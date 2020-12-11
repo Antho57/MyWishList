@@ -14,10 +14,10 @@ class VueParticipant{
 
     private function unItemHtml(\mywishlist\models\item $item):string {
         $html = <<<END
-            <section class="titre">
-            <h3>{$item->nom}</h3>
-            <p>{$item->descr}</p>
-            <h4>tarif : {$item->tarif}</h4>
+            <section>
+            <h3 class="titre3">-  {$item->nom}</h3>
+            <p class="text">{$item->descr}</p>
+            <h4 class="titre4">tarif : {$item->tarif}</h4>
 </section>
 END;
         return $html;
@@ -28,15 +28,15 @@ END;
 
         foreach($liste as $row) {
             $val =<<<END
-                <h3> {$row->no} - {$row->titre}</h3>
-                <p>Description : {$row->description}</p>
-                <h4>Expiration : {$row->expiration}</h4><br><br>
+                <h3 class="titre3"> {$row->no} - {$row->titre}</h3>
+                <p class="text">Description : {$row->description}</p>
+                <h4 class="titre4">Expiration : {$row->expiration}</h4><br><br>
 END;
             $html = $html. $val;
         }
 
         $val =<<<END
-            <section class="titre">
+            <section>
             $html
             </section>
 END;
@@ -50,19 +50,20 @@ END;
 
     private function listeItem($args):String {
         $html = <<<END
-            <h3> {$args[0]->no} - {$args[0]->titre}</h3><br>
+            <h3 class="titreli"> {$args[0]->no} - {$args[0]->titre}</h3><br>
 END;
 
         foreach($args[1] as $row) {
             $val =<<<END
-                <h4> - {$row->id} : {$row->nom}</h4>
-                <p>Description : <br><br>{$row->descr}</p><br>
+                <h4 class="titre3"> {$row->id} : {$row->nom}</h4>
+                <p class="text">Description : <br></p>
+                <p class="text2">{$row->descr}</p>
 END;
             $html = $html. $val;
         }
 
         $val =<<<END
-            <section class="titre">
+            <section>
             $html
             </section>
 END;
@@ -87,7 +88,8 @@ END;
                 <title>MyWishListe</title>
             </head>
             <body>
-                $content
+                <div id="header"><h1 class="centrage">Toutes les listes</h1></div>
+                <div class="info">$content</div>
             
             </body>
         </html>
@@ -104,7 +106,8 @@ END;
                 <title> MyWishListe </title>
             </head>
             <body>
-                $content
+                <div id="header"><h1 class="centrage">Les items d'une liste donnée</h1></div>
+                <div class="info">$content</div>
             
             </body>
         </html>
@@ -120,8 +123,9 @@ END;
                 <title> MyWishListe </title>
             </head>
             <body>
-                <h1 class="titre"> Description d'un item </h1>
-                $content
+                <div id="header"><h1 class="centrage">Description d'un item</h1></div>
+                
+                <div class="info">$content</div>
             
             </body>
         </html>
