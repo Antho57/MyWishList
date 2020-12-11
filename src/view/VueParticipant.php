@@ -56,7 +56,7 @@ END;
         foreach($args[1] as $row) {
             $val =<<<END
                 <h4 class="titre3"> {$row->id} : {$row->nom}</h4>
-                <p class="text">Description : <br></p>
+                <p class="text">Description : </p>
                 <p class="text2">{$row->descr}</p>
 END;
             $html = $html. $val;
@@ -88,9 +88,21 @@ END;
                 <title>MyWishListe</title>
             </head>
             <body>
-                <div id="header"><h1 class="centrage">Toutes les listes</h1></div>
-                <div class="info">$content</div>
-            
+            <div id="header"><h1 class="centrage">Toutes les listes</h1></div>
+            <div class="verticalStrip">
+                <ul>
+                <div class="titre5">Menu</div>
+                <br>
+                <br>
+                    <div class="liste">
+                        <li>Liste</li>
+                        <li>Item</li>
+                    </div>
+                </ul>
+            </div>
+                    <div class="content">
+                        <div class="info">$content</div>
+                    </div>
             </body>
         </html>
 END;
@@ -106,9 +118,21 @@ END;
                 <title> MyWishListe </title>
             </head>
             <body>
-                <div id="header"><h1 class="centrage">Les items d'une liste donnée</h1></div>
-                <div class="info">$content</div>
-            
+            <div id="header"><h1 class="centrage">Les items d'une liste donnée</h1></div>
+            <div class="verticalStrip">
+                <ul>
+                <div class="titre5">Menu</div>
+                <br>
+                <br>
+                    <div class="liste">
+                        <li>Liste</li>
+                        <li>Item</li>
+                    </div>
+                </ul>
+            </div>
+                    <div class="content">
+                        <div class="info">$content</div>
+                    </div>
             </body>
         </html>
 END;
@@ -123,10 +147,21 @@ END;
                 <title> MyWishListe </title>
             </head>
             <body>
-                <div id="header"><h1 class="centrage">Description d'un item</h1></div>
-                
-                <div class="info">$content</div>
-            
+            <div id="header"><h1 class="centrage">Description d'un item</h1></div>
+            <div class="verticalStrip">
+                <ul>
+                <div class="titre5">Menu</div>
+                <br>
+                <br>
+                    <div class="liste">
+                        <li>Liste</li>
+                        <li>Item</li>
+                    </div>
+                </ul>
+            </div>
+                    <div class="content">
+                        <div class="info">$content</div>
+                    </div>
             </body>
         </html>
 END;
