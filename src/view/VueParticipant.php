@@ -14,7 +14,7 @@ class VueParticipant{
 
     private function unItemHtml(\mywishlist\models\item $item):string {
         $html = <<<END
-            <section class="content">
+            <section class="titre">
             <h3>{$item->nom}</h3>
             <p>{$item->descr}</p>
             <h4>tarif : {$item->tarif}</h4>
@@ -36,7 +36,7 @@ END;
         }
 
         $val =<<<END
-            <section class="content">
+            <section class="titre">
             $html
             </section>
 END;
@@ -62,7 +62,7 @@ END;
         }
 
         $val =<<<END
-            <section class="content">
+            <section class="titre">
             $html
             </section>
 END;
@@ -83,7 +83,7 @@ END;
         <!DOCTYPE html>
         <html>
             <head> 
-                <link rel="stylesheet" href=$lien>
+                <link rel="stylesheet" href="{$lien['basepath']}/model.css">
                 <title>MyWishListe</title>
             </head>
             <body>
@@ -100,7 +100,7 @@ END;
         <!DOCTYPE html>
         <html>
             <head> 
-                <link rel="stylesheet" href=$lien>
+                <link rel="stylesheet" href="{$lien['basepath']}/model.css">
                 <title> MyWishListe </title>
             </head>
             <body>
@@ -116,7 +116,7 @@ END;
         <!DOCTYPE html>
         <html>
             <head> 
-                <link rel="stylesheet" href="$lien">
+                <link rel="stylesheet" href="{$lien['basepath']}/model.css">
                 <title> MyWishListe </title>
             </head>
             <body>
