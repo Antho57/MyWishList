@@ -1,2 +1,2 @@
-/.idea
-/src/conf
+/*.idea
+src/conf/db.conf.ini
