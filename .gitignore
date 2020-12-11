@@ -1,2 +1,4 @@
 src/conf/*.ini
 db.conf.ini
+*.ini
+src/conf/db.conf.ini
