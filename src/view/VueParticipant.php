@@ -83,7 +83,7 @@ END;
         <!DOCTYPE html>
         <html>
             <head> 
-                <link rel="stylesheet" href="{$lien['basepath']}/model.css">
+                <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
                 <title>MyWishListe</title>
             </head>
             <body>
@@ -100,7 +100,7 @@ END;
         <!DOCTYPE html>
         <html>
             <head> 
-                <link rel="stylesheet" href="{$lien['basepath']}/model.css">
+                <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
                 <title> MyWishListe </title>
             </head>
             <body>
@@ -116,7 +116,7 @@ END;
         <!DOCTYPE html>
         <html>
             <head> 
-                <link rel="stylesheet" href="{$lien['basepath']}/model.css">
+                <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
                 <title> MyWishListe </title>
             </head>
             <body>
