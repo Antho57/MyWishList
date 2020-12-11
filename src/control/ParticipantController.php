@@ -25,13 +25,14 @@ class ParticipantController{
             $item = item::query()->where('id', '=', $args['id'])
                 ->firstOrFail();
 
-            //$htmlvars = [
-            //    'basepath'=>$rq->getUri()->getBasePath()
-            //];
+            $htmlvars = [
+                'basepath'=>$rq->getUri()->getBasePath()
+            ];
+
 
             $v = new VueParticipant([$item]);
 
-            $rs->write( $v->render(3));
+            $rs->write( $v->render(3, $htmlvars));
             return $rs;
 
 
@@ -51,13 +52,13 @@ class ParticipantController{
 
             $item = liste::get();
 
-            //$htmlvars = [
-            //    'basepath'=>$rq->getUri()->getBasePath()
-            //];
+            $htmlvars = [
+                'basepath'=>$rq->getUri()->getBasePath()
+            ];
 
             $v = new VueParticipant($item);
 
-            $rs->write( $v->render(1));
+            $rs->write( $v->render(1, $htmlvars));
             return $rs;
 
 
@@ -82,9 +83,13 @@ class ParticipantController{
 
             $val =([$liste, $items]);
 
+            $htmlvars = [
+                'basepath'=>$rq->getUri()->getBasePath()
+            ];
+
             $v = new VueParticipant($val);
 
-            $rs->write( $v->render(2));
+            $rs->write( $v->render(2, $htmlvars));
             return $rs;
 
 

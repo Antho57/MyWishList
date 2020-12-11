@@ -72,7 +72,7 @@ END;
     }
 
 
-    public function render($vars){
+    public function render($vars, $lien){
 
         $html ='';
 
@@ -83,7 +83,9 @@ END;
         <!DOCTYPE html>
         <html>
             <head> 
-            <meta name ="title" content="Liste de toutes les listes">
+                <link rel="stylesheet" href=$lien>
+                <title>MyWishListe</title>
+            </head>
             <body>
                 $content
             
@@ -98,6 +100,9 @@ END;
         <!DOCTYPE html>
         <html>
             <head> 
+                <link rel="stylesheet" href=$lien>
+                <title> MyWishListe </title>
+            </head>
             <body>
                 $content
             
@@ -111,10 +116,11 @@ END;
         <!DOCTYPE html>
         <html>
             <head> 
-                <title> Un item </title>
+                <link rel="stylesheet" href="$lien">
+                <title> MyWishListe </title>
             </head>
             <body>
-        
+                <h1 class="titre"> Description d'un item </h1>
                 $content
             
             </body>
