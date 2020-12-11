@@ -26,7 +26,7 @@ class ParticipantController{
                 ->firstOrFail();
 
             $htmlvars = [
-                'basepath'=>$rq->getUri()->getBasePath()
+                'basepath' => $rq->getUri()->getBasePath()
             ];
 
 
