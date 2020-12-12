@@ -15,7 +15,7 @@ class VueParticipant{
     private function unItemHtml(\mywishlist\models\item $item):string {
         $html = <<<END
             <section>
-            <h3 class="titre3">-  {$item->nom}</h3>
+            <h3 class="titre3">{$item->id} - {$item->nom}</h3>
             <p class="text">{$item->descr}</p>
             <h4 class="text">Tarif : {$item->tarif}</h4>
 </section>
@@ -88,18 +88,25 @@ END;
                 <title>MyWishListe</title>
             </head>
             <body>
-            <div id="header"><h1 class="centrage">Toutes les listes</h1></div>
-            <div class="verticalStrip">
-                <ul>
-                <div class="titre5">Menu</div>
-                <br>
-                <br>
-                    <div class="liste">
-                        <li>Liste</li>
-                        <li>Item</li>
-                    </div>
-                </ul>
+            <div id="header"><h1 class="centrage">MyWishListe</h1>
+                <nav>
+                    <ul>
+                        <li class="liste"><a href="#">Liste</a>
+                            <ul>
+                            <li><a href="../liste/all">All</a></li>
+                            <li><a href="../liste/items/2">Items</a></li>
+                            </ul>
+                        </li>
+                        <li class="liste"><a href="#">Item</a>
+                            <ul>
+                            <li><a href="../item/1">Item 1</a></li>
+                            <li><a href="../item/2">Item 2</a></li>
+                            </ul>
+                        </li
+                    </ul>
+                </nav>
             </div>
+                    <div><h1 class="centrage2">Toutes les listes</h1></div>
                     <div class="content">
                         <div class="info">$content</div>
                     </div>
@@ -118,18 +125,25 @@ END;
                 <title> MyWishListe </title>
             </head>
             <body>
-            <div id="header"><h1 class="centrage">Les items d'une liste donnée</h1></div>
-            <div class="verticalStrip">
-                <ul>
-                <div class="titre5">Menu</div>
-                <br>
-                <br>
-                    <div class="liste">
-                        <li>Liste</li>
-                        <li>Item</li>
-                    </div>
-                </ul>
+            <div id="header"><h1 class="centrage">MyWishListe</h1>
+                <nav>
+                    <ul>
+                        <li class="liste"><a href="#">Liste</a>
+                            <ul>
+                            <li><a href="../liste/all">All</a></li>
+                            <li><a href="../liste/items/2">Items</a></li>
+                            </ul>
+                        </li>
+                        <li class="liste"><a href="#">Item</a>
+                            <ul>
+                            <li><a href="../../item/1">Item 1</a></li>
+                            <li><a href="../../item/2">Item 2</a></li>
+                            </ul>
+                        </li
+                    </ul>
+                </nav>
             </div>
+            <div><h1 class="centrage3">Les items d'une liste donnée</h1></div>
                     <div class="content">
                         <div class="info">$content</div>
                     </div>
@@ -147,18 +161,25 @@ END;
                 <title> MyWishListe </title>
             </head>
             <body>
-            <div id="header"><h1 class="centrage">Description d'un item</h1></div>
-            <div class="verticalStrip">
-                <ul>
-                <div class="titre5">Menu</div>
-                <br>
-                <br>
-                    <div class="liste">
-                        <li>Liste</li>
-                        <li>Item</li>
-                    </div>
-                </ul>
+            <div id="header"><h1 class="centrage">MyWishListe</h1>
+                <nav>
+                    <ul>
+                        <li class="liste"><a href="#">Liste</a>
+                            <ul>
+                            <li><a href="../liste/all">All</a></li>
+                            <li><a href="../liste/items/2">Items</a></li>
+                            </ul>
+                        </li>
+                        <li class="liste"><a href="#">Item</a>
+                            <ul>
+                            <li><a href="../item/1">Item 1</a></li>
+                            <li><a href="../item/2">Item 2</a></li>
+                            </ul>
+                        </li
+                    </ul>
+                </nav>
             </div>
+            <div><h1 class="centrage2">Description d'un item</h1></div>
                     <div class="content">
                         <div class="info">$content</div>
                     </div>

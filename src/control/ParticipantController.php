@@ -37,7 +37,7 @@ class ParticipantController{
 
 
         }catch(ModelNotFoundException $e){
-            $rs->write( "item {$item->id} non trouvé");
+            $rs->write( "item non trouvé");
             return $rs;
         }
     }

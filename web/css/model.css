@@ -10,12 +10,38 @@
     text-align: center;
     font-family: Impact;
     font-weight: bolder;
-    color: #1d1d1d;
+    color: #5ecbac;
+}
+
+.centrage2{
+    text-align: center;
+    font-family: "Agency FB";
+    font-weight: bolder;
+    font-size: 40px;
+    color: black;
+    border-color: black;
+    border-width: 5px;
+    border-style: solid;
+    margin-left: 800px;
+    margin-right: 800px;
+}
+
+.centrage3{
+    text-align: center;
+    font-family: "Agency FB";
+    font-weight: bolder;
+    font-size: 40px;
+    color: black;
+    border-color: black;
+    border-width: 5px;
+    border-style: solid;
+    margin-left: 750px;
+    margin-right: 750px;
 }
 
 #header{
     position: sticky;
-    background-color: #b1b1b1;
+    background-color: #414141;
     height: 90px;
     margin: 0;
     padding: 0;
@@ -26,7 +52,7 @@
 body{
     margin : 0px;
     margin-top: -20px;
-    background-image: url("../img/plus.png");
+    background-color: white;
 }
 
 .titre3{
@@ -44,12 +70,13 @@ body{
     margin-left: 10px;
     font-size: 40px;
     margin-top: 20px;
+    color: white;
 }
 
 .liste{
     font-family: "Agency FB";
-    margin-left: 10px;
     font-size: 25px;
+    color: white;
 }
 
 .text{
@@ -70,6 +97,57 @@ body{
     margin-left: -30px;
 }
 
+a{
+    text-decoration: none;
+    color: white;
+}
+
+li {
+    list-style:none;
+    color:#FFF;
+    padding:10px;
+    font-size:20px;
+    text-decoration:none;
+}
+
+nav ul {
+    background-color:#414141;
+    padding:0;
+    margin:0;
+    margin-top: -90px;
+}
+
+nav ul li {
+    list-style: none;
+    line-height:44px;
+    float:left;
+    background-color:#414141;
+}
+
+nav ul li a {
+    color:#FFF;
+    padding:10px;
+    font-size:30px;
+    text-decoration:none;
+}
+
+li a:hover {
+    border-bottom:3px #FFF solid;
+}
+nav ul li ul { display:none; } /* Rend le menu déroulant caché par défaut */
+
+nav ul li:hover ul { /* Affiche la dropNav au survol de la souris avec la class .drop */
+    z-index:99999;
+    display:list-item !important;
+    position:absolute;
+    margin-top:5px;
+    margin-left:-10px;
+}
+
+nav ul li:hover ul li {
+    float:none;
+}
+
 .info{
     margin-left: 100px;
 }
@@ -79,7 +157,18 @@ body{
     top: 0;
     left: 0;
     width: 200px;
-    background-color: #858585;
+    background-color: #2b2b2b;
+    margin-top: 90px;
+    height:100%;
+}
+
+.verticalStrip2 {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 200px;
+    background-color: #2b2b2b;
+    margin-top: 90px;
     height:100%;
 }
 
