@@ -17,7 +17,7 @@ class VueParticipant{
             <section>
             <h3 class="titre3">-  {$item->nom}</h3>
             <p class="text">{$item->descr}</p>
-            <h4 class="titre4">tarif : {$item->tarif}</h4>
+            <h4 class="text">Tarif : {$item->tarif}</h4>
 </section>
 END;
         return $html;
@@ -30,7 +30,7 @@ END;
             $val =<<<END
                 <h3 class="titre3"> {$row->no} - {$row->titre}</h3>
                 <p class="text">Description : {$row->description}</p>
-                <h4 class="titre4">Expiration : {$row->expiration}</h4><br><br>
+                <h4 class="text">Expiration : {$row->expiration}</h4><br>
 END;
             $html = $html. $val;
         }
