@@ -18,6 +18,27 @@ class ParticipantController{
         $this->c = $c;
     }
 
+    public function menuItem(Request $rq, Response $rs, array$args):Response{
+
+        try{
+
+            $htmlvars = [
+                'basepath' => $rq->getUri()->getBasePath()
+            ];
+
+
+            $v = new VueParticipant([0]);
+
+            $rs->write( $v->render(4, $htmlvars));
+            return $rs;
+
+
+        }catch(ModelNotFoundException $e){
+            $rs->write( "item non trouvé");
+            return $rs;
+        }
+    }
+
     public function displayItem(Request $rq, Response $rs, array$args):Response{
 
         try{

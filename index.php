@@ -45,7 +45,12 @@ $app->get('/item/{id}[/]', function (Request $rq, Response $rs, array $args): Re
 )->setName('item');
 
 
+$app->get('/item[/]', function (Request $rq, Response $rs, array $args): Response {
 
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->menuItem($rq,$rs,$args);
+}
+)->setName('item');
 
 
 $app->run();

@@ -12,6 +12,7 @@ class VueParticipant{
         $this->data = $data;
     }
 
+
     private function unItemHtml(\mywishlist\models\item $item):string {
         $html = <<<END
             <section>
@@ -88,7 +89,7 @@ END;
                 <title>MyWishListe</title>
             </head>
             <body>
-            <div id="header"><h1 class="centrage">MyWishListe</h1>
+            <div id="header"><h1 class="centrage">MWL</h1>
                 <nav>
                     <ul>
                         <li class="liste"><a href="#">Liste</a>
@@ -97,10 +98,8 @@ END;
                             <li><a href="../liste/items/2">Items</a></li>
                             </ul>
                         </li>
-                        <li class="liste"><a href="#">Item</a>
                             <ul>
-                            <li><a href="../item/1">Item 1</a></li>
-                            <li><a href="../item/2">Item 2</a></li>
+                            <li class="liste"><a href="../item">Item</a>
                             </ul>
                         </li
                     </ul>
@@ -125,7 +124,7 @@ END;
                 <title> MyWishListe </title>
             </head>
             <body>
-            <div id="header"><h1 class="centrage">MyWishListe</h1>
+            <div id="header"><h1 class="centrage">MWL</h1>
                 <nav>
                     <ul>
                         <li class="liste"><a href="#">Liste</a>
@@ -136,8 +135,7 @@ END;
                         </li>
                         <li class="liste"><a href="#">Item</a>
                             <ul>
-                            <li><a href="../../item/1">Item 1</a></li>
-                            <li><a href="../../item/2">Item 2</a></li>
+                            <li><a href="../../item">Item</a></li>
                             </ul>
                         </li
                     </ul>
@@ -161,7 +159,7 @@ END;
                 <title> MyWishListe </title>
             </head>
             <body>
-            <div id="header"><h1 class="centrage">MyWishListe</h1>
+            <div id="header"><h1 class="centrage">MWL</h1>
                 <nav>
                     <ul>
                         <li class="liste"><a href="#">Liste</a>
@@ -172,8 +170,7 @@ END;
                         </li>
                         <li class="liste"><a href="#">Item</a>
                             <ul>
-                            <li><a href="../item/1">Item 1</a></li>
-                            <li><a href="../item/2">Item 2</a></li>
+                            <li><a href="../item">Item</a></li>
                             </ul>
                         </li
                     </ul>
@@ -183,6 +180,37 @@ END;
                     <div class="content">
                         <div class="info">$content</div>
                     </div>
+            </body>
+        </html>
+END;
+                break;
+            case 4:
+                $html = <<<END
+        <!DOCTYPE html>
+        <html>
+            <head> 
+                <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
+                <title> MyWishListe </title>
+            </head>
+            <body>
+            <div id="header"><h1 class="centrage">MWL</h1>
+                <nav>
+                    <ul>
+                        <li class="liste"><a href="#">Liste</a>
+                            <ul>
+                            <li><a href="liste/all">All</a></li>
+                            <li><a href="liste/items/2">Items</a></li>
+                            </ul>
+                        </li>
+                        <li class="liste"><a href="#">Item</a>
+                            <ul>
+                            <li><a href="item">Item</a></li>
+                            </ul>
+                        </li
+                    </ul>
+                </nav>
+            </div>
+            <div><h1 class="centrage2">Description d'un item</h1></div>
             </body>
         </html>
 END;
