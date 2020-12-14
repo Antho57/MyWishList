@@ -130,8 +130,8 @@ END;
                     <ul>
                         <li class="liste"><a href="#">Liste</a>
                             <ul>
-                            <li><a href="../liste/all">All</a></li>
-                            <li><a href="../liste/items/2">Items</a></li>
+                            <li><a href="../../liste/all">All</a></li>
+                            <li><a href="../../liste/items/2">Items</a></li>
                             </ul>
                         </li>
                         <li class="liste"><a href="#">Item</a>
