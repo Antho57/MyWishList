@@ -115,7 +115,11 @@ END;
                 break;
 
             case 2:
-                $content = $this->listeItem($this->data);
+                $content = null;
+                if( $this->data !== null) {
+                    $content = $this->listeItem($this->data);
+                }
+
                 $html = <<<END
         <!DOCTYPE html>
         <html>
@@ -138,9 +142,23 @@ END;
                 </nav>
             </div>
             <div><h1 class="centrage3">Les items d'une liste donnée</h1></div>
-                    <div class="content">
-                        <div class="info">$content</div>
-                    </div>
+            <div class="formulaire1">
+                <form>
+                    <br>
+                    <label class="entrezNum" for="numLi"> Entrez le numéro de la liste que vous cherchez</label>
+                    <input type="number" class="numI" name="numLi" minlength="1" maxlength="2" size="10" placeholder="Entrez un numéro" >
+                    <input type="submit" class="numI" value="Rechercher">
+                </form>
+            </div>
+END;
+                if ($content !== null) {
+                    $html .=<<<END
+                            <div class="content">
+                                <div class="info">$content</div>
+                            </div>
+END;
+                }
+                $html .=<<<END
             </body>
         </html>
 END;
@@ -189,43 +207,6 @@ END;
 END;
                 }
             $html .=<<<END
-            </body>
-        </html>
-END;
-                break;
-            case 4:
-                $html = <<<END
-        <!DOCTYPE html>
-        <html>
-            <head> 
-                <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
-                <title> MyWishListe </title>
-            </head>
-            <body>
-            <div id="header"><h1 class="centrage">MWL</h1>
-                <nav>
-                    <ul>
-                        <li class="liste"><a href="#">Liste</a>
-                            <ul>
-                            <li><a href={$tab['lien1']}>All</a></li>
-                            <li><a href={$tab['lien2']}>Items</a></li>
-                            </ul>
-                        </li>
-                        <li class="liste"><a href={$tab['lien3']}>Item</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <div><h1 class="centrage2">Description d'un item</h1></div>
-            <div class="formulaire1">
-                <form>
-                    <br>
-                    <label class="entrezNum" for="numIt"> Entrez le numéro de l'item que vous cherchez</label>
-                    <input type="number" class="numI" name="numIt" minlength="1" maxlength="2" size="10" placeholder="Entrez un numéro" >
-                    <input type="submit" class="numI" value="Rechercher">
-                    <p
-                    <button 
-                </form>
-            </div>
             </body>
         </html>
 END;

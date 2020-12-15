@@ -66,7 +66,7 @@ class ParticipantController{
             ];
 
             $lien1 = $this->c->router->pathFor("AllListe");
-            $lien2 = $this->c->router->pathFor("AllItem", ["num"=>2]);
+            $lien2 = $this->c->router->pathFor("AllItem");
             $lien3 = $this->c->router->pathFor("Item");
 
             $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3];
@@ -91,19 +91,27 @@ class ParticipantController{
 
         try{
 
-            $liste = liste::query()->where('no', '=', $args['num'])
+            $var = $rq->getQueryParams();
+
+            $liste = null;
+            $items = null;
+
+            $val = null;
+
+            if(isset($var['numLi'])) {
+                $liste = liste::query()->where('no', '=', $var['numLi'])
                     ->firstOrFail();
+                $items = item::query()->where('liste_id', '=', $liste->no)->get();
+                $val = ([$liste, $items]);
+            }
 
-            $items = item::query()->where('liste_id', '=', $liste->no)->get();
-
-            $val =([$liste, $items]);
 
             $htmlvars = [
                 'basepath'=>$rq->getUri()->getBasePath()
             ];
 
             $lien1 = $this->c->router->pathFor("AllListe");
-            $lien2 = $this->c->router->pathFor("AllItem", ["num"=>2]);
+            $lien2 = $this->c->router->pathFor("AllItem");
             $lien3 = $this->c->router->pathFor("Item");
 
             $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3];

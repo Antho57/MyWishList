@@ -26,7 +26,7 @@ $app->get('/liste/all[/]', function (Request $rq, Response $rs, array $args): Re
 
 
 
-$app->get('/liste/items/{num}', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/liste/items', function (Request $rq, Response $rs, array $args): Response {
 
     $c = new mywishlist\control\ParticipantController($this);
     return $c->listeItem($rq,$rs,$args);
