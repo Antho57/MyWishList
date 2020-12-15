@@ -76,6 +76,15 @@ body{
     font-family: "Agency FB";
     font-size: 25px;
     color: white;
+    margin-top: 5px;
+}
+
+.liste2{
+    font-family: "Agency FB";
+    font-size: 25px;
+    color: white;
+    margin-top: 5px;
+    margin-left: 1650px;
 }
 
 .text{
@@ -176,3 +185,9 @@ input[type=number] {
     -webkit-appearance: none;
 }
 
+.credit{
+    text-align: center;
+    font-family: "Agency FB";
+    font-size: 30px;
+    font-weight: bold;
+}

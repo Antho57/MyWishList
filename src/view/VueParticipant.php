@@ -105,6 +105,11 @@ END;
                         </li>
                     </ul>
                 </nav>
+                <nav>
+                    <ul>
+                        <li class="liste2"><a href={$tab['lien667']}>Credit</a></li>
+                    </ul>
+                </nav>
             </div>
                     <div><h1 class="centrage2">Toutes les listes</h1></div>
                     <div class="content">
@@ -140,6 +145,11 @@ END;
                             </ul>
                         </li>
                         <li class="liste"><a href={$tab['lien3']}>Item</a></li>
+                    </ul>
+                </nav>
+                <nav>
+                    <ul>
+                        <li class="liste2"><a href={$tab['lien667']}>Credit</a></li>
                     </ul>
                 </nav>
             </div>
@@ -191,6 +201,11 @@ END;
                         <li class="liste"><a href={$tab['lien3']}>Item</a></li>
                     </ul>
                 </nav>
+                <nav>
+                    <ul>
+                        <li class="liste2"><a href={$tab['lien667']}>Credit</a></li>
+                    </ul>
+                </nav>
             </div>
             <div><h1 class="centrage2">Description d'un item</h1></div>
             <div class="formulaire1">
@@ -210,6 +225,48 @@ END;
 END;
                 }
             $html .=<<<END
+            </body>
+        </html>
+END;
+                break;
+            case 667:
+                $html = <<<END
+        <!DOCTYPE html>
+        <html>
+            <head> 
+                <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
+                <title> MyWishListe </title>
+            </head>
+            <body>
+            <div id="header">
+            <div><img src="{$lien['basepath']}/web/img/mwl2.png" class="centrage"></div>
+                <nav>
+                    <ul>
+                        <li class="liste"><a href="#">Liste</a>
+                            <ul>
+                            <li><a href={$tab['lien1']}>All</a></li>
+                            <li><a href={$tab['lien2']}>Items</a></li>
+                            </ul>
+                        </li>
+                        <li class="liste"><a href={$tab['lien3']}>Item</a></li>
+                    </ul>
+                </nav>
+                <nav>
+                    <ul>
+                        <li class="liste2"><a href={$tab['lien667']}>Credit</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div><h1 class="centrage2">CREDITS DU SITE</h1></div><br><br>
+            <div class="credit">
+            <p>LOGO : BRANCATI SILVIO</p>
+            <p>CREATEURS :</p>
+            <p>BRIOT ANTHONY</p>
+            <p>SPILMONT FRANCOIS</p>
+            <p>SAKER LUCAS</p>
+            <p>PISANT THOMAS</p>
+            </div>
+            
             </body>
         </html>
 END;

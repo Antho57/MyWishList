@@ -45,5 +45,16 @@ $app->get('/item', function (Request $rq, Response $rs, array $args): Response {
 )->setName('Item');
 
 
+
+
+
+$app->get('/credits', function (Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->displayCredits($rq,$rs,$args);
+}
+)->setName('Credits');
+
+
 $app->run();
 

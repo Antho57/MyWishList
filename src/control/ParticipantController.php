@@ -36,8 +36,9 @@ class ParticipantController{
             $lien1 = $this->c->router->pathFor("AllListe");
             $lien2 = $this->c->router->pathFor("AllItem", ["num"=>2]);
             $lien3 = $this->c->router->pathFor("Item");
+            $lien667 = $this->c->router->pathFor("Credits");
 
-            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3];
+            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien667"=>$lien667];
 
             $v = new VueParticipant([$item]);
 
@@ -68,8 +69,9 @@ class ParticipantController{
             $lien1 = $this->c->router->pathFor("AllListe");
             $lien2 = $this->c->router->pathFor("AllItem");
             $lien3 = $this->c->router->pathFor("Item");
+            $lien667 = $this->c->router->pathFor("Credits");
 
-            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3];
+            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien667"=>$lien667];
 
             $v = new VueParticipant($item);
 
@@ -87,9 +89,10 @@ class ParticipantController{
 
 
 
-    public function listeItem(Request $rq, Response $rs, array$args):Response{
+    public function listeItem(Request $rq, Response $rs, array$args):Response
+    {
 
-        try{
+        try {
 
             $var = $rq->getQueryParams();
 
@@ -98,7 +101,7 @@ class ParticipantController{
 
             $val = null;
 
-            if(isset($var['numLi'])) {
+            if (isset($var['numLi'])) {
                 $liste = liste::query()->where('no', '=', $var['numLi'])
                     ->firstOrFail();
                 $items = item::query()->where('liste_id', '=', $liste->no)->get();
@@ -107,25 +110,55 @@ class ParticipantController{
 
 
             $htmlvars = [
-                'basepath'=>$rq->getUri()->getBasePath()
+                'basepath' => $rq->getUri()->getBasePath()
             ];
 
             $lien1 = $this->c->router->pathFor("AllListe");
             $lien2 = $this->c->router->pathFor("AllItem");
             $lien3 = $this->c->router->pathFor("Item");
+            $lien667 = $this->c->router->pathFor("Credits");
 
-            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3];
+            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien667"=>$lien667];
 
             $v = new VueParticipant($val);
 
-            $rs->write( $v->render(2, $htmlvars, $tab));
+            $rs->write($v->render(2, $htmlvars, $tab));
             return $rs;
 
 
-        }catch(ModelNotFoundException $e){
-            $rs->write( "La liste n°{$args['num']} n'a pas été trouvé");
+        } catch (ModelNotFoundException $e) {
+            $rs->write("La liste n°{$args['num']} n'a pas été trouvé");
             return $rs;
         }
+    }
+
+        public function displayCredits(Request $rq, Response $rs, array$args):Response{
+
+            try{
+
+                $val = null;
+
+                $htmlvars = [
+                    'basepath'=>$rq->getUri()->getBasePath()
+                ];
+
+                $lien1 = $this->c->router->pathFor("AllListe");
+                $lien2 = $this->c->router->pathFor("AllItem");
+                $lien3 = $this->c->router->pathFor("Item");
+                $lien667 = $this->c->router->pathFor("Credits");
+
+                $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien667"=>$lien667];
+
+                $v = new VueParticipant($val);
+
+                $rs->write( $v->render(667, $htmlvars, $tab));
+                return $rs;
+
+
+            }catch(ModelNotFoundException $e){
+                $rs->write( "Problème avec les crédits");
+                return $rs;
+            }
     }
 
 
