@@ -74,7 +74,7 @@ END;
     }
 
 
-    public function render($vars, $lien){
+    public function render($vars, $lien, $tab){
 
         $html ='';
 
@@ -94,12 +94,12 @@ END;
                     <ul>
                         <li class="liste"><a href="#">Liste</a>
                             <ul>
-                            <li><a href="../liste/all">All</a></li>
-                            <li><a href="../liste/items/2">Items</a></li>
+                            <li><a href={$tab['lien1']}>All</a></li>
+                            <li><a href={$tab['lien2']}>Items</a></li>
                             </ul>
                         </li>
                             <ul>
-                            <li class="liste"><a href="../item">Item</a>
+                            <li class="liste"><a href={$tab['lien3']}>Item</a>
                             </ul>
                         </li>
                     </ul>
@@ -129,15 +129,11 @@ END;
                     <ul>
                         <li class="liste"><a href="#">Liste</a>
                             <ul>
-                            <li><a href="../../liste/all">All</a></li>
-                            <li><a href="../../liste/items/2">Items</a></li>
+                            <li><a href={$tab['lien1']}>All</a></li>
+                            <li><a href={$tab['lien2']}>Items</a></li>
                             </ul>
                         </li>
-                        <li class="liste"><a href="#">Item</a>
-                            <ul>
-                            <li><a href="../../item">Item</a></li>
-                            </ul>
-                        </li>
+                        <li class="liste"><a href={$tab['lien3']}>Item</a></li>
                     </ul>
                 </nav>
             </div>
@@ -164,15 +160,11 @@ END;
                     <ul>
                         <li class="liste"><a href="#">Liste</a>
                             <ul>
-                            <li><a href="../liste/all">All</a></li>
-                            <li><a href="../liste/items/2">Items</a></li>
+                            <li><a href={$tab['lien1']}>All</a></li>
+                            <li><a href={$tab['lien2']}>Items</a></li>
                             </ul>
                         </li>
-                        <li class="liste"><a href="#">Item</a>
-                            <ul>
-                            <li><a href="../item">Item</a></li>
-                            </ul>
-                        </li>
+                        <li class="liste"><a href={$tab['lien3']}>Item</a></li>
                     </ul>
                 </nav>
             </div>
@@ -198,15 +190,11 @@ END;
                     <ul>
                         <li class="liste"><a href="#">Liste</a>
                             <ul>
-                            <li><a href="liste/all">All</a></li>
-                            <li><a href="liste/items/2">Items</a></li>
+                            <li><a href={$tab['lien1']}>All</a></li>
+                            <li><a href={$tab['lien2']}>Items</a></li>
                             </ul>
                         </li>
-                        <li class="liste"><a href="#">Item</a>
-                            <ul>
-                            <li><a href="item">Item</a></li>
-                            </ul>
-                        </li>
+                        <li class="liste"><a href={$tab['lien3']}>Item</a></li>
                     </ul>
                 </nav>
             </div>

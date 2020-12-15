@@ -42,7 +42,7 @@ $app->get('/item/{id}[/]', function (Request $rq, Response $rs, array $args): Re
     $c = new mywishlist\control\ParticipantController($this);
     return $c->displayItem($rq,$rs,$args);
 }
-)->setName('item');
+)->setName('ItemN');
 
 
 $app->get('/item[/]', function (Request $rq, Response $rs, array $args): Response {
@@ -50,7 +50,7 @@ $app->get('/item[/]', function (Request $rq, Response $rs, array $args): Respons
     $c = new mywishlist\control\ParticipantController($this);
     return $c->menuItem($rq,$rs,$args);
 }
-)->setName('item');
+)->setName('Item');
 
 
 $app->run();

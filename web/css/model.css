@@ -134,9 +134,11 @@ nav ul li a {
 li a:hover {
     border-bottom:3px #FFF solid;
 }
-nav ul li ul { display:none; } /* Rend le menu déroulant caché par défaut */
+nav ul li ul {
+    display:none;
+}
 
-nav ul li:hover ul { /* Affiche la dropNav au survol de la souris avec la class .drop */
+nav ul li:hover ul {
     z-index:99999;
     display:list-item !important;
     position:absolute;
@@ -150,29 +152,5 @@ nav ul li:hover ul li {
 
 .info{
     margin-left: 100px;
-}
-
-.verticalStrip {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 200px;
-    background-color: #2b2b2b;
-    margin-top: 90px;
-    height:100%;
-}
-
-.verticalStrip2 {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 200px;
-    background-color: #2b2b2b;
-    margin-top: 90px;
-    height:100%;
-}
-
-.content {
-    padding-left: 150px;
 }
 

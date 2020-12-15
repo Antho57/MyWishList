@@ -26,10 +26,16 @@ class ParticipantController{
                 'basepath' => $rq->getUri()->getBasePath()
             ];
 
+            $lien1 = $this->c->router->pathFor("AllListe");
+            $lien2 = $this->c->router->pathFor("AllItem", ["num"=>2]);
+            $lien3 = $this->c->router->pathFor("Item");
+
+            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3];
+
 
             $v = new VueParticipant([0]);
 
-            $rs->write( $v->render(4, $htmlvars));
+            $rs->write( $v->render(4, $htmlvars, $tab));
             return $rs;
 
 
@@ -50,10 +56,15 @@ class ParticipantController{
                 'basepath' => $rq->getUri()->getBasePath()
             ];
 
+            $lien1 = $this->c->router->pathFor("AllListe");
+            $lien2 = $this->c->router->pathFor("AllItem", ["num"=>2]);
+            $lien3 = $this->c->router->pathFor("Item");
+
+            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3];
 
             $v = new VueParticipant([$item]);
 
-            $rs->write( $v->render(3, $htmlvars));
+            $rs->write( $v->render(3, $htmlvars, $tab));
             return $rs;
 
 
@@ -77,9 +88,15 @@ class ParticipantController{
                 'basepath'=>$rq->getUri()->getBasePath()
             ];
 
+            $lien1 = $this->c->router->pathFor("AllListe");
+            $lien2 = $this->c->router->pathFor("AllItem", ["num"=>2]);
+            $lien3 = $this->c->router->pathFor("Item");
+
+            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3];
+
             $v = new VueParticipant($item);
 
-            $rs->write( $v->render(1, $htmlvars));
+            $rs->write( $v->render(1, $htmlvars, $tab));
             return $rs;
 
 
@@ -108,9 +125,15 @@ class ParticipantController{
                 'basepath'=>$rq->getUri()->getBasePath()
             ];
 
+            $lien1 = $this->c->router->pathFor("AllListe");
+            $lien2 = $this->c->router->pathFor("AllItem", ["num"=>2]);
+            $lien3 = $this->c->router->pathFor("Item");
+
+            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3];
+
             $v = new VueParticipant($val);
 
-            $rs->write( $v->render(2, $htmlvars));
+            $rs->write( $v->render(2, $htmlvars, $tab));
             return $rs;
 
 
