@@ -89,7 +89,8 @@ END;
                 <title>MyWishListe</title>
             </head>
             <body>
-            <div id="header"><h1 class="centrage">MWL</h1>
+            <div id="header">
+                <div><img src="{$lien['basepath']}/web/img/mwl2.png" class="centrage"></div>
                 <nav>
                     <ul>
                         <li class="liste"><a href="#">Liste</a>
@@ -128,7 +129,8 @@ END;
                 <title> MyWishListe </title>
             </head>
             <body>
-            <div id="header"><h1 class="centrage">MWL</h1>
+            <div id="header">
+            <div><img src="{$lien['basepath']}/web/img/mwl2.png" class="centrage"></div>
                 <nav>
                     <ul>
                         <li class="liste"><a href="#">Liste</a>
@@ -176,7 +178,8 @@ END;
                 <title> MyWishListe </title>
             </head>
             <body>
-            <div id="header"><h1 class="centrage">MWL</h1>
+            <div id="header">
+            <div><img src="{$lien['basepath']}/web/img/mwl2.png" class="centrage"></div>
                 <nav>
                     <ul>
                         <li class="liste"><a href="#">Liste</a>

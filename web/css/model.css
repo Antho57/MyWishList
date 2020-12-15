@@ -7,10 +7,9 @@
 }
 
 .centrage{
-    text-align: center;
-    font-family: Impact;
-    font-weight: bolder;
-    color: #5ecbac;
+    display: block;
+    margin-left: auto;
+    margin-right: auto
 }
 
 .centrage2{
@@ -42,7 +41,7 @@
 #header{
     position: sticky;
     background-color: #414141;
-    height: 90px;
+    height: 110px;
     margin: 0;
     padding: 0;
     vertical-align: middle;
