@@ -18,39 +18,16 @@ class ParticipantController{
         $this->c = $c;
     }
 
-    public function menuItem(Request $rq, Response $rs, array$args):Response{
-
-        try{
-
-            $htmlvars = [
-                'basepath' => $rq->getUri()->getBasePath()
-            ];
-
-            $lien1 = $this->c->router->pathFor("AllListe");
-            $lien2 = $this->c->router->pathFor("AllItem", ["num"=>2]);
-            $lien3 = $this->c->router->pathFor("Item");
-
-            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3];
-
-
-            $v = new VueParticipant([0]);
-
-            $rs->write( $v->render(4, $htmlvars, $tab));
-            return $rs;
-
-
-        }catch(ModelNotFoundException $e){
-            $rs->write( "item non trouvé");
-            return $rs;
-        }
-    }
-
     public function displayItem(Request $rq, Response $rs, array$args):Response{
 
         try{
 
-            $item = item::query()->where('id', '=', $args['id'])
-                ->firstOrFail();
+            $var = $rq->getQueryParams();
+            $item = null;
+            if(isset($var['numIt'])){
+                $item = item::query()->where('id', '=', $var['numIt'])
+                    ->firstOrFail();
+            }
 
             $htmlvars = [
                 'basepath' => $rq->getUri()->getBasePath()

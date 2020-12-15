@@ -146,7 +146,10 @@ END;
 END;
                 break;
             case 3:
-                $content = $this->unItemHtml($this->data[0]);
+                $content = null;
+                if( $this->data[0] !== null) {
+                    $content = $this->unItemHtml($this->data[0]);
+                }
                 $html = <<<END
         <!DOCTYPE html>
         <html>
@@ -169,9 +172,23 @@ END;
                 </nav>
             </div>
             <div><h1 class="centrage2">Description d'un item</h1></div>
-                    <div class="content">
-                        <div class="info">$content</div>
-                    </div>
+            <div class="formulaire1">
+                <form>
+                    <br>
+                    <label class="entrezNum" for="numIt"> Entrez le numéro de l'item que vous cherchez</label>
+                    <input type="number" class="numI" name="numIt" minlength="1" maxlength="2" size="10" placeholder="Entrez un numéro" >
+                    <input type="submit" class="numI" value="Rechercher">
+                </form>
+            </div>
+END;
+                if ($content !== null) {
+                    $html .=<<<END
+                            <div class="content">
+                                <div class="info">$content</div>
+                            </div>
+END;
+                }
+            $html .=<<<END
             </body>
         </html>
 END;
@@ -199,6 +216,16 @@ END;
                 </nav>
             </div>
             <div><h1 class="centrage2">Description d'un item</h1></div>
+            <div class="formulaire1">
+                <form>
+                    <br>
+                    <label class="entrezNum" for="numIt"> Entrez le numéro de l'item que vous cherchez</label>
+                    <input type="number" class="numI" name="numIt" minlength="1" maxlength="2" size="10" placeholder="Entrez un numéro" >
+                    <input type="submit" class="numI" value="Rechercher">
+                    <p
+                    <button 
+                </form>
+            </div>
             </body>
         </html>
 END;
@@ -207,5 +234,4 @@ END;
 
         return $html;
 }
-//<link rel="stylesheet" href="{$vars['basepath']}/wish.css"
 }
