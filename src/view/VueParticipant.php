@@ -49,16 +49,20 @@ END;
 
 
 
-    private function listeItem($args):String {
+    private function listeDetail($args, $lien):String {
         $html = <<<END
-            <h3 class="titreli"> {$args[0]->no} - {$args[0]->titre}</h3><br>
+            <h3 class="titreli"> {$args[0]->no} - {$args[0]->titre}</h3>
+            <p class="text">Description : {$args[0]->description}</p>
+            <p class="text">Expiration : {$args[0]->expiration}</p>
+            <br>
 END;
 
         foreach($args[1] as $row) {
             $val =<<<END
-                <h4 class="titre3"> {$row->id} : {$row->nom}</h4>
-                <p class="text">Description : </p>
-                <p class="text2">{$row->descr}</p>
+                <h4 class="titre3">{$row->nom}</h4>
+                <img src="{$lien['basepath']}/web/img/{$row->img}" class="imgItem">
+                <p class="text">Reservation : </p>
+                <br>
 END;
             $html = $html. $val;
         }
@@ -86,7 +90,7 @@ END;
         <html>
             <head> 
                 <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
-                <title>MyWishListe</title>
+                <title>MyWishList</title>
             </head>
             <body>
             <div id="header">
@@ -95,12 +99,12 @@ END;
                     <ul>
                         <li class="liste"><a href="#">Liste</a>
                             <ul>
-                            <li><a href={$tab['lien1']}>All</a></li>
-                            <li><a href={$tab['lien2']}>Items</a></li>
+                                <li><a href={$tab['lien1']}>All</a></li>
+                                <li><a href={$tab['lien2']}>Detail</a></li>
                             </ul>
                         </li>
                             <ul>
-                            <li class="liste"><a href={$tab['lien3']}>Item</a>
+                                <li class="liste"><a href={$tab['lien3']}>Item</a>
                             </ul>
                         </li>
                     </ul>
@@ -112,7 +116,7 @@ END;
                 </nav>
             </div>
                     <div><h1 class="centrage2">Toutes les listes</h1></div>
-                    <div class="content">
+                    <div>
                         <div class="info">$content</div>
                     </div>
             </body>
@@ -123,7 +127,7 @@ END;
             case 2:
                 $content = null;
                 if( $this->data !== null) {
-                    $content = $this->listeItem($this->data);
+                    $content = $this->listeDetail($this->data, $lien);
                 }
 
                 $html = <<<END
@@ -131,7 +135,7 @@ END;
         <html>
             <head> 
                 <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
-                <title> MyWishListe </title>
+                <title> MyWishList </title>
             </head>
             <body>
             <div id="header">
@@ -141,7 +145,7 @@ END;
                         <li class="liste"><a href="#">Liste</a>
                             <ul>
                             <li><a href={$tab['lien1']}>All</a></li>
-                            <li><a href={$tab['lien2']}>Items</a></li>
+                            <li><a href={$tab['lien2']}>Detail</a></li>
                             </ul>
                         </li>
                         <li class="liste"><a href={$tab['lien3']}>Item</a></li>
@@ -153,10 +157,9 @@ END;
                     </ul>
                 </nav>
             </div>
-            <div><h1 class="centrage3">Les items d'une liste donnée</h1></div>
+            <div><h1 class="centrage2">Les items d'une liste donnée</h1></div>
             <div class="formulaire1">
                 <form>
-                    <br>
                     <label class="entrezNum" for="numLi"> Entrez le numéro de la liste que vous cherchez</label>
                     <input type="number" class="numI" name="numLi" minlength="1" maxlength="2" size="10" placeholder="Entrez un numéro" >
                     <input type="submit" class="numI" value="Rechercher">
@@ -165,7 +168,7 @@ END;
 END;
                 if ($content !== null) {
                     $html .=<<<END
-                            <div class="content">
+                            <div>
                                 <div class="info">$content</div>
                             </div>
 END;
@@ -185,7 +188,7 @@ END;
         <html>
             <head> 
                 <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
-                <title> MyWishListe </title>
+                <title> MyWishList </title>
             </head>
             <body>
             <div id="header">
@@ -195,7 +198,7 @@ END;
                         <li class="liste"><a href="#">Liste</a>
                             <ul>
                             <li><a href={$tab['lien1']}>All</a></li>
-                            <li><a href={$tab['lien2']}>Items</a></li>
+                            <li><a href={$tab['lien2']}>Detail</a></li>
                             </ul>
                         </li>
                         <li class="liste"><a href={$tab['lien3']}>Item</a></li>
@@ -219,12 +222,12 @@ END;
 END;
                 if ($content !== null) {
                     $html .=<<<END
-                            <div class="content">
+                            <div>
                                 <div class="info">$content</div>
                             </div>
 END;
                 }
-            $html .=<<<END
+                $html .=<<<END
             </body>
         </html>
 END;
@@ -235,7 +238,7 @@ END;
         <html>
             <head> 
                 <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
-                <title> MyWishListe </title>
+                <title> MyWishList </title>
             </head>
             <body>
             <div id="header">
@@ -245,7 +248,7 @@ END;
                         <li class="liste"><a href="#">Liste</a>
                             <ul>
                             <li><a href={$tab['lien1']}>All</a></li>
-                            <li><a href={$tab['lien2']}>Items</a></li>
+                            <li><a href={$tab['lien2']}>Detail</a></li>
                             </ul>
                         </li>
                         <li class="liste"><a href={$tab['lien3']}>Item</a></li>

@@ -89,7 +89,7 @@ class ParticipantController{
 
 
 
-    public function listeItem(Request $rq, Response $rs, array$args):Response
+    public function listeDetail(Request $rq, Response $rs, array$args):Response
     {
 
         try {
@@ -132,33 +132,33 @@ class ParticipantController{
         }
     }
 
-        public function displayCredits(Request $rq, Response $rs, array$args):Response{
+    public function displayCredits(Request $rq, Response $rs, array$args):Response{
 
-            try{
+        try{
 
-                $val = null;
+            $val = null;
 
-                $htmlvars = [
-                    'basepath'=>$rq->getUri()->getBasePath()
-                ];
+            $htmlvars = [
+                'basepath'=>$rq->getUri()->getBasePath()
+            ];
 
-                $lien1 = $this->c->router->pathFor("AllListe");
-                $lien2 = $this->c->router->pathFor("AllItem");
-                $lien3 = $this->c->router->pathFor("Item");
-                $lien667 = $this->c->router->pathFor("Credits");
+            $lien1 = $this->c->router->pathFor("AllListe");
+            $lien2 = $this->c->router->pathFor("AllItem");
+            $lien3 = $this->c->router->pathFor("Item");
+            $lien667 = $this->c->router->pathFor("Credits");
 
-                $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien667"=>$lien667];
+            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien667"=>$lien667];
 
-                $v = new VueParticipant($val);
+            $v = new VueParticipant($val);
 
-                $rs->write( $v->render(667, $htmlvars, $tab));
-                return $rs;
+            $rs->write( $v->render(667, $htmlvars, $tab));
+            return $rs;
 
 
-            }catch(ModelNotFoundException $e){
-                $rs->write( "Problème avec les crédits");
-                return $rs;
-            }
+        }catch(ModelNotFoundException $e){
+            $rs->write( "Problème avec les crédits");
+            return $rs;
+        }
     }
 
 

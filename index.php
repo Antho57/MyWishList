@@ -5,6 +5,8 @@ require_once __DIR__.'/vendor/autoload.php';
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
+header("Cache-Control: no-cache, must-revalidate");
+
 $c = new \Slim\Container(['settings' => ['displayErrorDetails' =>true]]);
 
 $app = new \Slim\App($c);
@@ -15,7 +17,7 @@ $app = new \Slim\App($c);
 
 
 
-$app->get('/liste/all[/]', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/liste/all', function (Request $rq, Response $rs, array $args): Response {
 
     $c = new mywishlist\control\ParticipantController($this);
     return $c->allListe($rq,$rs,$args);
@@ -26,10 +28,10 @@ $app->get('/liste/all[/]', function (Request $rq, Response $rs, array $args): Re
 
 
 
-$app->get('/liste/items', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/liste/detail', function (Request $rq, Response $rs, array $args): Response {
 
     $c = new mywishlist\control\ParticipantController($this);
-    return $c->listeItem($rq,$rs,$args);
+    return $c->listeDetail($rq,$rs,$args);
 }
 )->setName('AllItem');
 
