@@ -13,12 +13,13 @@ class VueParticipant{
     }
 
 
-    private function unItemHtml(\mywishlist\models\item $item):string {
+    private function unItemHtml(\mywishlist\models\item $item, $lien):string {
         $html = <<<END
             <section>
             <h3 class="titre3">{$item->id} - {$item->nom}</h3>
             <p class="text">{$item->descr}</p>
             <h4 class="text">Tarif : {$item->tarif}</h4>
+            <img src="{$lien['basepath']}/web/img/{$item->img}" class="imgItem">
 </section>
 END;
         return $html;
@@ -49,7 +50,7 @@ END;
 
 
 
-    private function listeDetail($args, $lien):String {
+    private function listeDetail($args, $lien, $tab):String {
         $html = <<<END
             <h3 class="titreli"> {$args[0]->no} - {$args[0]->titre}</h3>
             <p class="text">Description : {$args[0]->description}</p>
@@ -59,7 +60,7 @@ END;
 
         foreach($args[1] as $row) {
             $val =<<<END
-                <h4 class="titre3">{$row->nom}</h4>
+                <h4><a class="titre3" href="{$tab['lien3']}?numIt={$row->id}}"> {$row->nom}</a></h4>
                 <img src="{$lien['basepath']}/web/img/{$row->img}" class="imgItem">
                 <p class="text">Reservation : </p>
                 <br>
@@ -127,7 +128,7 @@ END;
             case 2:
                 $content = null;
                 if( $this->data !== null) {
-                    $content = $this->listeDetail($this->data, $lien);
+                    $content = $this->listeDetail($this->data, $lien, $tab);
                 }
 
                 $html = <<<END
@@ -181,7 +182,7 @@ END;
             case 3:
                 $content = null;
                 if( $this->data[0] !== null) {
-                    $content = $this->unItemHtml($this->data[0]);
+                    $content = $this->unItemHtml($this->data[0], $lien);
                 }
                 $html = <<<END
         <!DOCTYPE html>

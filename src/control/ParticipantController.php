@@ -34,7 +34,7 @@ class ParticipantController{
             ];
 
             $lien1 = $this->c->router->pathFor("AllListe");
-            $lien2 = $this->c->router->pathFor("AllItem", ["num"=>2]);
+            $lien2 = $this->c->router->pathFor("AllItem");
             $lien3 = $this->c->router->pathFor("Item");
             $lien667 = $this->c->router->pathFor("Credits");
 
