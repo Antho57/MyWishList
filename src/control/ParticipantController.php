@@ -101,8 +101,8 @@ class ParticipantController{
 
             $val = null;
 
-            if (isset($var['numLi'])) {
-                $liste = liste::query()->where('no', '=', $var['numLi'])
+            if (isset($var['token'])) {
+                $liste = liste::query()->where('token', '=', $var['token'])
                     ->firstOrFail();
                 $items = item::query()->where('liste_id', '=', $liste->no)->get();
                 $val = ([$liste, $items]);

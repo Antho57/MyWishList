@@ -160,8 +160,8 @@ END;
             <div><h1 class="centrage2">Les items d'une liste donnée</h1></div>
             <div class="formulaire1">
                 <form>
-                    <label class="entrezNum" for="numLi"> Entrez le numéro de la liste que vous cherchez</label>
-                    <input type="number" class="numI" name="numLi" minlength="1" maxlength="2" size="10" placeholder="Entrez un numéro" >
+                    <label class="entrezNum" for="numLi"> Entrez le token de la liste pour y acceder</label>
+                    <input type="text" class="numI" name="token" minlength="1" maxlength="15" size="15" placeholder="Entrez un token" >
                     <input type="submit" class="numI" value="Rechercher">
                 </form>
             </div>
