@@ -127,7 +127,7 @@ class ParticipantController{
 
 
         } catch (ModelNotFoundException $e) {
-            $rs->write("La liste n°{$args['num']} n'a pas été trouvé");
+            $rs->write("La liste {$_GET['token']} n'a pas été trouvée");
             return $rs;
         }
     }
