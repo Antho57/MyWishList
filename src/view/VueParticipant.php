@@ -233,6 +233,60 @@ END;
         </html>
 END;
                 break;
+            case 4:
+                $content = null;
+                if( $this->data !== null) {
+                    $content = $this->listeDetail($this->data, $lien, $tab);
+                }
+
+                $html = <<<END
+        <!DOCTYPE html>
+        <html>
+            <head> 
+                <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
+                <title> MyWishList </title>
+            </head>
+            <body>
+            <div id="header">
+            <div><img src="{$lien['basepath']}/web/img/mwl2.png" class="centrage"></div>
+                <nav>
+                    <ul>
+                        <li class="liste"><a href="#">Liste</a>
+                            <ul>
+                            <li><a href={$tab['lien1']}>All</a></li>
+                            <li><a href={$tab['lien2']}>Detail</a></li>
+                            </ul>
+                        </li>
+                        <li class="liste"><a href={$tab['lien3']}>Item</a></li>
+                    </ul>
+                </nav>
+                <nav>
+                    <ul>
+                        <li class="liste2"><a href={$tab['lien667']}>Credit</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div><h1 class="centrage2">Les items d'une liste donnée</h1></div>
+            <div class="formulaire1">
+                <form>
+                    <label class="entrezNum" for="numLi"> Entrez le token de la liste pour y acceder</label>
+                    <input type="text" class="numI" name="token" minlength="1" maxlength="15" size="15" placeholder="Entrez un token" >
+                    <input type="submit" class="numI" value="Rechercher">
+                </form>
+            </div>
+END;
+                if ($content !== null) {
+                    $html .=<<<END
+                            <div>
+                                <div class="info">$content</div>
+                            </div>
+END;
+                }
+                $html .=<<<END
+            </body>
+        </html>
+END;
+                break;
             case 667:
                 $html = <<<END
         <!DOCTYPE html>
