@@ -28,7 +28,7 @@ $app->get('/liste/all', function (Request $rq, Response $rs, array $args): Respo
 
 
 
-$app->get('/liste/detail', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/liste/detail/{token}', function (Request $rq, Response $rs, array $args): Response {
 
     $c = new mywishlist\control\ParticipantController($this);
     return $c->listeDetail($rq,$rs,$args);
@@ -56,6 +56,18 @@ $app->get('/credits', function (Request $rq, Response $rs, array $args): Respons
     return $c->displayCredits($rq,$rs,$args);
 }
 )->setName('Credits');
+
+
+
+
+
+
+$app->get('/liste/creer', function (Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->creerListe($rq,$rs,$args);
+}
+)->setName('CréerListe');
 
 
 $app->run();

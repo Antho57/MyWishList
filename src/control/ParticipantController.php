@@ -34,11 +34,11 @@ class ParticipantController{
             ];
 
             $lien1 = $this->c->router->pathFor("AllListe");
-            $lien2 = $this->c->router->pathFor("AllItem");
             $lien3 = $this->c->router->pathFor("Item");
+            $lien4 = $this->c->router->pathFor("CréerListe");
             $lien667 = $this->c->router->pathFor("Credits");
 
-            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien667"=>$lien667];
+            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667];
 
             $v = new VueParticipant([$item]);
 
@@ -67,11 +67,11 @@ class ParticipantController{
             ];
 
             $lien1 = $this->c->router->pathFor("AllListe");
-            $lien2 = $this->c->router->pathFor("AllItem");
             $lien3 = $this->c->router->pathFor("Item");
+            $lien4 = $this->c->router->pathFor("CréerListe");
             $lien667 = $this->c->router->pathFor("Credits");
 
-            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien667"=>$lien667];
+            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667];
 
             $v = new VueParticipant($item);
 
@@ -91,35 +91,24 @@ class ParticipantController{
 
     public function listeDetail(Request $rq, Response $rs, array$args):Response
     {
-
         try {
-
-            $var = $rq->getQueryParams();
-
-            $liste = null;
-            $items = null;
-
             $val = null;
 
-            if (isset($var['token'])) {
-                $liste = liste::query()->where('token', '=', $var['token'])
-                    ->firstOrFail();
-                $items = item::query()->where('liste_id', '=', $liste->no)->get();
-                $val = ([$liste, $items]);
-            }
+            $liste = liste::query()->where('token', '=', $args['token'])
+                ->firstOrFail();
+            $items = item::query()->where('liste_id', '=', $liste->no)->get();
+            $val = ([$liste, $items]);
 
 
             $htmlvars = [
                 'basepath' => $rq->getUri()->getBasePath()
             ];
-
             $lien1 = $this->c->router->pathFor("AllListe");
-            $lien2 = $this->c->router->pathFor("AllItem");
+            $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
             $lien3 = $this->c->router->pathFor("Item");
+            $lien4 = $this->c->router->pathFor("CréerListe");
             $lien667 = $this->c->router->pathFor("Credits");
-
-            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien667"=>$lien667];
-
+            $tab = ["lien1"=>$lien1,"lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667];
             $v = new VueParticipant($val);
 
             $rs->write($v->render(2, $htmlvars, $tab));
@@ -143,11 +132,11 @@ class ParticipantController{
             ];
 
             $lien1 = $this->c->router->pathFor("AllListe");
-            $lien2 = $this->c->router->pathFor("AllItem");
             $lien3 = $this->c->router->pathFor("Item");
+            $lien4 = $this->c->router->pathFor("CréerListe");
             $lien667 = $this->c->router->pathFor("Credits");
 
-            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien667"=>$lien667];
+            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667];
 
             $v = new VueParticipant($val);
 
@@ -161,6 +150,52 @@ class ParticipantController{
         }
     }
 
+    public function creerListe(Request $rq, Response $rs, array$args):Response{
 
+        try{
+
+            $var = $rq->getQueryParams();
+
+            $liste = null;
+
+            $val = null;
+
+            if (isset($var['titre']) && isset($var['description']) && isset($var['expiration'])) {
+                $l = new liste();
+                $l->titre =$var['titre'];
+                $l->description = $var['description'];
+                $l->expiration = $var['expiration'];
+                $code = uniqid();
+                $l->token = $code;
+                $l->timestamps = false;
+                $l->save();
+
+                $liste = liste::query()->where('token', 'like', $code)->first();
+                $val = $liste;
+            }
+
+            $htmlvars = [
+                'basepath'=>$rq->getUri()->getBasePath()
+            ];
+
+            $lien1 = $this->c->router->pathFor("AllListe");
+            $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
+            $lien3 = $this->c->router->pathFor("Item");
+            $lien4 = $this->c->router->pathFor("CréerListe");
+            $lien667 = $this->c->router->pathFor("Credits");
+
+            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667];
+
+            $v = new VueParticipant($val);
+
+            $rs->write( $v->render(4, $htmlvars, $tab));
+            return $rs;
+
+
+        }catch(ModelNotFoundException $e){
+            $rs->write( "Problème avec la création de listes");
+            return $rs;
+        }
+    }
 
 }

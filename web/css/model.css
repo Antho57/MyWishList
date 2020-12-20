@@ -71,6 +71,13 @@ body{
     color: white;
 }
 
+.importante{
+    margin-left: 30px;
+    font-size: 22px;
+    font-family: Dubai;
+    color: #ff0000;
+}
+
 .liste{
     font-family: "Agency FB";
     font-size: 25px;
@@ -172,9 +179,37 @@ nav ul li:hover ul li {
     font-size: 20px;
 }
 
+.infosL{
+    margin-left: 775px;
+    font-family: "Agency FB";
+    font-size: 20px;
+}
+
 .numI{
     margin-left: 100px;
     margin-bottom: 20px;
+}
+
+.annonce{
+    text-align: center;
+    color: Red;
+    font-family: "Agency FB";
+    font-size: 30px;
+    margin-left: 850px;
+    margin-right: 850px;
+    border: 1px solid red;
+}
+
+.infosL2{
+    text-align: center;
+    margin-left: 15px;
+    margin-bottom: 20px;
+}
+
+.buttonCreer{
+    margin-left: 925px;
+    font-family: "Agency FB";
+    font-size: 20px;
 }
 
 input[type=number] {

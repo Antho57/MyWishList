@@ -55,6 +55,9 @@ END;
             <h3 class="titreli"> {$args[0]->no} - {$args[0]->titre}</h3>
             <p class="text">Description : {$args[0]->description}</p>
             <p class="text">Expiration : {$args[0]->expiration}</p>
+            <p class="text">Token unique : {$args[0]->token}</p>
+            <p class="importante"> Il faut bien garder ce lien pour accéder à la liste en mode modification</p>
+            <p class="text">URL :  {$tab['lien2']}{$args[0]->token}</p>
             <br>
 END;
 
@@ -79,6 +82,29 @@ END;
     }
 
 
+    private function creerListe($args, $tab):String {
+        $html = <<<END
+            <h3 class="titreli"> {$args->no} - {$args->titre}</h3>
+            <p class="text">Description : {$args->description}</p>
+            <p class="text">Expiration : {$args->expiration}</p>
+            <p class="text">Token unique : {$args->token}</p>
+            <p class="importante"> Il faut bien garder ce lien pour accéder à la liste en mode modification</p>
+            <p class="text">URL :  {$tab['lien2']}{$args->token}</p>
+            <br>
+END;
+
+        $val =<<<END
+            <section>
+            $html
+            </section>
+END;
+
+        return $val;
+
+    }
+
+
+
     public function render($vars, $lien, $tab){
 
         $html ='';
@@ -101,7 +127,7 @@ END;
                         <li class="liste"><a href="#">Liste</a>
                             <ul>
                                 <li><a href={$tab['lien1']}>All</a></li>
-                                <li><a href={$tab['lien2']}>Detail</a></li>
+                                <li><a href={$tab['lien4']}>Créer</a></li>
                             </ul>
                         </li>
                             <ul>
@@ -126,10 +152,7 @@ END;
                 break;
 
             case 2:
-                $content = null;
-                if( $this->data !== null) {
-                    $content = $this->listeDetail($this->data, $lien, $tab);
-                }
+                $content = $this->listeDetail($this->data, $lien, $tab);
 
                 $html = <<<END
         <!DOCTYPE html>
@@ -146,7 +169,7 @@ END;
                         <li class="liste"><a href="#">Liste</a>
                             <ul>
                             <li><a href={$tab['lien1']}>All</a></li>
-                            <li><a href={$tab['lien2']}>Detail</a></li>
+                            <li><a href={$tab['lien4']}>Créer</a></li>
                             </ul>
                         </li>
                         <li class="liste"><a href={$tab['lien3']}>Item</a></li>
@@ -159,22 +182,9 @@ END;
                 </nav>
             </div>
             <div><h1 class="centrage2">Les items d'une liste donnée</h1></div>
-            <div class="formulaire1">
-                <form>
-                    <label class="entrezNum" for="numLi"> Entrez le token de la liste pour y acceder</label>
-                    <input type="text" class="numI" name="token" minlength="1" maxlength="15" size="15" placeholder="Entrez un token" >
-                    <input type="submit" class="numI" value="Rechercher">
-                </form>
-            </div>
-END;
-                if ($content !== null) {
-                    $html .=<<<END
-                            <div>
-                                <div class="info">$content</div>
-                            </div>
-END;
-                }
-                $html .=<<<END
+                <div>
+                    <div class="info">$content</div>
+                </div>
             </body>
         </html>
 END;
@@ -199,7 +209,7 @@ END;
                         <li class="liste"><a href="#">Liste</a>
                             <ul>
                             <li><a href={$tab['lien1']}>All</a></li>
-                            <li><a href={$tab['lien2']}>Detail</a></li>
+                            <li><a href={$tab['lien4']}>Créer</a></li>
                             </ul>
                         </li>
                         <li class="liste"><a href={$tab['lien3']}>Item</a></li>
@@ -236,7 +246,7 @@ END;
             case 4:
                 $content = null;
                 if( $this->data !== null) {
-                    $content = $this->listeDetail($this->data, $lien, $tab);
+                    $content = $this->creerListe($this->data, $tab);
                 }
 
                 $html = <<<END
@@ -254,7 +264,7 @@ END;
                         <li class="liste"><a href="#">Liste</a>
                             <ul>
                             <li><a href={$tab['lien1']}>All</a></li>
-                            <li><a href={$tab['lien2']}>Detail</a></li>
+                            <li><a href={$tab['lien4']}>Créer</a></li>
                             </ul>
                         </li>
                         <li class="liste"><a href={$tab['lien3']}>Item</a></li>
@@ -266,23 +276,32 @@ END;
                     </ul>
                 </nav>
             </div>
-            <div><h1 class="centrage2">Les items d'une liste donnée</h1></div>
-            <div class="formulaire1">
-                <form>
-                    <label class="entrezNum" for="numLi"> Entrez le token de la liste pour y acceder</label>
-                    <input type="text" class="numI" name="token" minlength="1" maxlength="15" size="15" placeholder="Entrez un token" >
-                    <input type="submit" class="numI" value="Rechercher">
-                </form>
-            </div>
+            <div><h1 class="centrage2">Création de liste</h1></div>
+            
 END;
-                if ($content !== null) {
+                if ($content == null){
                     $html .=<<<END
-                            <div>
-                                <div class="info">$content</div>
+                            <div class="formulaire1">
+                                <form>
+                                        <label class="infosL" for="numLi"> Entrez le titre de votre liste </label>
+                                        <input type="text" class="infosL2" name="titre" minlength="1" maxlength="100" size="15" placeholder="Entrez le titre" ><br>
+                                        <label class="infosL" for="numLi"> Entrez la description de votre liste </label>
+                                        <input type="text" class="infosL2" name="description" minlength="1" maxlength="300" size="15" placeholder="Entrez la description" ><br>
+                                        <label class="infosL" for="numLi"> Entrez la date d'expiration de votre liste </label>
+                                        <input type="date" class="infosL2" name="expiration" min="2020-12-20" > <br>
+                                        <input type="submit" class="buttonCreer" value="Créer">
+                                </form>
                             </div>
 END;
+                }else{
+                    $html .=<<<END
+                        <div>
+                        <p class="annonce">La liste est créée</p>
+                        <div class="info">$content</div>
+                        </div>
+END;
                 }
-                $html .=<<<END
+$html .=<<<END
             </body>
         </html>
 END;
@@ -303,7 +322,7 @@ END;
                         <li class="liste"><a href="#">Liste</a>
                             <ul>
                             <li><a href={$tab['lien1']}>All</a></li>
-                            <li><a href={$tab['lien2']}>Detail</a></li>
+                            <li><a href={$tab['lien4']}>Créer</a></li>
                             </ul>
                         </li>
                         <li class="liste"><a href={$tab['lien3']}>Item</a></li>
