@@ -162,9 +162,9 @@ class ParticipantController{
 
             if (isset($var['titre']) && isset($var['description']) && isset($var['expiration'])) {
                 $l = new liste();
-                $l->titre =$var['titre'];
-                $l->description = $var['description'];
-                $l->expiration = $var['expiration'];
+                $l->titre =strip_tags($var['titre']);
+                $l->description = strip_tags($var['description']);
+                $l->expiration = strip_tags($var['expiration']);
                 $code = uniqid();
                 $l->token = $code;
                 $l->timestamps = false;
