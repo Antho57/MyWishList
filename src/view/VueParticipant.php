@@ -325,7 +325,7 @@ END;
             <p>BRIOT ANTHONY</p>
             <p>SPILMONT FRANCOIS</p>
             <p>SAKER LUCAS</p>
-            <p>PISANT THOMAS</p>
+            <p>PISAN THOMAS</p>
             </div>
             
             </body>
