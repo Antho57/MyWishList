@@ -232,8 +232,9 @@ class ParticipantController{
             $lien4 = $this->c->router->pathFor("CréerListe");
             $lien5 = $this->c->router->pathFor("Connexion");
             $lien667 = $this->c->router->pathFor("Credits");
+            $inscription = $this->c->router->pathFor("Inscription");
 
-            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien5"=>$lien5, "lien667"=>$lien667];
+            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien5"=>$lien5, "lien667"=>$lien667, "inscription"=>$inscription];
 
             $v = new VueParticipant($val);
 
@@ -242,6 +243,54 @@ class ParticipantController{
 
         }catch (ModelNotFoundException $e){
             $rs->write( "Problème avec la connexion");
+            return $rs;
+        }
+    }
+
+    public function inscription(Request $rq, Response $rs, array$args):Response{
+        try {
+            $var = $rq->getQueryParams();
+
+            $val = null;
+
+            if (!empty($var['login']) && !empty($var['password'])) {
+                $login = strip_tags($var['login']);
+                $pass = strip_tags($var['password']);
+
+                $compte = compte::query()->where('login', 'like', $login)->first();
+                if(isset($compte)){
+                    echo "login déjà utilisé";
+                }else{
+                    $c = new compte();
+                    $c->login = strip_tags($var['login']);
+                    $c->password = strip_tags(password_hash($var['password'], PASSWORD_BCRYPT));
+                    $c->timestamps = false;
+                    $c->save();
+                    $val = $compte;
+                }
+
+            }
+
+            $htmlvars = [
+                'basepath'=>$rq->getUri()->getBasePath()
+            ];
+
+            $lien1 = $this->c->router->pathFor("AllListe");
+            $lien3 = $this->c->router->pathFor("Item");
+            $lien4 = $this->c->router->pathFor("CréerListe");
+            $lien5 = $this->c->router->pathFor("Connexion");
+            $lien667 = $this->c->router->pathFor("Credits");
+            $inscription = $this->c->router->pathFor("Inscription");
+
+            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien5"=>$lien5, "lien667"=>$lien667, "inscription"=>$inscription];
+
+            $v = new VueParticipant($val);
+
+            $rs->write( $v->render(6, $htmlvars, $tab));
+            return $rs;
+
+        }catch (ModelNotFoundException $e){
+            $rs->write( "Problème avec l'inscription'");
             return $rs;
         }
     }

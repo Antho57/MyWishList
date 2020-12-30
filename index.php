@@ -58,6 +58,9 @@ $app->get('/credits', function (Request $rq, Response $rs, array $args): Respons
 )->setName('Credits');
 
 
+
+
+
 $app->get('/connexion', function (Request $rq, Response $rs, array $args): Response {
 
     $c = new mywishlist\control\ParticipantController($this);
@@ -66,12 +69,29 @@ $app->get('/connexion', function (Request $rq, Response $rs, array $args): Respo
 )->setName('Connexion');
 
 
+
+
+
+$app->get('/inscription', function (Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->inscription($rq,$rs,$args);
+}
+)->setName('Inscription');
+
+
+
+
+
 $app->get('/liste/creer', function (Request $rq, Response $rs, array $args): Response {
 
     $c = new mywishlist\control\ParticipantController($this);
     return $c->creerListe($rq,$rs,$args);
 }
 )->setName('CréerListe');
+
+
+
 
 
 $app->run();

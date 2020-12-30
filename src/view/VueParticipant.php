@@ -266,7 +266,7 @@ END;
                             <label class="infosL" for="numLi"> Saisissez votre mot de passe </label>
                             <input type="password" class="infosL2" name="password" minlength="5" maxlength="50" size="15" placeholder="Password" ><br>
                             <input type="submit" class="buttonCreer" value="Connexion">
-                            <p>non fonctionnel</p>
+                            <p>Inscrivez-vous <a href="{$tab['inscription']}">ici</a></p> 
                         </form>
                     </div>
 END;
@@ -277,6 +277,40 @@ END;
                     $html .=<<<END
                         <div>
                         <p class="connexionok">Connecté !</p>
+                        <div class="info">$content</div>
+                        </div>
+END;
+                }
+                break;
+            case 6:
+                $content = null;
+                if( $this->data !== null) {
+                    $content = $this->inscription($this->data, $tab);
+                }
+
+                $html .= <<<END
+            <div><h1 class="centrage2">Inscription</h1></div>
+            
+END;
+                if ($content == null){
+                    $html .= <<<END
+                    <div class="formulaire1">
+                        <form>
+                            <label class="infosL" for="numLi"> Saisissez votre login </label>
+                            <input type="text" class="infosL2" name="login" minlength="5" maxlength="20" size="15" placeholder="Login" ><br>
+                            <label class="infosL" for="numLi"> Saisissez votre mot de passe </label>
+                            <input type="password" class="infosL2" name="password" minlength="5" maxlength="50" size="15" placeholder="Password" ><br>
+                            <input type="submit" class="buttonCreer" value="Inscription">
+                        </form>
+                    </div>
+END;
+                }else{
+                    session_start();
+                    $_SESSION['login'] = $_GET['login'];
+                    $_SESSION['password'] = password_hash($_GET['password'], PASSWORD_BCRYPT);
+                    $html .=<<<END
+                        <div>
+                        <p class="connexionok">Incription réussie !</p>
                         <div class="info">$content</div>
                         </div>
 END;
