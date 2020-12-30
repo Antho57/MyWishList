@@ -4,6 +4,7 @@
 namespace mywishlist\control;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use mywishlist\models\compte;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use mywishlist\models\item as item;
@@ -206,7 +207,21 @@ class ParticipantController{
 
     public function connexion(Request $rq, Response $rs, array$args):Response{
         try {
+            $var = $rq->getQueryParams();
+
             $val = null;
+
+            if (!empty($var['login']) && !empty($var['password'])) {
+                $login = strip_tags($var['login']);
+                $pass = strip_tags($var['password']);
+
+                $compte = compte::query()->where('login', 'like', $login)->first();
+                if(isset($compte)){
+                    if (password_verify($pass, $compte['password']))
+                        $val = $compte;
+                }
+
+            }
 
             $htmlvars = [
                 'basepath'=>$rq->getUri()->getBasePath()

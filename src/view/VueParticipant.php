@@ -103,6 +103,20 @@ END;
 
     }
 
+    private function connexion($args, $tab):String{
+        $html = <<<END
+        <p>Vous êtes connecté !</p>
+END;
+
+        $val =<<<END
+            <section>
+            $html
+            </section>
+END;
+
+        return $val;
+    }
+
 
     public function render($vars, $lien, $tab){
 
@@ -234,14 +248,39 @@ $html .=<<<END
 END;
                 break;
             case 5:
-                               $html .= <<<END
+                $content = null;
+                if( $this->data !== null) {
+                    $content = $this->connexion($this->data, $tab);
+                }
+
+                $html .= <<<END
             <div><h1 class="centrage2">Connexion</h1></div>
-                <div>
-                    <div class="info">CONNEXION</div>
-                </div>
-            </body>
-        </html>
+            
 END;
+                if ($content == null){
+                $html .= <<<END
+                    <div class="formulaire1">
+                        <form>
+                            <label class="infosL" for="numLi"> Saisissez votre login </label>
+                            <input type="text" class="infosL2" name="login" minlength="5" maxlength="20" size="15" placeholder="Login" ><br>
+                            <label class="infosL" for="numLi"> Saisissez votre mot de passe </label>
+                            <input type="password" class="infosL2" name="password" minlength="5" maxlength="50" size="15" placeholder="Password" ><br>
+                            <input type="submit" class="buttonCreer" value="Connexion">
+                            <p>non fonctionnel</p>
+                        </form>
+                    </div>
+END;
+                }else{
+                    session_start();
+                    $_SESSION['login'] = $_GET['login'];
+                    $_SESSION['password'] = password_hash($_GET['password'], PASSWORD_BCRYPT);
+                    $html .=<<<END
+                        <div>
+                        <p class="connexionok">Connecté !</p>
+                        <div class="info">$content</div>
+                        </div>
+END;
+                }
                 break;
             case 667:
                 $html .= <<<END

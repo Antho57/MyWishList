@@ -200,6 +200,16 @@ nav ul li:hover ul li {
     border: 1px solid red;
 }
 
+.connexionok{
+    text-align: center;
+    color: Green;
+    font-family: "Agency FB";
+    font-size: 30px;
+    margin-left: 850px;
+    margin-right: 850px;
+    border: 1px solid green;
+}
+
 .infosL2{
     text-align: center;
     margin-left: 15px;
