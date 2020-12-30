@@ -280,6 +280,7 @@ END;
             
 END;
                 if ($content == null){
+                    $date = date('Y-m-d');
                     $html .=<<<END
                             <div class="formulaire1">
                                 <form>
@@ -288,7 +289,7 @@ END;
                                         <label class="infosL" for="numLi"> Entrez la description de votre liste </label>
                                         <input type="text" class="infosL2" name="description" minlength="1" maxlength="300" size="15" placeholder="Entrez la description" ><br>
                                         <label class="infosL" for="numLi"> Entrez la date d'expiration de votre liste </label>
-                                        <input type="date" class="infosL2" name="expiration" min="2020-12-20" > <br>
+                                        <input type="date" class="infosL2" name="expiration" min=$date <br>
                                         <input type="submit" class="buttonCreer" value="Créer">
                                 </form>
                             </div>
