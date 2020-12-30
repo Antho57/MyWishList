@@ -160,7 +160,7 @@ class ParticipantController{
 
             $val = null;
 
-            if (isset($var['titre']) && isset($var['description']) && isset($var['expiration'])) {
+            if (!empty($var['titre']) && !empty($var['description']) && !empty($var['expiration'])) {
                 $l = new liste();
                 $l->titre =strip_tags($var['titre']);
                 $l->description = strip_tags($var['description']);
