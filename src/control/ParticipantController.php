@@ -266,7 +266,7 @@ class ParticipantController{
                     $c->password = strip_tags(password_hash($var['password'], PASSWORD_BCRYPT));
                     $c->timestamps = false;
                     $c->save();
-                    $val = $compte;
+                    $val = $c;
                 }
 
             }

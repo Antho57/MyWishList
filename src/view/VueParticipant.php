@@ -117,6 +117,20 @@ END;
         return $val;
     }
 
+    private function inscription($args, $tab):String{
+        $html = <<<END
+        <p>Vous êtes inscrit !</p>
+END;
+
+        $val =<<<END
+            <section>
+            $html
+            </section>
+END;
+
+        return $val;
+    }
+
 
     public function render($vars, $lien, $tab){
 
@@ -264,16 +278,16 @@ END;
                             <label class="infosL" for="numLi"> Saisissez votre login </label>
                             <input type="text" class="infosL2" name="login" minlength="5" maxlength="20" size="15" placeholder="Login" ><br>
                             <label class="infosL" for="numLi"> Saisissez votre mot de passe </label>
-                            <input type="password" class="infosL2" name="password" minlength="5" maxlength="50" size="15" placeholder="Password" ><br>
+                            <input type="password" class="infosL2" name="password" minlength="5" maxlength="60" size="15" placeholder="Password" ><br>
                             <input type="submit" class="buttonCreer" value="Connexion">
                             <p class="infosL">Inscrivez-vous <a class="ici" href="{$tab['inscription']}">ici</a></p> 
                         </form>
                     </div>
 END;
                 }else{
-                    session_start();
-                    $_SESSION['login'] = $_GET['login'];
-                    $_SESSION['password'] = password_hash($_GET['password'], PASSWORD_BCRYPT);
+                    //session_start();
+                    //$_SESSION['login'] = $_GET['login'];
+                    //$_SESSION['password'] = password_hash($_GET['password'], PASSWORD_BCRYPT);
                     $html .=<<<END
                         <div>
                         <p class="connexionok">Connecté !</p>
@@ -299,15 +313,15 @@ END;
                             <label class="infosL" for="numLi"> Saisissez votre login </label>
                             <input type="text" class="infosL2" name="login" minlength="5" maxlength="20" size="15" placeholder="Login" ><br>
                             <label class="infosL" for="numLi"> Saisissez votre mot de passe </label>
-                            <input type="password" class="infosL2" name="password" minlength="5" maxlength="50" size="15" placeholder="Password" ><br>
+                            <input type="password" class="infosL2" name="password" minlength="5" maxlength="60" size="15" placeholder="Password" ><br>
                             <input type="submit" class="buttonCreer" value="Inscription">
                         </form>
                     </div>
 END;
                 }else{
-                    session_start();
-                    $_SESSION['login'] = $_GET['login'];
-                    $_SESSION['password'] = password_hash($_GET['password'], PASSWORD_BCRYPT);
+                    //session_start();
+                    //$_SESSION['login'] = $_GET['login'];
+                    //$_SESSION['password'] = password_hash($_GET['password'], PASSWORD_BCRYPT);
                     $html .=<<<END
                         <div>
                         <p class="connexionok">Incription réussie !</p>
