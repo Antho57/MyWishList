@@ -148,7 +148,7 @@ END;
                     <ul>
                         <li class="liste2"><a href={$tab['lien5']}>Connexion</a></li>
                             <ul>
-                                <li class="liste"><a href={$tab['lien667']}>Credit</a>
+                                <li class="liste"><a href={$tab['lien667']}>Credits</a>
                             </ul>
                         </li>
                     </ul>
@@ -266,7 +266,7 @@ END;
                             <label class="infosL" for="numLi"> Saisissez votre mot de passe </label>
                             <input type="password" class="infosL2" name="password" minlength="5" maxlength="50" size="15" placeholder="Password" ><br>
                             <input type="submit" class="buttonCreer" value="Connexion">
-                            <p>Inscrivez-vous <a href="{$tab['inscription']}">ici</a></p> 
+                            <p class="infosL">Inscrivez-vous <a class="ici" href="{$tab['inscription']}">ici</a></p> 
                         </form>
                     </div>
 END;
