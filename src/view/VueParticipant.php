@@ -107,12 +107,7 @@ END;
 
     public function render($vars, $lien, $tab){
 
-        $html ='';
-
-        switch ($vars){
-            case 1:
-                $content = $this->allListe($this->data);
-                $html = <<<END
+        $html = <<<END
         <!DOCTYPE html>
         <html>
             <head> 
@@ -142,6 +137,12 @@ END;
                     </ul>
                 </nav>
             </div>
+END;
+
+        switch ($vars){
+            case 1:
+                $content = $this->allListe($this->data);
+                $html .= <<<END
                     <div><h1 class="centrage2">Toutes les listes</h1></div>
                     <div>
                         <div class="info">$content</div>
@@ -154,33 +155,7 @@ END;
             case 2:
                 $content = $this->listeDetail($this->data, $lien, $tab);
 
-                $html = <<<END
-        <!DOCTYPE html>
-        <html>
-            <head> 
-                <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
-                <title> MyWishList </title>
-            </head>
-            <body>
-            <div id="header">
-            <div><img src="{$lien['basepath']}/web/img/mwl2.png" class="centrage"></div>
-                <nav>
-                    <ul>
-                        <li class="liste"><a href="#">Liste</a>
-                            <ul>
-                            <li><a href={$tab['lien1']}>All</a></li>
-                            <li><a href={$tab['lien4']}>Créer</a></li>
-                            </ul>
-                        </li>
-                        <li class="liste"><a href={$tab['lien3']}>Item</a></li>
-                    </ul>
-                </nav>
-                <nav>
-                    <ul>
-                        <li class="liste2"><a href={$tab['lien667']}>Credit</a></li>
-                    </ul>
-                </nav>
-            </div>
+                $html .= <<<END
             <div><h1 class="centrage2">Les items d'une liste donnée</h1></div>
                 <div>
                     <div class="info">$content</div>
@@ -194,33 +169,7 @@ END;
                 if( $this->data[0] !== null) {
                     $content = $this->unItemHtml($this->data[0], $lien);
                 }
-                $html = <<<END
-        <!DOCTYPE html>
-        <html>
-            <head> 
-                <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
-                <title> MyWishList </title>
-            </head>
-            <body>
-            <div id="header">
-            <div><img src="{$lien['basepath']}/web/img/mwl2.png" class="centrage"></div>
-                <nav>
-                    <ul>
-                        <li class="liste"><a href="#">Liste</a>
-                            <ul>
-                            <li><a href={$tab['lien1']}>All</a></li>
-                            <li><a href={$tab['lien4']}>Créer</a></li>
-                            </ul>
-                        </li>
-                        <li class="liste"><a href={$tab['lien3']}>Item</a></li>
-                    </ul>
-                </nav>
-                <nav>
-                    <ul>
-                        <li class="liste2"><a href={$tab['lien667']}>Credit</a></li>
-                    </ul>
-                </nav>
-            </div>
+                $html .= <<<END
             <div><h1 class="centrage2">Description d'un item</h1></div>
             <div class="formulaire1">
                 <form>
@@ -249,33 +198,7 @@ END;
                     $content = $this->creerListe($this->data, $tab);
                 }
 
-                $html = <<<END
-        <!DOCTYPE html>
-        <html>
-            <head> 
-                <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
-                <title> MyWishList </title>
-            </head>
-            <body>
-            <div id="header">
-            <div><img src="{$lien['basepath']}/web/img/mwl2.png" class="centrage"></div>
-                <nav>
-                    <ul>
-                        <li class="liste"><a href="#">Liste</a>
-                            <ul>
-                            <li><a href={$tab['lien1']}>All</a></li>
-                            <li><a href={$tab['lien4']}>Créer</a></li>
-                            </ul>
-                        </li>
-                        <li class="liste"><a href={$tab['lien3']}>Item</a></li>
-                    </ul>
-                </nav>
-                <nav>
-                    <ul>
-                        <li class="liste2"><a href={$tab['lien667']}>Credit</a></li>
-                    </ul>
-                </nav>
-            </div>
+                $html .= <<<END
             <div><h1 class="centrage2">Création de liste</h1></div>
             
 END;
@@ -308,33 +231,7 @@ $html .=<<<END
 END;
                 break;
             case 667:
-                $html = <<<END
-        <!DOCTYPE html>
-        <html>
-            <head> 
-                <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
-                <title> MyWishList </title>
-            </head>
-            <body>
-            <div id="header">
-            <div><img src="{$lien['basepath']}/web/img/mwl2.png" class="centrage"></div>
-                <nav>
-                    <ul>
-                        <li class="liste"><a href="#">Liste</a>
-                            <ul>
-                            <li><a href={$tab['lien1']}>All</a></li>
-                            <li><a href={$tab['lien4']}>Créer</a></li>
-                            </ul>
-                        </li>
-                        <li class="liste"><a href={$tab['lien3']}>Item</a></li>
-                    </ul>
-                </nav>
-                <nav>
-                    <ul>
-                        <li class="liste2"><a href={$tab['lien667']}>Credit</a></li>
-                    </ul>
-                </nav>
-            </div>
+                $html .= <<<END
             <div><h1 class="centrage2">CREDITS DU SITE</h1></div><br><br>
             <div class="credit">
             <p>LOGO : BRANCATI SILVIO</p>
