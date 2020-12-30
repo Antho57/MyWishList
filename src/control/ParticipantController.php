@@ -36,9 +36,10 @@ class ParticipantController{
             $lien1 = $this->c->router->pathFor("AllListe");
             $lien3 = $this->c->router->pathFor("Item");
             $lien4 = $this->c->router->pathFor("CréerListe");
+            $lien5 = $this->c->router->pathFor("Connexion");
             $lien667 = $this->c->router->pathFor("Credits");
 
-            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667];
+            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien5"=>$lien5, "lien667"=>$lien667];
 
             $v = new VueParticipant([$item]);
 
@@ -69,9 +70,10 @@ class ParticipantController{
             $lien1 = $this->c->router->pathFor("AllListe");
             $lien3 = $this->c->router->pathFor("Item");
             $lien4 = $this->c->router->pathFor("CréerListe");
+            $lien5 = $this->c->router->pathFor("Connexion");
             $lien667 = $this->c->router->pathFor("Credits");
 
-            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667];
+            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien5"=>$lien5, "lien667"=>$lien667];
 
             $v = new VueParticipant($item);
 
@@ -107,8 +109,10 @@ class ParticipantController{
             $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
             $lien3 = $this->c->router->pathFor("Item");
             $lien4 = $this->c->router->pathFor("CréerListe");
+            $lien5 = $this->c->router->pathFor("Connexion");
             $lien667 = $this->c->router->pathFor("Credits");
-            $tab = ["lien1"=>$lien1,"lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667];
+
+            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien5"=>$lien5, "lien667"=>$lien667];
             $v = new VueParticipant($val);
 
             $rs->write($v->render(2, $htmlvars, $tab));
@@ -134,9 +138,10 @@ class ParticipantController{
             $lien1 = $this->c->router->pathFor("AllListe");
             $lien3 = $this->c->router->pathFor("Item");
             $lien4 = $this->c->router->pathFor("CréerListe");
+            $lien5 = $this->c->router->pathFor("Connexion");
             $lien667 = $this->c->router->pathFor("Credits");
 
-            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667];
+            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien5"=>$lien5, "lien667"=>$lien667];
 
             $v = new VueParticipant($val);
 
@@ -182,9 +187,10 @@ class ParticipantController{
             $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
             $lien3 = $this->c->router->pathFor("Item");
             $lien4 = $this->c->router->pathFor("CréerListe");
+            $lien5 = $this->c->router->pathFor("Connexion");
             $lien667 = $this->c->router->pathFor("Credits");
 
-            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667];
+            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien5"=>$lien5, "lien667"=>$lien667];
 
             $v = new VueParticipant($val);
 
@@ -194,6 +200,33 @@ class ParticipantController{
 
         }catch(ModelNotFoundException $e){
             $rs->write( "Problème avec la création de listes");
+            return $rs;
+        }
+    }
+
+    public function connexion(Request $rq, Response $rs, array$args):Response{
+        try {
+            $val = null;
+
+            $htmlvars = [
+                'basepath'=>$rq->getUri()->getBasePath()
+            ];
+
+            $lien1 = $this->c->router->pathFor("AllListe");
+            $lien3 = $this->c->router->pathFor("Item");
+            $lien4 = $this->c->router->pathFor("CréerListe");
+            $lien5 = $this->c->router->pathFor("Connexion");
+            $lien667 = $this->c->router->pathFor("Credits");
+
+            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien5"=>$lien5, "lien667"=>$lien667];
+
+            $v = new VueParticipant($val);
+
+            $rs->write( $v->render(5, $htmlvars, $tab));
+            return $rs;
+
+        }catch (ModelNotFoundException $e){
+            $rs->write( "Problème avec la connexion");
             return $rs;
         }
     }

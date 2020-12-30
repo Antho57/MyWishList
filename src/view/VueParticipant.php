@@ -104,7 +104,6 @@ END;
     }
 
 
-
     public function render($vars, $lien, $tab){
 
         $html = <<<END
@@ -133,7 +132,11 @@ END;
                 </nav>
                 <nav>
                     <ul>
-                        <li class="liste2"><a href={$tab['lien667']}>Credit</a></li>
+                        <li class="liste2"><a href={$tab['lien5']}>Connexion</a></li>
+                            <ul>
+                                <li class="liste"><a href={$tab['lien667']}>Credit</a>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -226,6 +229,16 @@ END;
 END;
                 }
 $html .=<<<END
+            </body>
+        </html>
+END;
+                break;
+            case 5:
+                               $html .= <<<END
+            <div><h1 class="centrage2">Connexion</h1></div>
+                <div>
+                    <div class="info">CONNEXION</div>
+                </div>
             </body>
         </html>
 END;
