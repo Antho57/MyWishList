@@ -114,7 +114,11 @@ END;
             </head>
             <body>
             <div id="header">
-                <div><a href={$tab['accueil']}><img src="{$lien['basepath']}/web/img/mwl2.png" class="centrage"></a></div>
+                <div>
+                    <a href={$tab['accueil']}>
+                        <img src="{$lien['basepath']}/web/img/mwl2.png" class="centrage"/>
+                    </a>
+                </div>
                 <nav>
                     <ul>
                         <li class="liste"><a href="#">Liste</a>
@@ -364,5 +368,5 @@ END;
         }
 
         return $html;
-}
+    }
 }
