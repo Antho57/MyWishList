@@ -102,34 +102,6 @@ END;
 
     }
 
-    private function connexion($args, $tab):String{
-        $html = <<<END
-        <p>Vous êtes connecté !</p>
-END;
-
-        $val =<<<END
-            <section>
-            $html
-            </section>
-END;
-
-        return $val;
-    }
-
-    private function inscription($args, $tab):String{
-        $html = <<<END
-        <p>Vous êtes inscrit !</p>
-END;
-
-        $val =<<<END
-            <section>
-            $html
-            </section>
-END;
-
-        return $val;
-    }
-
 
     public function render($vars, $lien, $tab){
 
@@ -142,7 +114,7 @@ END;
             </head>
             <body>
             <div id="header">
-                <div><img src="{$lien['basepath']}/web/img/mwl2.png" class="centrage"></div>
+                <div><a href={$tab['accueil']}><img src="{$lien['basepath']}/web/img/mwl2.png" class="centrage"></a></div>
                 <nav>
                     <ul>
                         <li class="liste"><a href="#">Liste</a>
@@ -171,15 +143,13 @@ END;
                 </nav>
             </div>
 END;
-        }else{
+        }else if ($_SESSION['active'] === true){
             $html .= <<<END
                 <nav>
-                    <ul>
-                            <ul>
-                                <li class="liste3"><a href={$tab['lien667']}>Credits</a>
-                            </ul>
-                        </li>
-                    </ul>
+                        <ul>
+                            <li class="liste3"><a href={$tab['lien667']}>Credits</a>
+                        </ul>
+                    </li>
                 </nav>
             </div>
 END;
@@ -280,7 +250,11 @@ END;
             case 5:
                 $content = null;
                 if( $this->data !== null) {
-                    $content = $this->connexion($this->data, $tab);
+                    $content =<<<END
+                        <section>
+                        $html
+                        </section>
+END;
                 }
 
                 $html .= <<<END
@@ -313,7 +287,11 @@ END;
             case 6:
                 $content = null;
                 if( $this->data !== null) {
-                    $content = $this->inscription($this->data, $tab);
+                    $content =<<<END
+                        <section>
+                        $html
+                        </section>
+END;
                 }
 
                 $html .= <<<END
@@ -344,6 +322,29 @@ END;
 END;
                 }
                 break;
+            case 7:
+                $content = null;
+                if( $this->data !== null) {
+                    $content =<<<END
+                        <section>
+                        $html
+                        </section>
+END;
+                }
+
+                $html .= <<<END
+            <div><h1 class="centrage2">Accueil</h1></div>
+            
+END;
+                if ($content == null){
+                    $html .= <<<END
+                    <div class="formulaire1">
+                        <p class="text">Voilà l'accueil !</p>
+                    </div>
+END;
+                }
+                break;
+
             case 667:
                 $html .= <<<END
             <div><h1 class="centrage2">CREDITS DU SITE</h1></div><br><br>

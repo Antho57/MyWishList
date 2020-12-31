@@ -10,6 +10,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use mywishlist\models\item as item;
 use mywishlist\models\liste as liste;
 use mywishlist\view\VueParticipant as vueParticipant;
+use function Sodium\add;
 
 session_start();
 class ParticipantController{
@@ -36,12 +37,17 @@ class ParticipantController{
             ];
 
             $lien1 = $this->c->router->pathFor("AllListe");
+            $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
             $lien3 = $this->c->router->pathFor("Item");
             $lien4 = $this->c->router->pathFor("CréerListe");
-            $lien5 = $this->c->router->pathFor("Connexion");
             $lien667 = $this->c->router->pathFor("Credits");
-
-            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien5"=>$lien5, "lien667"=>$lien667];
+            $inscription = $this->c->router->pathFor("Inscription");
+            $accueil = $this->c->router->pathFor("Accueil");
+            $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
+            if ($_SESSION['active'] === false){
+                $lien5 = $this->c->router->pathFor("Connexion");
+                $tab["lien5"] = $lien5;
+            }
 
             $v = new VueParticipant([$item]);
 
@@ -70,12 +76,17 @@ class ParticipantController{
             ];
 
             $lien1 = $this->c->router->pathFor("AllListe");
+            $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
             $lien3 = $this->c->router->pathFor("Item");
             $lien4 = $this->c->router->pathFor("CréerListe");
-            $lien5 = $this->c->router->pathFor("Connexion");
             $lien667 = $this->c->router->pathFor("Credits");
-
-            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien5"=>$lien5, "lien667"=>$lien667];
+            $inscription = $this->c->router->pathFor("Inscription");
+            $accueil = $this->c->router->pathFor("Accueil");
+            $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
+            if ($_SESSION['active'] === false){
+                $lien5 = $this->c->router->pathFor("Connexion");
+                $tab["lien5"] = $lien5;
+            }
 
             $v = new VueParticipant($item);
 
@@ -107,14 +118,20 @@ class ParticipantController{
             $htmlvars = [
                 'basepath' => $rq->getUri()->getBasePath()
             ];
+
             $lien1 = $this->c->router->pathFor("AllListe");
             $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
             $lien3 = $this->c->router->pathFor("Item");
             $lien4 = $this->c->router->pathFor("CréerListe");
-            $lien5 = $this->c->router->pathFor("Connexion");
             $lien667 = $this->c->router->pathFor("Credits");
+            $inscription = $this->c->router->pathFor("Inscription");
+            $accueil = $this->c->router->pathFor("Accueil");
+            $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
+            if ($_SESSION['active'] === false){
+                $lien5 = $this->c->router->pathFor("Connexion");
+                $tab["lien5"] = $lien5;
+            }
 
-            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien5"=>$lien5, "lien667"=>$lien667];
             $v = new VueParticipant($val);
 
             $rs->write($v->render(2, $htmlvars, $tab));
@@ -138,12 +155,17 @@ class ParticipantController{
             ];
 
             $lien1 = $this->c->router->pathFor("AllListe");
+            $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
             $lien3 = $this->c->router->pathFor("Item");
             $lien4 = $this->c->router->pathFor("CréerListe");
-            $lien5 = $this->c->router->pathFor("Connexion");
             $lien667 = $this->c->router->pathFor("Credits");
-
-            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien5"=>$lien5, "lien667"=>$lien667];
+            $inscription = $this->c->router->pathFor("Inscription");
+            $accueil = $this->c->router->pathFor("Accueil");
+            $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
+            if ($_SESSION['active'] === false){
+                $lien5 = $this->c->router->pathFor("Connexion");
+                $tab["lien5"] = $lien5;
+            }
 
             $v = new VueParticipant($val);
 
@@ -189,10 +211,14 @@ class ParticipantController{
             $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
             $lien3 = $this->c->router->pathFor("Item");
             $lien4 = $this->c->router->pathFor("CréerListe");
-            $lien5 = $this->c->router->pathFor("Connexion");
             $lien667 = $this->c->router->pathFor("Credits");
-
-            $tab = ["lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien5"=>$lien5, "lien667"=>$lien667];
+            $inscription = $this->c->router->pathFor("Inscription");
+            $accueil = $this->c->router->pathFor("Accueil");
+            $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
+            if ($_SESSION['active'] === false){
+                $lien5 = $this->c->router->pathFor("Connexion");
+                $tab["lien5"] = $lien5;
+            }
 
             $v = new VueParticipant($val);
 
@@ -214,13 +240,14 @@ class ParticipantController{
             $val = null;
 
             if (!empty($var['login']) && !empty($var['password']) && $_SESSION['active'] === false) {
-                $_SESSION['active'] = true;
-                $_SESSION['login'] = strip_tags($var['login']);
-
-                $compte = compte::query()->where('login', 'like', $_SESSION['login'])->first();
+                $compte = compte::query()->where('login', 'like', strip_tags($var['login']))->first();
                 if(isset($compte)){
                     if (password_verify(strip_tags($var['password']), $compte['password'])){
                         $val = $compte;
+                        unset($_SESSION);
+                        $_SESSION = null;
+                        $_SESSION['active'] = true;
+                        $_SESSION['login'] = strip_tags($var['login']);
                     }else{
                         session_destroy();
                     }
@@ -236,13 +263,18 @@ class ParticipantController{
             ];
 
             $lien1 = $this->c->router->pathFor("AllListe");
+            $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
             $lien3 = $this->c->router->pathFor("Item");
             $lien4 = $this->c->router->pathFor("CréerListe");
-            $lien5 = $this->c->router->pathFor("Connexion");
             $lien667 = $this->c->router->pathFor("Credits");
             $inscription = $this->c->router->pathFor("Inscription");
+            $accueil = $this->c->router->pathFor("Accueil");
+            $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
+            if ($_SESSION['active'] === false){
+                $lien5 = $this->c->router->pathFor("Connexion");
+                $tab["lien5"] = $lien5;
+            }
 
-            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien5"=>$lien5, "lien667"=>$lien667, "inscription"=>$inscription];
 
             $v = new VueParticipant($val);
 
@@ -261,13 +293,12 @@ class ParticipantController{
 
             $val = null;
 
-            if (!empty($var['login']) && !empty($var['password'])) {
-                $login = strip_tags($var['login']);
-                $pass = strip_tags($var['password']);
+            if (!empty($var['login']) && !empty($var['password']) && $_SESSION['active'] === false) {
 
-                $compte = compte::query()->where('login', 'like', $login)->first();
+                $compte = compte::query()->where('login', 'like', strip_tags($var['login']))->first();
                 if(isset($compte)){
                     echo "login déjà utilisé";
+                    session_destroy();
                 }else{
                     $c = new compte();
                     $c->login = strip_tags($var['login']);
@@ -275,8 +306,11 @@ class ParticipantController{
                     $c->timestamps = false;
                     $c->save();
                     $val = $c;
+                    $_SESSION['active'] = true;
+                    $_SESSION['login'] = strip_tags($var['login']);
                 }
-
+            }else{
+                session_destroy();
             }
 
             $htmlvars = [
@@ -284,13 +318,17 @@ class ParticipantController{
             ];
 
             $lien1 = $this->c->router->pathFor("AllListe");
+            $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
             $lien3 = $this->c->router->pathFor("Item");
             $lien4 = $this->c->router->pathFor("CréerListe");
-            $lien5 = $this->c->router->pathFor("Connexion");
             $lien667 = $this->c->router->pathFor("Credits");
             $inscription = $this->c->router->pathFor("Inscription");
-
-            $tab = ["lien1"=>$lien1, "lien3"=>$lien3, "lien4"=>$lien4, "lien5"=>$lien5, "lien667"=>$lien667, "inscription"=>$inscription];
+            $accueil = $this->c->router->pathFor("Accueil");
+            $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
+            if ($_SESSION['active'] === false){
+                $lien5 = $this->c->router->pathFor("Connexion");
+                $tab["lien5"] = $lien5;
+            }
 
             $v = new VueParticipant($val);
 
@@ -299,6 +337,40 @@ class ParticipantController{
 
         }catch (ModelNotFoundException $e){
             $rs->write( "Problème avec l'inscription'");
+            return $rs;
+        }
+    }
+
+    public function accueil(Request $rq, Response $rs, array$args):Response{
+        try {
+
+            $val = null;
+
+            $htmlvars = [
+                'basepath'=>$rq->getUri()->getBasePath()
+            ];
+
+            $lien1 = $this->c->router->pathFor("AllListe");
+            $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
+            $lien3 = $this->c->router->pathFor("Item");
+            $lien4 = $this->c->router->pathFor("CréerListe");
+            $lien667 = $this->c->router->pathFor("Credits");
+            $inscription = $this->c->router->pathFor("Inscription");
+            $accueil = $this->c->router->pathFor("Accueil");
+            $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
+            if ($_SESSION['active'] === false){
+                $lien5 = $this->c->router->pathFor("Connexion");
+                $tab["lien5"] = $lien5;
+            }
+
+
+            $v = new VueParticipant($val);
+
+            $rs->write( $v->render(7, $htmlvars, $tab));
+            return $rs;
+
+        }catch (ModelNotFoundException $e){
+            $rs->write( "Problème avec l'accueil'");
             return $rs;
         }
     }
