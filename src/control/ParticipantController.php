@@ -11,12 +11,13 @@ use mywishlist\models\item as item;
 use mywishlist\models\liste as liste;
 use mywishlist\view\VueParticipant as vueParticipant;
 
+session_start();
 class ParticipantController{
-
     private $c = null;
 
     public function __construct(\Slim\Container $c){
         $this->c = $c;
+        $_SESSION['active'] = false;
     }
 
     public function displayItem(Request $rq, Response $rs, array$args):Response{
@@ -207,20 +208,27 @@ class ParticipantController{
 
     public function connexion(Request $rq, Response $rs, array$args):Response{
         try {
+
             $var = $rq->getQueryParams();
 
             $val = null;
 
-            if (!empty($var['login']) && !empty($var['password'])) {
-                $login = strip_tags($var['login']);
-                $pass = strip_tags($var['password']);
+            if (!empty($var['login']) && !empty($var['password']) && $_SESSION['active'] === false) {
+                $_SESSION['active'] = true;
+                $_SESSION['login'] = strip_tags($var['login']);
 
-                $compte = compte::query()->where('login', 'like', $login)->first();
+                $compte = compte::query()->where('login', 'like', $_SESSION['login'])->first();
                 if(isset($compte)){
-                    if (password_verify($pass, $compte['password']))
+                    if (password_verify(strip_tags($var['password']), $compte['password'])){
                         $val = $compte;
+                    }else{
+                        session_destroy();
+                    }
+                }else{
+                    session_destroy();
                 }
-
+            }else{
+                session_destroy();
             }
 
             $htmlvars = [

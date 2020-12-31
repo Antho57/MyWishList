@@ -3,7 +3,6 @@
 
 namespace mywishlist\view;
 
-
 class VueParticipant{
 
     private $data;
@@ -158,6 +157,9 @@ END;
                         </li>
                     </ul>
                 </nav>
+END;
+        if ($_SESSION['active'] === false){
+            $html .= <<<END
                 <nav>
                     <ul>
                         <li class="liste2"><a href={$tab['lien5']}>Connexion</a></li>
@@ -169,6 +171,20 @@ END;
                 </nav>
             </div>
 END;
+        }else{
+            $html .= <<<END
+                <nav>
+                    <ul>
+                            <ul>
+                                <li class="liste3"><a href={$tab['lien667']}>Credits</a>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+END;
+
+        }
 
         switch ($vars){
             case 1:
@@ -285,9 +301,7 @@ END;
                     </div>
 END;
                 }else{
-                    //session_start();
-                    //$_SESSION['login'] = $_GET['login'];
-                    //$_SESSION['password'] = password_hash($_GET['password'], PASSWORD_BCRYPT);
+                    $_SESSION['password'] = password_hash($_GET['password'], PASSWORD_BCRYPT);
                     $html .=<<<END
                         <div>
                         <p class="connexionok">Connecté !</p>
