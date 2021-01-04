@@ -68,7 +68,12 @@ $app->get('/connexion', function (Request $rq, Response $rs, array $args): Respo
 }
 )->setName('Connexion');
 
+$app->post('/connexion', function (Request $rq, Response $rs, array $args): Response {
 
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->connexion($rq,$rs,$args);
+}
+)->setName('ConnexionPost');
 
 
 
@@ -79,7 +84,12 @@ $app->get('/inscription', function (Request $rq, Response $rs, array $args): Res
 }
 )->setName('Inscription');
 
+$app->post('/inscription', function (Request $rq, Response $rs, array $args): Response {
 
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->inscription($rq,$rs,$args);
+}
+)->setName('InscriptionPost');
 
 
 
@@ -96,7 +106,6 @@ $app->get('/', function (Request $rq, Response $rs, array $args): Response {
     return $c->accueil($rq,$rs,$args);
 }
 )->setName('Accueil');
-
 
 
 

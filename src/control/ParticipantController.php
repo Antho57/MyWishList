@@ -4,6 +4,7 @@
 namespace mywishlist\control;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use mywishlist\Connexion\Authentication;
 use mywishlist\models\compte;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -12,7 +13,6 @@ use mywishlist\models\liste as liste;
 use mywishlist\view\VueParticipant as vueParticipant;
 use function Sodium\add;
 
-session_start();
 class ParticipantController{
     private $c = null;
 
@@ -24,6 +24,7 @@ class ParticipantController{
     public function displayItem(Request $rq, Response $rs, array$args):Response{
 
         try{
+            session_start();
 
             $var = $rq->getQueryParams();
             $item = null;
@@ -44,7 +45,7 @@ class ParticipantController{
             $inscription = $this->c->router->pathFor("Inscription");
             $accueil = $this->c->router->pathFor("Accueil");
             $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
-            if ($_SESSION['active'] === false){
+            if (!isset($_SESSION['active'])){
                 $lien5 = $this->c->router->pathFor("Connexion");
                 $tab["lien5"] = $lien5;
             }
@@ -68,6 +69,7 @@ class ParticipantController{
     public function allListe(Request $rq, Response $rs, array$args):Response{
 
         try{
+            session_start();
 
             $item = liste::get();
 
@@ -83,7 +85,7 @@ class ParticipantController{
             $inscription = $this->c->router->pathFor("Inscription");
             $accueil = $this->c->router->pathFor("Accueil");
             $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
-            if ($_SESSION['active'] === false){
+            if (!isset($_SESSION['active'])){
                 $lien5 = $this->c->router->pathFor("Connexion");
                 $tab["lien5"] = $lien5;
             }
@@ -107,6 +109,8 @@ class ParticipantController{
     public function listeDetail(Request $rq, Response $rs, array$args):Response
     {
         try {
+            session_start();
+
             $val = null;
 
             $liste = liste::query()->where('token', '=', $args['token'])
@@ -127,7 +131,7 @@ class ParticipantController{
             $inscription = $this->c->router->pathFor("Inscription");
             $accueil = $this->c->router->pathFor("Accueil");
             $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
-            if ($_SESSION['active'] === false){
+            if (!isset($_SESSION['active'])){
                 $lien5 = $this->c->router->pathFor("Connexion");
                 $tab["lien5"] = $lien5;
             }
@@ -147,6 +151,7 @@ class ParticipantController{
     public function displayCredits(Request $rq, Response $rs, array$args):Response{
 
         try{
+            session_start();
 
             $val = null;
 
@@ -162,7 +167,7 @@ class ParticipantController{
             $inscription = $this->c->router->pathFor("Inscription");
             $accueil = $this->c->router->pathFor("Accueil");
             $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
-            if ($_SESSION['active'] === false){
+            if (!isset($_SESSION['active'])){
                 $lien5 = $this->c->router->pathFor("Connexion");
                 $tab["lien5"] = $lien5;
             }
@@ -182,6 +187,7 @@ class ParticipantController{
     public function creerListe(Request $rq, Response $rs, array$args):Response{
 
         try{
+            session_start();
 
             $var = $rq->getQueryParams();
 
@@ -215,7 +221,7 @@ class ParticipantController{
             $inscription = $this->c->router->pathFor("Inscription");
             $accueil = $this->c->router->pathFor("Accueil");
             $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
-            if ($_SESSION['active'] === false){
+            if (!isset($_SESSION['active'])){
                 $lien5 = $this->c->router->pathFor("Connexion");
                 $tab["lien5"] = $lien5;
             }
@@ -235,27 +241,11 @@ class ParticipantController{
     public function connexion(Request $rq, Response $rs, array$args):Response{
         try {
 
-            $var = $rq->getQueryParams();
-
             $val = null;
 
-            if (!empty($var['login']) && !empty($var['password']) && $_SESSION['active'] === false) {
-                $compte = compte::query()->where('login', 'like', strip_tags($var['login']))->first();
-                if(isset($compte)){
-                    if (password_verify(strip_tags($var['password']), $compte['password'])){
-                        $val = $compte;
-                        unset($_SESSION);
-                        $_SESSION = null;
-                        $_SESSION['active'] = true;
-                        $_SESSION['login'] = strip_tags($var['login']);
-                    }else{
-                        session_destroy();
-                    }
-                }else{
-                    session_destroy();
-                }
-            }else{
-                session_destroy();
+            if (!empty($_POST['login']) && !empty($_POST['password']) && $_SESSION['active'] === false) {
+                Authentication::authenticate($_POST['login'], $_POST['password']);
+                $val = compte::query()->where('login', 'like', strip_tags($_POST['login']))->first();
             }
 
             $htmlvars = [
@@ -270,7 +260,7 @@ class ParticipantController{
             $inscription = $this->c->router->pathFor("Inscription");
             $accueil = $this->c->router->pathFor("Accueil");
             $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
-            if ($_SESSION['active'] === false){
+            if (!isset($_SESSION['active']) || $_SESSION['active'] === false){
                 $lien5 = $this->c->router->pathFor("Connexion");
                 $tab["lien5"] = $lien5;
             }
@@ -289,28 +279,25 @@ class ParticipantController{
 
     public function inscription(Request $rq, Response $rs, array$args):Response{
         try {
-            $var = $rq->getQueryParams();
 
             $val = null;
 
-            if (!empty($var['login']) && !empty($var['password']) && $_SESSION['active'] === false) {
+            if (!empty($_POST['login']) && !empty($_POST['password']) && $_SESSION['active'] === false) {
 
-                $compte = compte::query()->where('login', 'like', strip_tags($var['login']))->first();
+                $compte = compte::query()->where('login', 'like', strip_tags($_POST['login']))->first();
                 if(isset($compte)){
                     echo "login déjà utilisé";
-                    session_destroy();
                 }else{
+                    session_start();
                     $c = new compte();
-                    $c->login = strip_tags($var['login']);
-                    $c->password = strip_tags(password_hash($var['password'], PASSWORD_BCRYPT));
+                    $c->login = strip_tags($_POST['login']);
+                    $c->password = strip_tags(password_hash($_POST['password'], PASSWORD_BCRYPT));
                     $c->timestamps = false;
                     $c->save();
                     $val = $c;
                     $_SESSION['active'] = true;
-                    $_SESSION['login'] = strip_tags($var['login']);
+                    $_SESSION['login'] = strip_tags($_POST['login']);
                 }
-            }else{
-                session_destroy();
             }
 
             $htmlvars = [
@@ -325,7 +312,7 @@ class ParticipantController{
             $inscription = $this->c->router->pathFor("Inscription");
             $accueil = $this->c->router->pathFor("Accueil");
             $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
-            if ($_SESSION['active'] === false){
+            if (!isset($_SESSION['active']) || $_SESSION['active'] === false){
                 $lien5 = $this->c->router->pathFor("Connexion");
                 $tab["lien5"] = $lien5;
             }
@@ -343,7 +330,9 @@ class ParticipantController{
 
     public function accueil(Request $rq, Response $rs, array$args):Response{
         try {
-
+            session_start();
+            // PERMET DE SE DECONNECTER
+            unset($_SESSION['active']);
             $val = null;
 
             $htmlvars = [
@@ -358,11 +347,11 @@ class ParticipantController{
             $inscription = $this->c->router->pathFor("Inscription");
             $accueil = $this->c->router->pathFor("Accueil");
             $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
-            if ($_SESSION['active'] === false){
+            if (!isset($_SESSION['active'])){
+                echo "vdjndvk";
                 $lien5 = $this->c->router->pathFor("Connexion");
                 $tab["lien5"] = $lien5;
             }
-
 
             $v = new VueParticipant($val);
 
@@ -370,9 +359,8 @@ class ParticipantController{
             return $rs;
 
         }catch (ModelNotFoundException $e){
-            $rs->write( "Problème avec l'accueil'");
+            $rs->write( "Problème avec l'accueil");
             return $rs;
         }
     }
-
 }

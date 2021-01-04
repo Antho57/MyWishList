@@ -114,11 +114,7 @@ END;
             </head>
             <body>
             <div id="header">
-                <div>
-                    <a href={$tab['accueil']}>
-                        <img src="{$lien['basepath']}/web/img/mwl2.png" class="centrage"/>
-                    </a>
-                </div>
+                <div><a href={$tab['accueil']}><img src="{$lien['basepath']}/web/img/mwl2.png" class="centrage"/></a></div>
                 <nav>
                     <ul>
                         <li class="liste"><a href="#">Liste</a>
@@ -134,7 +130,7 @@ END;
                     </ul>
                 </nav>
 END;
-        if ($_SESSION['active'] === false){
+        if (!isset($_SESSION['active']) || $_SESSION['active'] === false){
             $html .= <<<END
                 <nav>
                     <ul>
@@ -252,23 +248,15 @@ $html .=<<<END
 END;
                 break;
             case 5:
-                $content = null;
-                if( $this->data !== null) {
-                    $content =<<<END
-                        <section>
-                        $html
-                        </section>
-END;
-                }
 
                 $html .= <<<END
             <div><h1 class="centrage2">Connexion</h1></div>
             
 END;
-                if ($content == null){
-                $html .= <<<END
+                if($_SESSION['active'] === false){
+                    $html .= <<<END
                     <div class="formulaire1">
-                        <form>
+                        <form method="post">
                             <label class="infosL" for="numLi"> Saisissez votre login </label>
                             <input type="text" class="infosL2" name="login" minlength="5" maxlength="20" size="15" placeholder="Login" ><br>
                             <label class="infosL" for="numLi"> Saisissez votre mot de passe </label>
@@ -279,33 +267,25 @@ END;
                     </div>
 END;
                 }else{
-                    $_SESSION['password'] = password_hash($_GET['password'], PASSWORD_BCRYPT);
+                    $_SESSION['password'] = password_hash($_POST['password'], PASSWORD_BCRYPT);
                     $html .=<<<END
                         <div>
                         <p class="connexionok">Connecté !</p>
-                        <div class="info">$content</div>
                         </div>
 END;
-                }
+                    }
+
                 break;
             case 6:
-                $content = null;
-                if( $this->data !== null) {
-                    $content =<<<END
-                        <section>
-                        $html
-                        </section>
-END;
-                }
 
                 $html .= <<<END
             <div><h1 class="centrage2">Inscription</h1></div>
             
 END;
-                if ($content == null){
+                if ($_SESSION['active'] === false){
                     $html .= <<<END
                     <div class="formulaire1">
-                        <form>
+                        <form method="post">
                             <label class="infosL" for="numLi"> Saisissez votre login </label>
                             <input type="text" class="infosL2" name="login" minlength="5" maxlength="20" size="15" placeholder="Login" ><br>
                             <label class="infosL" for="numLi"> Saisissez votre mot de passe </label>
@@ -315,18 +295,16 @@ END;
                     </div>
 END;
                 }else{
-                    //session_start();
-                    //$_SESSION['login'] = $_GET['login'];
-                    //$_SESSION['password'] = password_hash($_GET['password'], PASSWORD_BCRYPT);
+                    $_SESSION['password'] = password_hash($_POST['password'], PASSWORD_BCRYPT);
                     $html .=<<<END
                         <div>
                         <p class="connexionok">Incription réussie !</p>
-                        <div class="info">$content</div>
                         </div>
 END;
                 }
                 break;
             case 7:
+                //session_destroy();
                 $content = null;
                 if( $this->data !== null) {
                     $content =<<<END
@@ -335,7 +313,11 @@ END;
                         </section>
 END;
                 }
-
+//                $html .= <<<END
+//                    <form action="{$lien['basepath']}/src/view/logout.php">
+//                        <input type="submit" value="Deconnexion" >
+//                    </form>
+//END;
                 $html .= <<<END
             <div><h1 class="centrage2">Accueil</h1></div>
             
