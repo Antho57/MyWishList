@@ -9,9 +9,19 @@ use mywishlist\models\compte;
 class Authentication
 {
     public static function createUser( $userName, $password ){
-    // vérifier la conformité de $password avec la police
-    // si ok : hacher $password
-    // créer et enregistrer l'utilisateur
+        $compte = compte::query()->where('login', 'like', strip_tags($userName))->first();
+        if(isset($compte)){
+            echo "login déjà utilisé";
+        }else{
+            session_start();
+            $c = new compte();
+            $c->login = strip_tags($userName);
+            $c->password = strip_tags(password_hash($password, PASSWORD_BCRYPT));
+            $c->timestamps = false;
+            $c->save();
+            $_SESSION['active'] = true;
+            $_SESSION['login'] = strip_tags($userName);
+        }
     }
 
     public static function authenticate ( $username, $password ) {

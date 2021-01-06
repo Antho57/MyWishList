@@ -21,6 +21,29 @@ class ParticipantController{
         $_SESSION['active'] = false;
     }
 
+    public function paths($rq, $val, $rs, $render){
+        $htmlvars = [
+            'basepath' => $rq->getUri()->getBasePath()
+        ];
+
+        $lien1 = $this->c->router->pathFor("AllListe");
+        $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
+        $lien3 = $this->c->router->pathFor("Item");
+        $lien4 = $this->c->router->pathFor("CréerListe");
+        $lien667 = $this->c->router->pathFor("Credits");
+        $inscription = $this->c->router->pathFor("Inscription");
+        $accueil = $this->c->router->pathFor("Accueil");
+        $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
+        if (!isset($_SESSION['active']) || $_SESSION['active'] === false){
+            $lien5 = $this->c->router->pathFor("Connexion");
+            $tab["lien5"] = $lien5;
+        }
+
+        $v = new VueParticipant($val);
+
+        $rs->write($v->render($render, $htmlvars, $tab));
+    }
+
     public function displayItem(Request $rq, Response $rs, array$args):Response{
 
         try{
@@ -33,26 +56,7 @@ class ParticipantController{
                     ->firstOrFail();
             }
 
-            $htmlvars = [
-                'basepath' => $rq->getUri()->getBasePath()
-            ];
-
-            $lien1 = $this->c->router->pathFor("AllListe");
-            $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
-            $lien3 = $this->c->router->pathFor("Item");
-            $lien4 = $this->c->router->pathFor("CréerListe");
-            $lien667 = $this->c->router->pathFor("Credits");
-            $inscription = $this->c->router->pathFor("Inscription");
-            $accueil = $this->c->router->pathFor("Accueil");
-            $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
-            if (!isset($_SESSION['active'])){
-                $lien5 = $this->c->router->pathFor("Connexion");
-                $tab["lien5"] = $lien5;
-            }
-
-            $v = new VueParticipant([$item]);
-
-            $rs->write( $v->render(3, $htmlvars, $tab));
+            $this->paths($rq, [$item], $rs, 3);
             return $rs;
 
 
@@ -73,26 +77,7 @@ class ParticipantController{
 
             $item = liste::get();
 
-            $htmlvars = [
-                'basepath'=>$rq->getUri()->getBasePath()
-            ];
-
-            $lien1 = $this->c->router->pathFor("AllListe");
-            $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
-            $lien3 = $this->c->router->pathFor("Item");
-            $lien4 = $this->c->router->pathFor("CréerListe");
-            $lien667 = $this->c->router->pathFor("Credits");
-            $inscription = $this->c->router->pathFor("Inscription");
-            $accueil = $this->c->router->pathFor("Accueil");
-            $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
-            if (!isset($_SESSION['active'])){
-                $lien5 = $this->c->router->pathFor("Connexion");
-                $tab["lien5"] = $lien5;
-            }
-
-            $v = new VueParticipant($item);
-
-            $rs->write( $v->render(1, $htmlvars, $tab));
+            $this->paths($rq, $item, $rs, 1);
             return $rs;
 
 
@@ -118,27 +103,8 @@ class ParticipantController{
             $items = item::query()->where('liste_id', '=', $liste->no)->get();
             $val = ([$liste, $items]);
 
+            $this->paths($rq, $val, $rs, 2);
 
-            $htmlvars = [
-                'basepath' => $rq->getUri()->getBasePath()
-            ];
-
-            $lien1 = $this->c->router->pathFor("AllListe");
-            $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
-            $lien3 = $this->c->router->pathFor("Item");
-            $lien4 = $this->c->router->pathFor("CréerListe");
-            $lien667 = $this->c->router->pathFor("Credits");
-            $inscription = $this->c->router->pathFor("Inscription");
-            $accueil = $this->c->router->pathFor("Accueil");
-            $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
-            if (!isset($_SESSION['active'])){
-                $lien5 = $this->c->router->pathFor("Connexion");
-                $tab["lien5"] = $lien5;
-            }
-
-            $v = new VueParticipant($val);
-
-            $rs->write($v->render(2, $htmlvars, $tab));
             return $rs;
 
 
@@ -155,26 +121,7 @@ class ParticipantController{
 
             $val = null;
 
-            $htmlvars = [
-                'basepath'=>$rq->getUri()->getBasePath()
-            ];
-
-            $lien1 = $this->c->router->pathFor("AllListe");
-            $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
-            $lien3 = $this->c->router->pathFor("Item");
-            $lien4 = $this->c->router->pathFor("CréerListe");
-            $lien667 = $this->c->router->pathFor("Credits");
-            $inscription = $this->c->router->pathFor("Inscription");
-            $accueil = $this->c->router->pathFor("Accueil");
-            $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
-            if (!isset($_SESSION['active'])){
-                $lien5 = $this->c->router->pathFor("Connexion");
-                $tab["lien5"] = $lien5;
-            }
-
-            $v = new VueParticipant($val);
-
-            $rs->write( $v->render(667, $htmlvars, $tab));
+            $this->paths($rq, $val, $rs, 667);
             return $rs;
 
 
@@ -209,26 +156,7 @@ class ParticipantController{
                 $val = $liste;
             }
 
-            $htmlvars = [
-                'basepath'=>$rq->getUri()->getBasePath()
-            ];
-
-            $lien1 = $this->c->router->pathFor("AllListe");
-            $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
-            $lien3 = $this->c->router->pathFor("Item");
-            $lien4 = $this->c->router->pathFor("CréerListe");
-            $lien667 = $this->c->router->pathFor("Credits");
-            $inscription = $this->c->router->pathFor("Inscription");
-            $accueil = $this->c->router->pathFor("Accueil");
-            $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
-            if (!isset($_SESSION['active'])){
-                $lien5 = $this->c->router->pathFor("Connexion");
-                $tab["lien5"] = $lien5;
-            }
-
-            $v = new VueParticipant($val);
-
-            $rs->write( $v->render(4, $htmlvars, $tab));
+            $this->paths($rq, $val, $rs, 4);
             return $rs;
 
 
@@ -252,23 +180,7 @@ class ParticipantController{
                 'basepath'=>$rq->getUri()->getBasePath()
             ];
 
-            $lien1 = $this->c->router->pathFor("AllListe");
-            $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
-            $lien3 = $this->c->router->pathFor("Item");
-            $lien4 = $this->c->router->pathFor("CréerListe");
-            $lien667 = $this->c->router->pathFor("Credits");
-            $inscription = $this->c->router->pathFor("Inscription");
-            $accueil = $this->c->router->pathFor("Accueil");
-            $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
-            if (!isset($_SESSION['active']) || $_SESSION['active'] === false){
-                $lien5 = $this->c->router->pathFor("Connexion");
-                $tab["lien5"] = $lien5;
-            }
-
-
-            $v = new VueParticipant($val);
-
-            $rs->write( $v->render(5, $htmlvars, $tab));
+            $this->paths($rq, $val, $rs, 5);
             return $rs;
 
         }catch (ModelNotFoundException $e){
@@ -283,43 +195,11 @@ class ParticipantController{
             $val = null;
 
             if (!empty($_POST['login']) && !empty($_POST['password']) && $_SESSION['active'] === false) {
-
-                $compte = compte::query()->where('login', 'like', strip_tags($_POST['login']))->first();
-                if(isset($compte)){
-                    echo "login déjà utilisé";
-                }else{
-                    session_start();
-                    $c = new compte();
-                    $c->login = strip_tags($_POST['login']);
-                    $c->password = strip_tags(password_hash($_POST['password'], PASSWORD_BCRYPT));
-                    $c->timestamps = false;
-                    $c->save();
-                    $val = $c;
-                    $_SESSION['active'] = true;
-                    $_SESSION['login'] = strip_tags($_POST['login']);
-                }
+                Authentication::createUser($_POST['login'],$_POST['password']);
+                $val = compte::query()->where('login', 'like', strip_tags($_POST['login']))->first();
             }
 
-            $htmlvars = [
-                'basepath'=>$rq->getUri()->getBasePath()
-            ];
-
-            $lien1 = $this->c->router->pathFor("AllListe");
-            $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
-            $lien3 = $this->c->router->pathFor("Item");
-            $lien4 = $this->c->router->pathFor("CréerListe");
-            $lien667 = $this->c->router->pathFor("Credits");
-            $inscription = $this->c->router->pathFor("Inscription");
-            $accueil = $this->c->router->pathFor("Accueil");
-            $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
-            if (!isset($_SESSION['active']) || $_SESSION['active'] === false){
-                $lien5 = $this->c->router->pathFor("Connexion");
-                $tab["lien5"] = $lien5;
-            }
-
-            $v = new VueParticipant($val);
-
-            $rs->write( $v->render(6, $htmlvars, $tab));
+            $this->paths($rq, $val, $rs, 6);
             return $rs;
 
         }catch (ModelNotFoundException $e){
@@ -335,27 +215,7 @@ class ParticipantController{
             unset($_SESSION['active']);
             $val = null;
 
-            $htmlvars = [
-                'basepath'=>$rq->getUri()->getBasePath()
-            ];
-
-            $lien1 = $this->c->router->pathFor("AllListe");
-            $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
-            $lien3 = $this->c->router->pathFor("Item");
-            $lien4 = $this->c->router->pathFor("CréerListe");
-            $lien667 = $this->c->router->pathFor("Credits");
-            $inscription = $this->c->router->pathFor("Inscription");
-            $accueil = $this->c->router->pathFor("Accueil");
-            $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
-            if (!isset($_SESSION['active'])){
-                echo "vdjndvk";
-                $lien5 = $this->c->router->pathFor("Connexion");
-                $tab["lien5"] = $lien5;
-            }
-
-            $v = new VueParticipant($val);
-
-            $rs->write( $v->render(7, $htmlvars, $tab));
+            $this->paths($rq, $val, $rs, 7);
             return $rs;
 
         }catch (ModelNotFoundException $e){
