@@ -36,8 +36,10 @@ class ParticipantController{
         $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
         if (!isset($_SESSION['active']) || $_SESSION['active'] === false){
             $lien5 = $this->c->router->pathFor("Connexion");
-            $tab["lien5"] = $lien5;
+        }else{
+            $lien5 = $this->c->router->pathFor("Deconnexion");
         }
+        $tab["lien5"] = $lien5;
 
         $v = new VueParticipant($val);
 
@@ -211,8 +213,7 @@ class ParticipantController{
     public function accueil(Request $rq, Response $rs, array$args):Response{
         try {
             session_start();
-            // PERMET DE SE DECONNECTER
-            unset($_SESSION['active']);
+
             $val = null;
 
             $this->paths($rq, $val, $rs, 7);
@@ -222,5 +223,13 @@ class ParticipantController{
             $rs->write( "Problème avec l'accueil");
             return $rs;
         }
+    }
+
+    public function deconnexion(Request $rq, Response $rs, array$args):Response{
+        session_start();
+        unset($_SESSION['active']);
+        $this->paths($rq, '', $rs, 8);
+
+        return $rs;
     }
 }

@@ -93,6 +93,17 @@ $app->post('/inscription', function (Request $rq, Response $rs, array $args): Re
 
 
 
+
+$app->get('/deconnexion', function (Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->deconnexion($rq,$rs,$args);
+}
+)->setName('Deconnexion');
+
+
+
+
 $app->get('/liste/creer', function (Request $rq, Response $rs, array $args): Response {
 
     $c = new mywishlist\control\ParticipantController($this);

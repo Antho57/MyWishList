@@ -146,10 +146,13 @@ END;
         }else if ($_SESSION['active'] === true){
             $html .= <<<END
                 <nav>
-                        <ul>
-                            <li class="liste3"><a href={$tab['lien667']}>Credits</a>
-                        </ul>
-                    </li>
+                    <ul>
+                        <li class="liste2"><a href="{$tab['lien5']}">Deconnexion</a></li>
+                            <ul>
+                                <li class="liste"><a href={$tab['lien667']}>Credits</a>
+                            </ul>
+                        </li>
+                    </ul>
                 </nav>
             </div>
 END;
@@ -346,6 +349,20 @@ END;
             </body>
         </html>
 END;
+                break;
+            case 8:
+                $html .= <<<END
+            <div><h1 class="centrage2">Deconnexion</h1></div>
+            
+END;
+                if(!isset($_SESSION['active'])){
+                    $html .=<<<END
+                        <div>
+                        <p class="connexionok">Deconnecté avec succès !</p>
+                        </div>
+END;
+                }
+
                 break;
         }
 
