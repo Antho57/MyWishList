@@ -111,6 +111,7 @@ END;
             <head> 
                 <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
                 <title>MyWishList</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
             </head>
             <body>
             <div id="header">
@@ -252,12 +253,9 @@ END;
                 break;
             case 5:
 
-                $html .= <<<END
-            <div><h1 class="centrage2">Connexion</h1></div>
-            
-END;
                 if($_SESSION['active'] === false){
                     $html .= <<<END
+<div><h1 class="centrage2">Connexion</h1></div>
                     <div class="formulaire1">
                         <form method="post">
                             <label class="infosL" for="numLi"> Saisissez votre login </label>
@@ -351,10 +349,7 @@ END;
 END;
                 break;
             case 8:
-                $html .= <<<END
-            <div><h1 class="centrage2">Deconnexion</h1></div>
-            
-END;
+
                 if(!isset($_SESSION['active'])){
                     $html .=<<<END
                         <div>
