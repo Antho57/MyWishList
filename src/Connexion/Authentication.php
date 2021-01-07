@@ -43,14 +43,11 @@ class Authentication
 
     public static function modifyUser($userName, $password){
         $compte = compte::query()->where('login', 'like', strip_tags($userName))->first();
-        if(isset($compte)){
-            session_start();
-            $compte->login = strip_tags($userName);
-            $compte->password = strip_tags(password_hash($password, PASSWORD_BCRYPT));
-            $compte->timestamps = false;
-            $compte->save();
-            $_SESSION['login'] = strip_tags($userName);
-        }
+        $compte->login = strip_tags($userName);
+        $compte->password = strip_tags(password_hash($password, PASSWORD_BCRYPT));
+        $compte->timestamps = false;
+        $compte->save();
+        $_SESSION['login'] = strip_tags($userName);
     }
 
     public static function checkAccessRights ( $required ) {
