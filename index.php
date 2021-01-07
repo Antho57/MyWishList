@@ -119,6 +119,19 @@ $app->get('/', function (Request $rq, Response $rs, array $args): Response {
 )->setName('Accueil');
 
 
+$app->get('/compte', function (Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->compte($rq,$rs,$args);
+}
+)->setName('Compte');
+
+$app->post('/compte', function (Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->compte($rq,$rs,$args);
+}
+)->setName('ComptePost');
 
 $app->run();
 

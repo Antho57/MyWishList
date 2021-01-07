@@ -33,7 +33,8 @@ class ParticipantController{
         $lien667 = $this->c->router->pathFor("Credits");
         $inscription = $this->c->router->pathFor("Inscription");
         $accueil = $this->c->router->pathFor("Accueil");
-        $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription];
+        $compte = $this->c->router->pathFor("Compte");
+        $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription, "compte"=>$compte];
         if (!isset($_SESSION['active']) || $_SESSION['active'] === false){
             $lien5 = $this->c->router->pathFor("Connexion");
         }else{
@@ -46,7 +47,7 @@ class ParticipantController{
         $rs->write($v->render($render, $htmlvars, $tab));
     }
 
-    public function displayItem(Request $rq, Response $rs, array$args):Response{
+    public function displayItem(Request $rq, Response $rs):Response{
 
         try{
             session_start();
@@ -72,7 +73,7 @@ class ParticipantController{
 
 
 
-    public function allListe(Request $rq, Response $rs, array$args):Response{
+    public function allListe(Request $rq, Response $rs):Response{
 
         try{
             session_start();
@@ -116,7 +117,7 @@ class ParticipantController{
         }
     }
 
-    public function displayCredits(Request $rq, Response $rs, array$args):Response{
+    public function displayCredits(Request $rq, Response $rs):Response{
 
         try{
             session_start();
@@ -133,7 +134,7 @@ class ParticipantController{
         }
     }
 
-    public function creerListe(Request $rq, Response $rs, array$args):Response{
+    public function creerListe(Request $rq, Response $rs):Response{
 
         try{
             session_start();
@@ -168,7 +169,7 @@ class ParticipantController{
         }
     }
 
-    public function connexion(Request $rq, Response $rs, array$args):Response{
+    public function connexion(Request $rq, Response $rs):Response{
         try {
 
             $val = null;
@@ -177,10 +178,6 @@ class ParticipantController{
                 Authentication::authenticate($_POST['login'], $_POST['password']);
                 $val = compte::query()->where('login', 'like', strip_tags($_POST['login']))->first();
             }
-
-            $htmlvars = [
-                'basepath'=>$rq->getUri()->getBasePath()
-            ];
 
             $this->paths($rq, $val, $rs, 5);
             return $rs;
@@ -191,7 +188,7 @@ class ParticipantController{
         }
     }
 
-    public function inscription(Request $rq, Response $rs, array$args):Response{
+    public function inscription(Request $rq, Response $rs):Response{
         try {
 
             $val = null;
@@ -205,12 +202,12 @@ class ParticipantController{
             return $rs;
 
         }catch (ModelNotFoundException $e){
-            $rs->write( "Problème avec l'inscription'");
+            $rs->write( "Problème avec l'inscription");
             return $rs;
         }
     }
 
-    public function accueil(Request $rq, Response $rs, array$args):Response{
+    public function accueil(Request $rq, Response $rs):Response{
         try {
             session_start();
 
@@ -225,11 +222,32 @@ class ParticipantController{
         }
     }
 
-    public function deconnexion(Request $rq, Response $rs, array$args):Response{
+    public function deconnexion(Request $rq, Response $rs):Response{
         session_start();
         unset($_SESSION['active']);
         $this->paths($rq, '', $rs, 8);
 
         return $rs;
+    }
+
+    public function compte(Request $rq, Response $rs):Response{
+        try {
+
+            $val = null;
+
+            if (!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['password2']) && $_SESSION['active'] === true) {
+                echo "ok";
+                Authentication::modifyUser($_POST['login'],$_POST['password2']);
+                $val = compte::query()->where('login', 'like', strip_tags($_POST['login']))->first();
+            }
+
+            $this->paths($rq, $val, $rs, 9);
+//            unset($_SESSION['active']);
+            return $rs;
+
+        }catch (ModelNotFoundException $e){
+            $rs->write( "Problème avec le compte");
+            return $rs;
+        }
     }
 }

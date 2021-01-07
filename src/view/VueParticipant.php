@@ -147,13 +147,16 @@ END;
         }else if ($_SESSION['active'] === true){
             $html .= <<<END
                 <nav>
+                <ul>
+                <li class="liste3"><a href={$tab['compte']}>Compte</a></li>
                     <ul>
-                        <li class="liste2"><a href="{$tab['lien5']}">Deconnexion</a></li>
+                        <li class="liste"><a href="{$tab['lien5']}">Deconnexion</a></li>
                             <ul>
                                 <li class="liste"><a href={$tab['lien667']}>Credits</a>
                             </ul>
                         </li>
                     </ul>
+                </ul>
                 </nav>
             </div>
 END;
@@ -354,6 +357,35 @@ END;
                     $html .=<<<END
                         <div>
                         <p class="connexionok">Deconnecté avec succès !</p>
+                        </div>
+END;
+                }
+
+                break;
+            case 9:
+
+                print_r($_SESSION);
+                if($_SESSION['active'] === true || isset($_SESSION['active'])){
+                    $log = $_SESSION['login'];
+                    $html .= <<<END
+                    <div><h1 class="centrage2">Compte</h1></div>
+                    <div class="formulaire1">
+                        <form method="post">
+                            <label class="infosL" for="numLi"> Login actuel </label>
+                            <input type="text" class="infosL2" name="login" minlength="5" maxlength="20" size="15" value="{$log}" readonly><br>
+                            <label class="infosL" for="numLi"> Saisissez votre nouveau mot de passe </label>
+                            <input type="password" class="infosL2" name="password" minlength="5" maxlength="60" size="15" placeholder="New Password" ><br>
+                            <label class="infosL" for="numLi"> Resaisissez votre nouveau mot de passe </label>
+                            <input type="password" class="infosL2" name="password2" minlength="5" maxlength="60" size="15" placeholder="New Password" ><br>
+                            <input type="submit" class="buttonCreer" value="Valider">
+                        </form>
+                    </div>
+END;
+                }else{
+                    $_SESSION['password'] = password_hash($_POST['password'], PASSWORD_BCRYPT);
+                    $html .=<<<END
+                        <div>
+                        <p class="connexionok">Mot de passe modifié !</p>
                         </div>
 END;
                 }
