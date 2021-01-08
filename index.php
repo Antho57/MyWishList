@@ -168,5 +168,14 @@ $app->post('/supprimercompte', function (Request $rq, Response $rs, array $args)
 }
 )->setName('supprimerComptePost');
 
+
+
+$app->get('/createurs', function (Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->listeCreateurs($rq,$rs,$args);
+}
+)->setName('Createurs');
+
 $app->run();
 

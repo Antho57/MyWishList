@@ -47,6 +47,16 @@ END;
     }
 
 
+    private function listeCreateurs($liste):String{
+        $val = '';
+
+
+            $val = <<<END
+                    <h3 class="titre3"> ID : {$liste->compte_id} &nbsp&nbsp&nbsp&nbsp - &nbsp&nbsp&nbsp&nbsp Login : {$liste->login}</h3>
+END;
+
+        return $val;
+    }
 
 
     private function listeDetail($args, $lien, $tab):String {
@@ -508,6 +518,20 @@ END;
 END;
                 }
                 break;
+            case 'createurs':
+                $content = $this->listeCreateurs($this->data);
+
+                $html .= <<<END
+                    <div><h1 class="centrage2">Listes des créateurs </h1></div>
+                    <div>
+                        <div class="info">
+                            $content
+                        </div>
+                    </div>
+            </body>
+        </html>
+END;
+        break;
         }
 
         return $html;
