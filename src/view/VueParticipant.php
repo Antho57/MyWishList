@@ -24,16 +24,20 @@ END;
         return $html;
     }
 
-    private function allListe($liste):String {
+    private function allListe($liste, $tab):String {
         $html = '';
+        $i =0;
 
-        foreach($liste as $row) {
-            $val =<<<END
-                <h3 class="titre3"> {$row->no} - {$row->titre}</h3>
-                <p class="text">Description : {$row->description}</p>
-                <h4 class="text">Expiration : {$row->expiration}</h4><br>
+        if ($liste != null){
+            foreach($liste as $row) {
+                $val =<<<END
+            <a href="{$tab['lienPublique'][$i]}"><h3 class="titre3"> {$row->no} - {$row->titre}</h3></a>
+            <p class="text">Description : {$row->description}</p>
+            <h4 class="text">Expiration : {$row->expiration}</h4><br>
 END;
-            $html = $html. $val;
+                $html = $html. $val;
+                $i++;
+            }
         }
 
         $val =<<<END
@@ -70,11 +74,16 @@ END;
             <p class="text">Description : {$args[0]->description}</p>
             <p class="text">Expiration : {$args[0]->expiration}</p>
             <p class="text">Liste publique : {$public}</p>
-            <p class="importante"> Il faut bien garder ce lien pour consulter la liste</p>
             <p class="text">URL DE CONSULTATION :  {$tab['lien2']}</p>
-            <a href="{$tab['lienModif']}"><input type="button" class="buttonAfficherModif" name="modifier" value="Modifier infos"></a>
-            <br>
 END;
+        if (isset($_SESSION['active']) && $_SESSION['active']===true){
+            if ($_SESSION['compte_id'] === $args[0]->user_id){
+                $html .= <<<END
+                <a href="{$tab['lienModif']}"><input type="button" class="buttonAfficherModif" name="modifier" value="Modifier infos"></a>
+                <br>
+END;
+            }
+        }
 
         foreach($args[1] as $row) {
             $val =<<<END
@@ -216,7 +225,7 @@ END;
 
         switch ($vars){
             case 'listes publiques':
-                $content = $this->allListe($this->data);
+                $content = $this->allListe($this->data, $tab);
                 $html .= <<<END
                     <div><h1 class="centrage2">Listes publiques</h1></div>
                     <div>
@@ -246,14 +255,6 @@ END;
                 }
                 $html .= <<<END
             <div><h1 class="centrage2">Description d'un item</h1></div>
-            <div class="formulaire1">
-                <form>
-                    <br>
-                    <label class="entrezNum" for="numIt"> Entrez le numéro de l'item que vous cherchez</label>
-                    <input type="number" class="numI" name="numIt" minlength="1" maxlength="2" size="10" placeholder="Entrez un numéro" >
-                    <input type="submit" class="numI" value="Rechercher">
-                </form>
-            </div>
 END;
                 if ($content !== null) {
                     $html .=<<<END

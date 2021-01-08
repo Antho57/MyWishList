@@ -62,6 +62,18 @@ class ParticipantController{
 
         }
 
+        if ($render === 'listes publiques'){
+            $i =0;
+            $tabLien = [];
+            foreach($val as $row){
+                $lien = $this->c->router->pathFor("listeDetail", ['token'=>$row->token]);
+                $tabLien[$i] = $lien;
+                $i++;
+            }
+            $tab['lienPublique'] = $tabLien;
+
+        }
+
         $v = new VueParticipant($val);
 
         $rs->write($v->render($render, $htmlvars, $tab));
@@ -124,8 +136,13 @@ class ParticipantController{
             $liste = liste::query()->where('token', '=', $args['token'])
                 ->firstOrFail();
             $items = item::query()->where('liste_id', '=', $liste->no)->get();
-            $utilisateur = compte::query()->where('login', 'like', $_SESSION['login'])->firstOrFail();
-            $val = ([$liste, $items, $utilisateur]);
+            if (isset($_SESSION['active']) && $_SESSION['active']===true){
+                $utilisateur = compte::query()->where('login', 'like', $_SESSION['login'])->firstOrFail();
+                $val = ([$liste, $items, $utilisateur]);
+            }else {
+                $val = ([$liste, $items]);
+            }
+
 
             $this->paths($rq, $val, $rs, 'liste detail');
 
