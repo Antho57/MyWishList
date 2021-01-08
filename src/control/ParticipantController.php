@@ -242,6 +242,7 @@ class ParticipantController{
                 Authentication::modifyUser($_POST['login'],$_POST['password2']);
                 unset($_SESSION['active']);
             }
+            $val = liste::query()->where('user_id', '=', $_SESSION['compte_id'])->get();
 
             $this->paths($rq, '', $rs, 9);
 

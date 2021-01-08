@@ -80,6 +80,28 @@ END;
 
     }
 
+    private function detailListeCompte($args):String {
+        $html = '';
+
+        foreach($args as $row) {
+            $val =<<<END
+                <h3 class="titre3"> {$row->no} - {$row->titre}</h3>
+                <p class="text">Description : {$row->description}</p>
+                <h4 class="text">Expiration : {$row->expiration}</h4><br>
+END;
+            $html = $html. $val;
+        }
+
+        $val =<<<END
+            <section>
+            $html
+            </section>
+END;
+
+        return $val;
+
+    }
+
 
     private function creerListe($args, $tab):String {
         if ($args->public){
@@ -285,7 +307,11 @@ END;
                         <p class="connexionok">Connecté !</p>
                         </div>
 END;
-                    }
+                }
+                $html .=<<<END
+            </body>
+        </html>
+END;
 
                 break;
             case 6:
@@ -343,6 +369,10 @@ END;
                     </div>
 END;
                 }
+                $html .=<<<END
+            </body>
+        </html>
+END;
                 break;
 
             case 667:
@@ -370,11 +400,16 @@ END;
                         </div>
 END;
                 }
+                $html .=<<<END
+            </body>
+        </html>
+END;
 
                 break;
             case 9:
 
                 if(isset($_SESSION['active']) && $_SESSION['active'] === true){
+                    $info = $this->detailListeCompte($this->data);
                     $html .= <<<END
                     <div><h1 class="centrage2">Compte</h1></div>
                     <div class="formulaire1">
@@ -388,6 +423,9 @@ END;
                             <input type="submit" class="buttonCreer" value="Valider">
                         </form>
                     </div>
+                    <div class="info">
+                    $info
+                    </div>
 END;
                 }else{
                     $_SESSION['password'] = password_hash($_POST['password'], PASSWORD_BCRYPT);
@@ -397,6 +435,10 @@ END;
                         </div>
 END;
                 }
+                $html .=<<<END
+            </body>
+        </html>
+END;
 
                 break;
         }
