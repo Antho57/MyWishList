@@ -364,14 +364,13 @@ END;
                 break;
             case 9:
 
-                if($_SESSION['active'] === true || isset($_SESSION['active'])){
-                    $log = $_SESSION['login'];
+                if(isset($_SESSION['active']) && $_SESSION['active'] === true){
                     $html .= <<<END
                     <div><h1 class="centrage2">Compte</h1></div>
                     <div class="formulaire1">
                         <form method="post">
                             <label class="infosL" for="numLi"> Login actuel </label>
-                            <input type="text" class="infosL2" name="login" minlength="5" maxlength="20" size="15" value="{$log}" readonly><br>
+                            <input type="text" class="infosL2" name="login" minlength="5" maxlength="20" size="15" value="{$_SESSION['login']}" readonly><br>
                             <label class="infosL" for="numLi"> Saisissez votre nouveau mot de passe </label>
                             <input type="password" class="infosL2" name="password" minlength="5" maxlength="60" size="15" placeholder="New Password" ><br>
                             <label class="infosL" for="numLi"> Resaisissez votre nouveau mot de passe </label>
