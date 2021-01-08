@@ -5,6 +5,7 @@ namespace mywishlist\Connexion;
 
 
 use mywishlist\models\compte;
+use mywishlist\models\liste;
 
 class Authentication
 {
@@ -54,5 +55,11 @@ class Authentication
     public static function checkAccessRights ( $required ) {
     //si Authentication::$profil['level'] < $required
     // throw new AuthException ;
+    }
+
+    public static function deleteUser($username){
+        liste::query()->where('user_id', '=', $_SESSION['compte_id'])->delete();
+        compte::query()->where('login', 'like', strip_tags($username))->delete();
+        unset($_SESSION);
     }
 }

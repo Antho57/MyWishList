@@ -141,5 +141,21 @@ $app->post('/compte', function (Request $rq, Response $rs, array $args): Respons
 }
 )->setName('ComptePost');
 
+
+
+$app->get('/supprimercompte', function (Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->supprimerCompte($rq,$rs,$args);
+}
+)->setName('supprimerCompte');
+
+$app->post('/supprimercompte', function (Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->supprimerCompte($rq,$rs,$args);
+}
+)->setName('supprimerComptePost');
+
 $app->run();
 

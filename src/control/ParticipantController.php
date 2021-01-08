@@ -34,7 +34,8 @@ class ParticipantController{
         $inscription = $this->c->router->pathFor("Inscription");
         $accueil = $this->c->router->pathFor("Accueil");
         $compte = $this->c->router->pathFor("Compte");
-        $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription, "compte"=>$compte];
+        $supprcompte = $this->c->router->pathFor("supprimerCompte");
+        $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription, "compte"=>$compte, "supprimerCompte"=>$supprcompte];
         if (!isset($_SESSION['active']) || $_SESSION['active'] === false){
             $lien5 = $this->c->router->pathFor("Connexion");
         }else{
@@ -238,12 +239,13 @@ class ParticipantController{
         try {
             session_start();
 
+            $val = null;
+            $val = liste::query()->where('user_id', '=', $_SESSION['compte_id'])->get();
+
             if (!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['password2']) && isset($_SESSION['active']) && $_SESSION['active'] === true) {
                 Authentication::modifyUser($_POST['login'],$_POST['password2']);
                 unset($_SESSION['active']);
             }
-            $val=null;
-            $val = liste::query()->where('user_id', '=', $_SESSION['compte_id'])->get();
 
             $this->paths($rq, $val, $rs, 'compte');
 
@@ -251,6 +253,24 @@ class ParticipantController{
 
         }catch (ModelNotFoundException $e){
             $rs->write( "Problème avec le compte");
+            return $rs;
+        }
+    }
+
+    public function supprimerCompte(Request $rq, Response $rs):Response{
+        try {
+            session_start();
+
+            if (isset($_POST['oui'])){
+                Authentication::deleteUser($_SESSION['login']);
+            }
+
+            $this->paths($rq, '', $rs, 'supprimerCompte');
+
+            return $rs;
+
+        }catch (ModelNotFoundException $e){
+            $rs->write( "Problème avec la suppression");
             return $rs;
         }
     }

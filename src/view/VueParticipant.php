@@ -83,14 +83,17 @@ END;
     private function detailListeCompte($args):String {
         $html = '';
 
-        foreach($args as $row) {
-            $val =<<<END
+        if(is_array($args)){
+            foreach($args as $row) {
+                $val =<<<END
                 <h3 class="titre3"> {$row->no} - {$row->titre}</h3>
                 <p class="text">Description : {$row->description}</p>
                 <h4 class="text">Expiration : {$row->expiration}</h4><br>
 END;
-            $html = $html. $val;
+                $html = $html. $val;
+            }
         }
+
 
         $val =<<<END
             <section>
@@ -419,6 +422,9 @@ END;
                             <input type="submit" class="buttonCreer" value="Valider">
                         </form>
                     </div>
+                    <div class="formulaire1">
+                            <a href="{$tab['supprimerCompte']}"><input type="button" class="text3" name="supprimerCompte" value="Supprimer mon compte"></a>
+                    </div>
                     <div class="info">
                     $info
                     </div>
@@ -436,6 +442,36 @@ END;
         </html>
 END;
 
+                break;
+
+            case 'supprimerCompte':
+
+                if(isset($_SESSION['active']) && $_SESSION['active'] === true){
+                    $info = $this->detailListeCompte($this->data);
+                    $html .= <<<END
+                    <div><h1 class="centrage2">Supprimer mon compte</h1></div>
+                    <div class="formulaire1">
+                        <form method="post">
+                            <p class="textRed">Etes vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.</p>
+                            <input type="submit" class="buttonCreer" name="oui" value="Oui">
+                            <a href="{$tab['compte']}"><input type="button" class="buttonCreer2" name="non" value="Non"></a>
+                        </form>
+                    </div>
+                    <div class="info">
+                    $info
+                    </div>
+END;
+                }else{
+                    $html .=<<<END
+                        <div>
+                        <p class="connexionok">Compte supprimé !</p>
+                        </div>
+END;
+                }
+                $html .=<<<END
+            </body>
+        </html>
+END;
                 break;
         }
 

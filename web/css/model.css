@@ -107,9 +107,27 @@ body{
     font-family: Dubai;
 }
 
+.textRed{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 22px;
+    font-family: Dubai;
+    color: red;
+    text-align: center;
+}
+
 .text2{
     margin-left: 60px;
     font-family: Dubai;
+}
+
+.text3{
+    display: block;
+    margin-left: 1650px;
+    font-size: 22px;
+    font-family: Dubai;
+    color: #353535;
 }
 
 .titreli{
@@ -226,6 +244,15 @@ nav ul li:hover ul li {
 
 .buttonCreer{
     margin-left: 925px;
+    font-family: "Agency FB";
+    font-size: 20px;
+}
+
+.buttonCreer2{
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
     font-family: "Agency FB";
     font-size: 20px;
 }
