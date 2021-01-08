@@ -234,15 +234,14 @@ class ParticipantController{
         try {
             session_start();
             $val = null;
-
             if (!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['password2']) && isset($_SESSION['active']) && $_SESSION['active'] === true) {
-                echo "ok";
                 Authentication::modifyUser($_POST['login'],$_POST['password2']);
                 $val = compte::query()->where('login', 'like', strip_tags($_POST['login']))->first();
+                unset($_SESSION['active']);
             }
 
             $this->paths($rq, $val, $rs, 9);
-            unset($_SESSION['active']);
+
             return $rs;
 
         }catch (ModelNotFoundException $e){

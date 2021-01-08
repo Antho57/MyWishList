@@ -258,7 +258,7 @@ END;
 
                 if($_SESSION['active'] === false){
                     $html .= <<<END
-<div><h1 class="centrage2">Connexion</h1></div>
+                    <div><h1 class="centrage2">Connexion</h1></div>
                     <div class="formulaire1">
                         <form method="post">
                             <label class="infosL" for="numLi"> Saisissez votre login </label>
