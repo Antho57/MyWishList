@@ -47,6 +47,14 @@ $app->get('/liste/modifier/{token_modif}', function(Request $rq, Response $rs, a
 )->setName('modifListe');
 
 
+$app->post('/liste/modifier/{token_modif}', function(Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->modifierListe($rq,$rs,$args);
+}
+)->setName('modifListePost');
+
+
 
 
 

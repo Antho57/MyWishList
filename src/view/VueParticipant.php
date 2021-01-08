@@ -93,15 +93,13 @@ END;
     private function detailListeCompte($args):String {
         $html = '';
 
-        if(is_array($args)){
-            foreach($args as $row) {
-                $val =<<<END
-                <h3 class="titre3"> {$row->no} - {$row->titre}</h3>
-                <p class="text">Description : {$row->description}</p>
-                <h4 class="text">Expiration : {$row->expiration}</h4><br>
+        foreach($args as $row) {
+            $val =<<<END
+            <h3 class="titre3"> {$row->no} - {$row->titre}</h3>
+            <p class="text">Description : {$row->description}</p>
+            <h4 class="text">Expiration : {$row->expiration}</h4><br>
 END;
-                $html = $html. $val;
-            }
+            $html = $html. $val;
         }
 
 
@@ -495,19 +493,38 @@ END;
                     <form method="post">
                         <label class="textModif" for="numLi"> - Titre actuel : {$this->data->titre} </label> <br><br>
                         <label class="text" for="numLi"> Nouveau titre </label>
-                        <input type="text" class="infosL2" name="titre" minlength="1" maxlength="250" size="30" placeholder="Entrez le nouveau titre" ><br><br>
+                        <input type="text" class="infosL2" name="NewTitre" minlength="1" maxlength="250" size="30" placeholder="Entrez le nouveau titre" ><br><br>
                         <label class="textModif" for="numLi"> - Descritpion actuelle : {$this->data->description} </label><br><br>
                         <label class="text" for="numLi"> Nouvelle description </label><br>
-                        <textarea type="text" class="infosModif" name="description" cols="75" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entrez la nouvelle description" ></textarea><br><br>
+                        <textarea type="text" class="infosModif" name="NewDescription" cols="75" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entrez la nouvelle description" ></textarea><br><br>
                         <label class="textModif" for="numLi"> - Date d'expiration actuelle : {$this->data->expiration}  </label><br><br>
                         <label class="text" for="numLi"> Nouvelle date d'expiration</label><br>
-                        <input type="date" class="infosModif" name="expiration" min=$date> <br><br>
+                        <input type="date" class="infosModif" name="NewExpiration" min=$date> <br><br>
+END;
+                    if ($this->data->public === 1){
+                        $html .=<<<END
+                        <label class="textModif" for="numLi"> - La liste est publique  </label><br><br>
+                        <label class="text" for="numLi"> Rendre la liste privée </label>
+                        <input type="checkbox" class="infosL2" name="public"><br>
                         <input type="submit" class="buttonModifier" value="Valider les modifications">
                     </form>
                     </div>
-            </body>
-        </html>
+                </body>
+            </html>
 END;
+                    }else {
+                        $html .=<<<END
+                        <label class="textModif" for="numLi"> - La liste est privée </label><br><br>
+                        <label class="text" for="numLi"> Rendre la liste publique </label>
+                        <input type="checkbox" class="infosL2" name="public"><br>
+                        <input type="submit" class="buttonModifier" value="Valider les modifications">
+                    </form>-
+                    </div>
+                </body>
+            </html>
+END;
+                    }
+
                 }else {
                     $html .=<<<END
                         <div>

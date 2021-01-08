@@ -241,13 +241,15 @@ class ParticipantController{
         try {
             session_start();
 
-            $val = null;
-            $val = liste::query()->where('user_id', '=', $_SESSION['compte_id'])->get();
+            $val = '';
 
             if (!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['password2']) && isset($_SESSION['active']) && $_SESSION['active'] === true) {
                 Authentication::modifyUser($_POST['login'],$_POST['password2']);
                 unset($_SESSION['active']);
             }
+
+            $val = liste::query()->where('user_id', '=', $_SESSION['compte_id'])->first();
+
 
             $this->paths($rq, $val, $rs, 'compte');
 
@@ -280,6 +282,28 @@ class ParticipantController{
     public function modifierListe(Request $rq, Response $rs, array$args){
         try {
             session_start();
+            $l = liste::query()->where('token_modif', '=', $args['token_modif'])->first();
+            if (!empty($_POST['NewTitre'])){
+                $l->titre = $_POST['NewTitre'];
+            }
+            if (!empty($_POST['NewDescription'])){
+                $l->description = $_POST['NewDescription'];
+            }
+            if (!empty($_POST['NewExpiration'])){
+                $l->expiration = $_POST['NewExpiration'];
+            }
+            if ($l->public === 1){
+                if (isset($_POST['public'])){
+                    $l->public = 0;
+                }
+            }else {
+                if (isset($_POST['public'])){
+                    $l->public = 1;
+                }
+            }
+            $l->timestamps = false;
+
+            $l->save();
 
             $val = null;
 
