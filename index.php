@@ -111,6 +111,14 @@ $app->get('/liste/creer', function (Request $rq, Response $rs, array $args): Res
 }
 )->setName('CréerListe');
 
+
+$app->post('/liste/creer', function (Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->creerListe($rq,$rs,$args);
+}
+)->setName('CréerListePost');
+
 $app->get('/', function (Request $rq, Response $rs, array $args): Response {
 
     $c = new mywishlist\control\ParticipantController($this);

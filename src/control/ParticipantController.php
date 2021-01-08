@@ -139,19 +139,23 @@ class ParticipantController{
         try{
             session_start();
 
-            $var = $rq->getQueryParams();
-
             $liste = null;
 
             $val = null;
 
-            if (!empty($var['titre']) && !empty($var['description']) && !empty($var['expiration'])) {
+            if (!empty($_POST['titre']) && !empty($_POST['description']) && !empty($_POST['expiration'])) {
                 $l = new liste();
-                $l->titre =strip_tags($var['titre']);
-                $l->description = strip_tags($var['description']);
-                $l->expiration = strip_tags($var['expiration']);
-                $code = uniqid();
+                if ($_SESSION['active']===true){
+                    $l->user_id = $_SESSION['compte_id'];
+                }
+                $l->titre =strip_tags($_POST['titre']);
+                $l->description = strip_tags($_POST['description']);
+                $l->expiration = strip_tags($_POST['expiration']);
+                $code = uniqid('token', true);
                 $l->token = $code;
+                $code2 = uniqid('token_modif', true);
+                $l->token_modif = $code2;
+                $l->public = isset($_POST['public']);
                 $l->timestamps = false;
                 $l->save();
 

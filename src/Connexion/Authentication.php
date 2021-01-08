@@ -31,6 +31,7 @@ class Authentication
                 session_start();
                 $_SESSION['active'] = true;
                 $_SESSION['login'] = strip_tags($username);
+                $_SESSION['compte_id'] = $compte->compte_id;
             }
         }
     }

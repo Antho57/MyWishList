@@ -230,13 +230,15 @@ END;
                     $date = date('Y-m-d');
                     $html .=<<<END
                             <div class="formulaire1">
-                                <form>
+                                <form method="post">
                                         <label class="infosL" for="numLi"> Entrez le titre de votre liste </label>
                                         <input type="text" class="infosL2" name="titre" minlength="1" maxlength="100" size="15" placeholder="Entrez le titre" ><br>
                                         <label class="infosL" for="numLi"> Entrez la description de votre liste </label>
                                         <input type="text" class="infosL2" name="description" minlength="1" maxlength="300" size="15" placeholder="Entrez la description" ><br>
                                         <label class="infosL" for="numLi"> Entrez la date d'expiration de votre liste </label>
-                                        <input type="date" class="infosL2" name="expiration" min=$date <br>
+                                        <input type="date" class="infosL2" name="expiration" min=$date> <br>
+                                        <label class="infosL" for="numLi"> Rendre la liste public </label>
+                                        <input type="checkbox" class="infosL2" name="public"><br>
                                         <input type="submit" class="buttonCreer" value="Créer">
                                 </form>
                             </div>
