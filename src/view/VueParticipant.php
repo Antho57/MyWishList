@@ -51,8 +51,8 @@ END;
         $val = '';
 
 
-            $val = <<<END
-                    <h3 class="titre3"> ID : {$liste->compte_id} &nbsp&nbsp&nbsp&nbsp - &nbsp&nbsp&nbsp&nbsp Login : {$liste->login}</h3>
+        $val = <<<END
+            <h3 class="titre3"> ID : {$liste->compte_id} &nbsp&nbsp&nbsp&nbsp - &nbsp&nbsp&nbsp&nbsp Login : {$liste->login}</h3>
 END;
 
         return $val;
@@ -60,13 +60,19 @@ END;
 
 
     private function listeDetail($args, $lien, $tab):String {
+        if ($args[0]->public){
+            $public = 'Oui';
+        }else{
+            $public = 'Non';
+        }
         $html = <<<END
             <h3 class="titreli"> {$args[0]->no} - {$args[0]->titre}</h3>
             <p class="text">Description : {$args[0]->description}</p>
             <p class="text">Expiration : {$args[0]->expiration}</p>
-            <p class="text">Token unique : {$args[0]->token}</p>
-            <p class="importante"> Il faut bien garder ce lien pour accéder à la liste en mode modification</p>
-            <p class="text">URL :  {$tab['lien2']}{$args[0]->token}</p>
+            <p class="text">Liste publique : {$public}</p>
+            <p class="importante"> Il faut bien garder ce lien pour consulter la liste</p>
+            <p class="text">URL DE CONSULTATION :  {$tab['lien2']}</p>
+            <a href="{$tab['lienModif']}"><input type="button" class="buttonAfficherModif" name="modifier" value="Modifier infos"></a>
             <br>
 END;
 
@@ -90,17 +96,19 @@ END;
 
     }
 
-    private function detailListeCompte($args):String {
+    private function detailListeCompte($args, $tab):String {
         $html = '';
+        $i =0;
 
         if ($args != null){
             foreach($args as $row) {
                 $val =<<<END
-            <h3 class="titre3"> {$row->no} - {$row->titre}</h3>
+            <a href="{$tab['lienCompte'][$i]}"><h3 class="titre3"> {$row->no} - {$row->titre}</h3></a>
             <p class="text">Description : {$row->description}</p>
             <h4 class="text">Expiration : {$row->expiration}</h4><br>
 END;
                 $html = $html. $val;
+                $i++;
             }
         }
 
@@ -127,12 +135,11 @@ END;
             <h3 class="titreli"> {$args->no} - {$args->titre}</h3>
             <p class="text">Description : {$args->description}</p>
             <p class="text">Expiration : {$args->expiration}</p>
-            <p class="text">Token unique : {$args->token}</p>
             <p class="text">Liste publique : {$public}</p>
             <p class="importante"> Il faut bien garder ce lien pour consulter la liste</p>
             <p class="text">URL DE CONSULTATION :  {$tab['lien2']}{$args->token}</p>
             <p class="importante"> Il faut bien garder ce lien pour modifier la liste</p>
-            <p class="text">URL DE MODIFICATION :  {$tab['lien2']}{$args->token}</p>
+            <p class="text">URL DE MODIFICATION :  {$tab['lien2']}{$args->token_modif}</p>
             <br>
 END;
 
@@ -224,7 +231,7 @@ END;
                 $content = $this->listeDetail($this->data, $lien, $tab);
 
                 $html .= <<<END
-            <div><h1 class="centrage2">Les items d'une liste donnée</h1></div>
+            <div><h1 class="centrage2">Liste détaillée</h1></div>
                 <div>
                     <div class="info">$content</div>
                 </div>
@@ -421,7 +428,7 @@ END;
             case 'compte':
 
                 if(isset($_SESSION['active']) && $_SESSION['active'] === true){
-                    $info = $this->detailListeCompte($this->data);
+                    $info = $this->detailListeCompte($this->data, $tab);
                     $html .= <<<END
                     <div><h1 class="centrage2">Compte</h1></div>
                     <div class="formulaire1">

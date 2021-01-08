@@ -27,7 +27,6 @@ class ParticipantController{
         ];
 
         $lien1 = $this->c->router->pathFor("AllListe");
-        $lien2 = $this->c->router->pathFor("AllItem", ['token'=>'']);
         $lien3 = $this->c->router->pathFor("Item");
         $lien4 = $this->c->router->pathFor("CréerListe");
         $lien667 = $this->c->router->pathFor("Credits");
@@ -37,13 +36,31 @@ class ParticipantController{
         $supprcompte = $this->c->router->pathFor("supprimerCompte");
         $createurs = $this->c->router->pathFor("Createurs");
 
-        $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>$lien2, "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription, "compte"=>$compte, "supprimerCompte"=>$supprcompte, "createurs"=>$createurs];
+        $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>'$lien2', "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription, "compte"=>$compte, "supprimerCompte"=>$supprcompte, "createurs"=>$createurs];
         if (!isset($_SESSION['active']) || $_SESSION['active'] === false){
             $lien5 = $this->c->router->pathFor("Connexion");
         }else{
             $lien5 = $this->c->router->pathFor("Deconnexion");
         }
         $tab["lien5"] = $lien5;
+
+        if ($render === 'liste detail'){
+            $lien6 = $this->c->router->pathFor("modifListe", ['token_modif'=>$val[0]->token_modif]);
+            $tab["lienModif"] = $lien6;
+            $lien2 = $this->c->router->pathFor("listeDetail", ['token'=>$val[0]->token]);
+            $tab["lien2"] = $lien2;
+        }
+        if ($render === 'compte'){
+            $i =0;
+            $tabLien = [];
+            foreach($val as $row){
+                $lien = $this->c->router->pathFor("listeDetail", ['token'=>$row->token]);
+                $tabLien[$i] = $lien;
+                $i++;
+            }
+            $tab['lienCompte'] = $tabLien;
+
+        }
 
         $v = new VueParticipant($val);
 
@@ -107,7 +124,8 @@ class ParticipantController{
             $liste = liste::query()->where('token', '=', $args['token'])
                 ->firstOrFail();
             $items = item::query()->where('liste_id', '=', $liste->no)->get();
-            $val = ([$liste, $items]);
+            $utilisateur = compte::query()->where('login', 'like', $_SESSION['login'])->firstOrFail();
+            $val = ([$liste, $items, $utilisateur]);
 
             $this->paths($rq, $val, $rs, 'liste detail');
 
@@ -247,7 +265,7 @@ class ParticipantController{
                 unset($_SESSION['active']);
             }
 
-            $val = liste::query()->where('user_id', '=', $_SESSION['compte_id'])->first();
+            $val = liste::query()->where('user_id', '=', $_SESSION['compte_id'])->get();
 
             $this->paths($rq, $val, $rs, 'compte');
 

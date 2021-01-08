@@ -33,7 +33,7 @@ $app->get('/liste/detail/{token}', function (Request $rq, Response $rs, array $a
     $c = new mywishlist\control\ParticipantController($this);
     return $c->listeDetail($rq,$rs,$args);
 }
-)->setName('AllItem');
+)->setName('listeDetail');
 
 
 

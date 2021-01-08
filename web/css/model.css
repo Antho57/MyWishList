@@ -276,6 +276,14 @@ nav ul li:hover ul li {
     font-size: 20px;
 }
 
+.buttonAfficherModif{
+    display: block;
+    margin-left: 30px;
+    font-size: 22px;
+    font-family: Dubai;
+    color: #353535;
+}
+
 input[type=number] {
     border-radius: 10px;
     border: 1px;
