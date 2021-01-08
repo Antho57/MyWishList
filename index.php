@@ -17,7 +17,7 @@ $app = new \Slim\App($c);
 
 
 
-$app->get('/liste/all', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/liste/publiques', function (Request $rq, Response $rs, array $args): Response {
 
     $c = new mywishlist\control\ParticipantController($this);
     return $c->allListe($rq,$rs,$args);

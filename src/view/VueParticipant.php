@@ -120,7 +120,7 @@ END;
                     <ul>
                         <li class="liste"><a href="#">Liste</a>
                             <ul>
-                                <li><a href={$tab['lien1']}>All</a></li>
+                                <li><a href={$tab['lien1']}>Publiques</a></li>
                                 <li><a href={$tab['lien4']}>Créer</a></li>
                             </ul>
                         </li>
@@ -167,7 +167,7 @@ END;
             case 1:
                 $content = $this->allListe($this->data);
                 $html .= <<<END
-                    <div><h1 class="centrage2">Toutes les listes</h1></div>
+                    <div><h1 class="centrage2">Listes publiques</h1></div>
                     <div>
                         <div class="info">$content</div>
                     </div>
