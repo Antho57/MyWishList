@@ -118,8 +118,10 @@ END;
             <p class="text">Expiration : {$args->expiration}</p>
             <p class="text">Token unique : {$args->token}</p>
             <p class="text">Liste publique : {$public}</p>
-            <p class="importante"> Il faut bien garder ce lien pour accéder à la liste en mode modification</p>
-            <p class="text">URL :  {$tab['lien2']}{$args->token}</p>
+            <p class="importante"> Il faut bien garder ce lien pour consulter la liste</p>
+            <p class="text">URL DE CONSULTATION :  {$tab['lien2']}{$args->token}</p>
+            <p class="importante"> Il faut bien garder ce lien pour modifier la liste</p>
+            <p class="text">URL DE MODIFICATION :  {$tab['lien2']}{$args->token}</p>
             <br>
 END;
 
@@ -472,6 +474,39 @@ END;
             </body>
         </html>
 END;
+                break;
+            case 'modifier liste':
+
+                $date = date('Y-m-d');
+                if(!isset($_POST['buttonModifier'])){
+                    $html .=<<<END
+                <div><h1 class="centrage2">Modifier une liste</h1></div>
+                    <div>
+                    <form method="post">
+                        <label class="textModif" for="numLi"> - Titre actuel : {$this->data->titre} </label> <br><br>
+                        <label class="text" for="numLi"> Nouveau titre </label>
+                        <input type="text" class="infosL2" name="titre" minlength="1" maxlength="250" size="30" placeholder="Entrez le nouveau titre" ><br><br>
+                        <label class="textModif" for="numLi"> - Descritpion actuelle : {$this->data->description} </label><br><br>
+                        <label class="text" for="numLi"> Nouvelle description </label><br>
+                        <textarea type="text" class="infosModif" name="description" cols="75" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entrez la nouvelle description" ></textarea><br><br>
+                        <label class="textModif" for="numLi"> - Date d'expiration actuelle : {$this->data->expiration}  </label><br><br>
+                        <label class="text" for="numLi"> Nouvelle date d'expiration</label><br>
+                        <input type="date" class="infosModif" name="expiration" min=$date> <br><br>
+                        <input type="submit" class="buttonModifier" value="Valider les modifications">
+                    </form>
+                    </div>
+            </body>
+        </html>
+END;
+                }else {
+                    $html .=<<<END
+                        <div>
+                        <p class="connexionok">Modifications effectuées</p>
+                        </div>
+                    </body>
+                </html>
+END;
+                }
                 break;
         }
 

@@ -107,7 +107,7 @@ class ParticipantController{
             $items = item::query()->where('liste_id', '=', $liste->no)->get();
             $val = ([$liste, $items]);
 
-            $this->paths($rq, $val, $rs, 2);
+            $this->paths($rq, $val, $rs, 'liste detail');
 
             return $rs;
 
@@ -257,6 +257,7 @@ class ParticipantController{
         }
     }
 
+
     public function supprimerCompte(Request $rq, Response $rs):Response{
         try {
             session_start();
@@ -269,8 +270,27 @@ class ParticipantController{
 
             return $rs;
 
-        }catch (ModelNotFoundException $e){
-            $rs->write( "Problème avec la suppression");
+        }catch (ModelNotFoundException $e) {
+            $rs->write("Problème avec la suppression");
+        }
+    }
+
+    public function modifierListe(Request $rq, Response $rs, array$args){
+        try {
+            session_start();
+
+            $val = null;
+
+            $val = liste::query()->where('token_modif', '=', $args['token_modif'])
+                ->firstOrFail();
+
+            $this->paths($rq, $val, $rs, 'modifier liste');
+
+            return $rs;
+
+
+        } catch (ModelNotFoundException $e) {
+            $rs->write("La liste {$_GET['token_modif']} n'a pas été trouvée");
             return $rs;
         }
     }

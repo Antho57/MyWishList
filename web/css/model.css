@@ -107,7 +107,7 @@ body{
     font-family: Dubai;
 }
 
-.textRed{
+.textRed {
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -115,6 +115,13 @@ body{
     font-family: Dubai;
     color: red;
     text-align: center;
+}
+
+.textModif{
+    margin-left: 30px;
+    font-size: 22px;
+    font-weight: bold;
+    font-family: Dubai;
 }
 
 .text2{
@@ -242,17 +249,27 @@ nav ul li:hover ul li {
     margin-bottom: 20px;
 }
 
+.infosModif{
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
 .buttonCreer{
     margin-left: 925px;
     font-family: "Agency FB";
     font-size: 20px;
 }
 
-.buttonCreer2{
+
+.buttonCreer2 {
     display: inline-block;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+}
+
+.buttonModifier{
+    margin-left: 870px;
     font-family: "Agency FB";
     font-size: 20px;
 }

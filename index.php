@@ -39,6 +39,17 @@ $app->get('/liste/detail/{token}', function (Request $rq, Response $rs, array $a
 
 
 
+$app->get('/liste/modifier/{token_modif}', function(Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->modifierListe($rq,$rs,$args);
+}
+)->setName('modifListe');
+
+
+
+
+
 $app->get('/item', function (Request $rq, Response $rs, array $args): Response {
 
     $c = new mywishlist\control\ParticipantController($this);
