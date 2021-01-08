@@ -78,7 +78,7 @@ class ParticipantController{
         try{
             session_start();
 
-            $item = liste::get();
+            $item = liste::query()->where('public', '=', '1')->get();
 
             $this->paths($rq, $item, $rs, 1);
             return $rs;
