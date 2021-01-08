@@ -59,7 +59,7 @@ class ParticipantController{
                     ->firstOrFail();
             }
 
-            $this->paths($rq, [$item], $rs, 3);
+            $this->paths($rq, [$item], $rs, 'un item');
             return $rs;
 
 
@@ -80,7 +80,7 @@ class ParticipantController{
 
             $item = liste::query()->where('public', '=', '1')->get();
 
-            $this->paths($rq, $item, $rs, 1);
+            $this->paths($rq, $item, $rs, 'listes publiques');
             return $rs;
 
 
@@ -124,7 +124,7 @@ class ParticipantController{
 
             $val = null;
 
-            $this->paths($rq, $val, $rs, 667);
+            $this->paths($rq, $val, $rs, 'credits');
             return $rs;
 
 
@@ -163,7 +163,7 @@ class ParticipantController{
                 $val = $liste;
             }
 
-            $this->paths($rq, $val, $rs, 4);
+            $this->paths($rq, $val, $rs, 'creer liste');
             return $rs;
 
 
@@ -183,7 +183,7 @@ class ParticipantController{
                 $val = compte::query()->where('login', 'like', strip_tags($_POST['login']))->first();
             }
 
-            $this->paths($rq, $val, $rs, 5);
+            $this->paths($rq, $val, $rs, 'connexion');
             return $rs;
 
         }catch (ModelNotFoundException $e){
@@ -202,7 +202,7 @@ class ParticipantController{
                 $val = compte::query()->where('login', 'like', strip_tags($_POST['login']))->first();
             }
 
-            $this->paths($rq, $val, $rs, 6);
+            $this->paths($rq, $val, $rs, 'inscription');
             return $rs;
 
         }catch (ModelNotFoundException $e){
@@ -217,7 +217,7 @@ class ParticipantController{
 
             $val = null;
 
-            $this->paths($rq, $val, $rs, 7);
+            $this->paths($rq, $val, $rs, 'accueil');
             return $rs;
 
         }catch (ModelNotFoundException $e){
@@ -229,7 +229,7 @@ class ParticipantController{
     public function deconnexion(Request $rq, Response $rs):Response{
         session_start();
         unset($_SESSION['active']);
-        $this->paths($rq, '', $rs, 8);
+        $this->paths($rq, '', $rs, 'deconnexion');
 
         return $rs;
     }
@@ -245,7 +245,7 @@ class ParticipantController{
             $val=null;
             $val = liste::query()->where('user_id', '=', $_SESSION['compte_id'])->get();
 
-            $this->paths($rq, $val, $rs, 9);
+            $this->paths($rq, $val, $rs, 'compte');
 
             return $rs;
 

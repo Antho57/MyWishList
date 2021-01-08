@@ -192,7 +192,7 @@ END;
         }
 
         switch ($vars){
-            case 1:
+            case 'listes publiques':
                 $content = $this->allListe($this->data);
                 $html .= <<<END
                     <div><h1 class="centrage2">Listes publiques</h1></div>
@@ -204,7 +204,7 @@ END;
 END;
                 break;
 
-            case 2:
+            case 'liste detail':
                 $content = $this->listeDetail($this->data, $lien, $tab);
 
                 $html .= <<<END
@@ -216,7 +216,7 @@ END;
         </html>
 END;
                 break;
-            case 3:
+            case 'un item':
                 $content = null;
                 if( $this->data[0] !== null) {
                     $content = $this->unItemHtml($this->data[0], $lien);
@@ -244,7 +244,7 @@ END;
         </html>
 END;
                 break;
-            case 4:
+            case 'creer liste':
                 $content = null;
                 if( $this->data !== null) {
                     $content = $this->creerListe($this->data, $tab);
@@ -284,7 +284,7 @@ $html .=<<<END
         </html>
 END;
                 break;
-            case 5:
+            case 'connexion':
 
                 if($_SESSION['active'] === false){
                     $html .= <<<END
@@ -314,7 +314,7 @@ END;
 END;
 
                 break;
-            case 6:
+            case 'inscription':
 
                 $html .= <<<END
             <div><h1 class="centrage2">Inscription</h1></div>
@@ -343,8 +343,8 @@ END;
 END;
                 }
                 break;
-            case 7:
-                //session_destroy();
+            case 'accueil':
+
                 $content = null;
                 if( $this->data !== null) {
                     $content =<<<END
@@ -353,11 +353,7 @@ END;
                         </section>
 END;
                 }
-//                $html .= <<<END
-//                    <form action="{$lien['basepath']}/src/view/logout.php">
-//                        <input type="submit" value="Deconnexion" >
-//                    </form>
-//END;
+
                 $html .= <<<END
             <div><h1 class="centrage2">Accueil</h1></div>
             
@@ -375,7 +371,7 @@ END;
 END;
                 break;
 
-            case 667:
+            case 'credits':
                 $html .= <<<END
             <div><h1 class="centrage2">CREDITS DU SITE</h1></div><br><br>
             <div class="credit">
@@ -391,7 +387,7 @@ END;
         </html>
 END;
                 break;
-            case 8:
+            case 'deconnexion':
 
                 if(!isset($_SESSION['active'])){
                     $html .=<<<END
@@ -406,7 +402,7 @@ END;
 END;
 
                 break;
-            case 9:
+            case 'compte':
 
                 if(isset($_SESSION['active']) && $_SESSION['active'] === true){
                     $info = $this->detailListeCompte($this->data);
