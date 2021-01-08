@@ -296,6 +296,8 @@ END;
                             <input type="text" class="infosL2" name="login" minlength="5" maxlength="20" size="15" placeholder="Login" ><br>
                             <label class="infosL" for="numLi"> Saisissez votre mot de passe </label>
                             <input type="password" class="infosL2" name="password" minlength="5" maxlength="60" size="15" placeholder="Password" ><br>
+                            <label class="infosL" for="numLi"> Resaisissez votre mot de passe </label>
+                            <input type="password" class="infosL2" name="password2" minlength="5" maxlength="60" size="15" placeholder="Password" ><br>
                             <input type="submit" class="buttonCreer" value="Inscription">
                         </form>
                     </div>

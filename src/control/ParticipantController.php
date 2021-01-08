@@ -197,7 +197,7 @@ class ParticipantController{
 
             $val = null;
 
-            if (!empty($_POST['login']) && !empty($_POST['password']) && $_SESSION['active'] === false) {
+            if (!empty($_POST['login']) && !empty($_POST['password']) && $_SESSION['active'] === false && $_POST['password'] === $_POST['password2']) {
                 Authentication::createUser($_POST['login'],$_POST['password']);
                 $val = compte::query()->where('login', 'like', strip_tags($_POST['login']))->first();
             }
