@@ -82,11 +82,17 @@ END;
 
 
     private function creerListe($args, $tab):String {
+        if ($args->public){
+            $public = 'Oui';
+        }else{
+            $public = 'Non';
+        }
         $html = <<<END
             <h3 class="titreli"> {$args->no} - {$args->titre}</h3>
             <p class="text">Description : {$args->description}</p>
             <p class="text">Expiration : {$args->expiration}</p>
             <p class="text">Token unique : {$args->token}</p>
+            <p class="text">Liste publique : {$public}</p>
             <p class="importante"> Il faut bien garder ce lien pour accéder à la liste en mode modification</p>
             <p class="text">URL :  {$tab['lien2']}{$args->token}</p>
             <br>
@@ -237,7 +243,7 @@ END;
                                         <input type="text" class="infosL2" name="description" minlength="1" maxlength="300" size="15" placeholder="Entrez la description" ><br>
                                         <label class="infosL" for="numLi"> Entrez la date d'expiration de votre liste </label>
                                         <input type="date" class="infosL2" name="expiration" min=$date> <br>
-                                        <label class="infosL" for="numLi"> Rendre la liste public </label>
+                                        <label class="infosL" for="numLi"> Rendre la liste publique </label>
                                         <input type="checkbox" class="infosL2" name="public"><br>
                                         <input type="submit" class="buttonCreer" value="Créer">
                                 </form>
@@ -246,7 +252,7 @@ END;
                 }else{
                     $html .=<<<END
                         <div>
-                        <p class="annonce">La liste est créée</p>
+                        <p class="connexionok">La liste est créée</p>
                         <div class="info">$content</div>
                         </div>
 END;

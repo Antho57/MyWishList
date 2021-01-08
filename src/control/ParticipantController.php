@@ -145,7 +145,7 @@ class ParticipantController{
 
             if (!empty($_POST['titre']) && !empty($_POST['description']) && !empty($_POST['expiration'])) {
                 $l = new liste();
-                if ($_SESSION['active']===true){
+                if (isset($_SESSION['active']) && $_SESSION['active']===true){
                     $l->user_id = $_SESSION['compte_id'];
                 }
                 $l->titre =strip_tags($_POST['titre']);
@@ -237,14 +237,13 @@ class ParticipantController{
     public function compte(Request $rq, Response $rs):Response{
         try {
             session_start();
-            $val = null;
+
             if (!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['password2']) && isset($_SESSION['active']) && $_SESSION['active'] === true) {
                 Authentication::modifyUser($_POST['login'],$_POST['password2']);
-                $val = compte::query()->where('login', 'like', strip_tags($_POST['login']))->first();
                 unset($_SESSION['active']);
             }
 
-            $this->paths($rq, $val, $rs, 9);
+            $this->paths($rq, '', $rs, 9);
 
             return $rs;
 
