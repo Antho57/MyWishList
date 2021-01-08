@@ -232,7 +232,7 @@ class ParticipantController{
 
     public function compte(Request $rq, Response $rs):Response{
         try {
-
+            session_start();
             $val = null;
 
             if (!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['password2']) && $_SESSION['active'] === true) {

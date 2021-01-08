@@ -364,7 +364,6 @@ END;
                 break;
             case 9:
 
-                print_r($_SESSION);
                 if($_SESSION['active'] === true || isset($_SESSION['active'])){
                     $log = $_SESSION['login'];
                     $html .= <<<END
