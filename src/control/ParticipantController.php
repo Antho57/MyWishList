@@ -240,8 +240,7 @@ class ParticipantController{
     public function compte(Request $rq, Response $rs):Response{
         try {
             session_start();
-
-            $val = '';
+            $val = null;
 
             if (!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['password2']) && isset($_SESSION['active']) && $_SESSION['active'] === true) {
                 Authentication::modifyUser($_POST['login'],$_POST['password2']);
@@ -249,7 +248,6 @@ class ParticipantController{
             }
 
             $val = liste::query()->where('user_id', '=', $_SESSION['compte_id'])->first();
-
 
             $this->paths($rq, $val, $rs, 'compte');
 

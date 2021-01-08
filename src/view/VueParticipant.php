@@ -93,23 +93,26 @@ END;
     private function detailListeCompte($args):String {
         $html = '';
 
-        foreach($args as $row) {
-            $val =<<<END
+        if ($args != null){
+            foreach($args as $row) {
+                $val =<<<END
             <h3 class="titre3"> {$row->no} - {$row->titre}</h3>
             <p class="text">Description : {$row->description}</p>
             <h4 class="text">Expiration : {$row->expiration}</h4><br>
 END;
-            $html = $html. $val;
+                $html = $html. $val;
+            }
         }
 
 
-        $val =<<<END
+
+        $rep =<<<END
             <section>
             $html
             </section>
 END;
 
-        return $val;
+        return $rep;
 
     }
 
