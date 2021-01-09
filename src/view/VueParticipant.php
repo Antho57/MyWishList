@@ -468,7 +468,7 @@ END;
             case 'supprimerCompte':
 
                 if(isset($_SESSION['active']) && $_SESSION['active'] === true){
-                    $info = $this->detailListeCompte($this->data);
+                    $info = $this->detailListeCompte($this->data, $tab);
                     $html .= <<<END
                     <div><h1 class="centrage2">Supprimer mon compte</h1></div>
                     <div class="formulaire1">
