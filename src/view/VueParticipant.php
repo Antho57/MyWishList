@@ -80,6 +80,7 @@ END;
             if ($_SESSION['compte_id'] === $args[0]->user_id){
                 $html .= <<<END
                 <p class="text">URL DE CONSULTATION :  {$tab['lien2']}</p>
+                <p class="textImportant" >URL DE MODIFICATION : </p> <p class="text" style="display: inline; margin-left: 0px;">{$tab['lienModif']}</p><br><br>
                 <a href="{$tab['lienModif']}"><input type="button" class="buttonAfficherModif" name="modifier" value="Modifier infos"></a>
                 
 END;

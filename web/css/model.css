@@ -107,6 +107,14 @@ body{
     font-family: Dubai;
 }
 
+.textImportant{
+    margin-left: 30px;
+    font-size: 22px;
+    font-family: Dubai;
+    color : red;
+    display: inline;
+}
+
 .textRed {
     display: block;
     margin-left: auto;
