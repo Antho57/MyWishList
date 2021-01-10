@@ -31,9 +31,7 @@ END;
         if ($liste != null){
             foreach($liste as $row) {
                 $val =<<<END
-            <a href="{$tab['lienPublique'][$i]}"><h3 class="titre3"> {$row->no} - {$row->titre}</h3></a>
-            <p class="text">Description : {$row->description}</p>
-            <h4 class="text">Expiration : {$row->expiration}</h4><br>
+            <a href="{$tab['lienPublique'][$i]}"><h3 class="titre3"> {$row->no} - {$row->titre}</h3></a><br><br>
 END;
                 $html = $html. $val;
                 $i++;
@@ -64,35 +62,47 @@ END;
 
 
     private function listeDetail($args, $lien, $tab):String {
+        $html = null;
+
         if ($args[0]->public){
             $public = 'Oui';
         }else{
             $public = 'Non';
         }
+
         $html = <<<END
             <h3 class="titreli"> {$args[0]->no} - {$args[0]->titre}</h3>
             <p class="text">Description : {$args[0]->description}</p>
             <p class="text">Expiration : {$args[0]->expiration}</p>
             <p class="text">Liste publique : {$public}</p>
-            <p class="text">URL DE CONSULTATION :  {$tab['lien2']}</p>
 END;
         if (isset($_SESSION['active']) && $_SESSION['active']===true){
             if ($_SESSION['compte_id'] === $args[0]->user_id){
                 $html .= <<<END
+                <p class="text">URL DE CONSULTATION :  {$tab['lien2']}</p>
                 <a href="{$tab['lienModif']}"><input type="button" class="buttonAfficherModif" name="modifier" value="Modifier infos"></a>
-                <br>
+                
 END;
             }
         }
 
-        foreach($args[1] as $row) {
-            $val =<<<END
+        $html .= <<<END
+        <br><h3 class="titreli2"> Les items de la liste </h3><br>
+END;
+
+        if (empty($args[1][0]->id)){
+            $html .= <<<END
+                <p class="text"> !! Cette liste est vide !! </p>
+END;
+        }else {
+            foreach ($args[1] as $row) {
+                $html .= <<<END
                 <h4><a class="titre3" href="{$tab['lien3']}?numIt={$row->id}}"> {$row->nom}</a></h4>
                 <img src="{$lien['basepath']}/web/img/{$row->img}" class="imgItem">
                 <p class="text">Reservation : </p>
                 <br>
 END;
-            $html = $html. $val;
+            }
         }
 
         $val =<<<END

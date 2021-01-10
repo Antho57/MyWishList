@@ -110,7 +110,7 @@ class ParticipantController{
         try{
             session_start();
 
-            $item = liste::query()->where('public', '=', '1')->get();
+            $item = liste::query()->where('public', '=', '1')->orderBy('expiration')->get();
 
             $this->paths($rq, $item, $rs, 'listes publiques');
             return $rs;
@@ -132,6 +132,7 @@ class ParticipantController{
             session_start();
 
             $val = null;
+            $items = null;
 
             $liste = liste::query()->where('token', '=', $args['token'])
                 ->firstOrFail();
