@@ -23,6 +23,17 @@
     border: 3px solid black;
 }
 
+
+
+.titreAjoutItem{
+    font-family: "Agency FB";
+    font-weight: bolder;
+    font-size: 30px;
+    color: black;
+    margin-left: 150px;
+    text-decoration: underline black;
+}
+
 .centrage3{
     text-align: center;
     font-family: "Agency FB";
@@ -287,6 +298,18 @@ nav ul li:hover ul li {
 
 .buttonModifier{
     margin-left: 870px;
+    font-family: "Agency FB";
+    font-size: 20px;
+}
+
+.buttonAjouter{
+margin-left: 870px;
+font-family: "Agency FB";
+font-size: 20px;
+}
+
+.buttonAjoutItem{
+    margin-left: 30px;
     font-family: "Agency FB";
     font-size: 20px;
 }

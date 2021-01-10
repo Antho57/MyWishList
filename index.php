@@ -57,6 +57,24 @@ $app->post('/liste/modifier/{token_modif}', function(Request $rq, Response $rs, 
 
 
 
+$app->get('/liste/modifier/{token_modif}/ajoutItem', function(Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->ajouterItemListe($rq,$rs,$args);
+}
+)->setName('ajoutItemListe');
+
+
+$app->post('/liste/modifier/{token_modif}/ajoutItem', function(Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->ajouterItemListe($rq,$rs,$args);
+}
+)->setName('ajoutItemListePost');
+
+
+
+
 
 $app->get('/item', function (Request $rq, Response $rs, array $args): Response {
 

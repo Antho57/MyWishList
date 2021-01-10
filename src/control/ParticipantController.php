@@ -74,6 +74,11 @@ class ParticipantController{
 
         }
 
+        if ($render === 'modifier liste'){
+            $lien = $this->c->router->pathFor("ajoutItemListe", ['token_modif'=>$val->token_modif]);
+            $tab['lienAjoutItem'] = $lien;
+        }
+
         $v = new VueParticipant($val);
 
         $rs->write($v->render($render, $htmlvars, $tab));
@@ -355,6 +360,8 @@ class ParticipantController{
         }
     }
 
+
+
     public function listeCreateurs(Request $rq, Response $rs, array$args){
         try {
             session_start();
@@ -376,5 +383,52 @@ class ParticipantController{
             $rs->write("Problème avec la liste des créateurs");
             return $rs;
         }
+    }
+
+
+
+
+    public function ajouterItemListe(Request $rq, Response $rs, array$args){
+        try {
+            session_start();
+
+            $liste = null;
+            $itemCree = null;
+
+            $liste = liste::query()->where('token_modif', '=', $args['token_modif'])
+                ->firstOrFail();
+
+            if (!empty($_POST['NomItem']) && !empty($_POST['DescriptionItem']) && !empty($_POST['PrixItem'])){
+                $item = new item();
+
+                $item->liste_id = $liste->no;
+
+                $item->nom = $_POST['NomItem'];
+
+                $item->descr= $_POST['DescriptionItem'];
+
+                $item->tarif = $_POST['PrixItem'];
+
+                if (!empty($_POST['url'])) {
+                    $item->url = $_POST['url'];
+                }
+
+                $item->timestamps = false;
+                $item->save();
+
+                $itemCree = item::query()->where( 'descr', 'like', $_POST['DescriptionItem'])->firstOrFail();
+            }
+
+            $val = ([$liste, $itemCree]);
+
+            $this->paths($rq, $val, $rs, 'ajouter Item');
+
+            return $rs;
+
+        } catch (ModelNotFoundException $e) {
+            $rs->write("Problème avec l'ajout de l'item");
+            return $rs;
+        }
+
     }
 }
