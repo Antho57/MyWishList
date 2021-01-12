@@ -20,9 +20,20 @@ class VueParticipant{
             <p class="text">{$item->descr}</p>
             <h4 class="text">Tarif : {$item->tarif}</h4>
             <h4 class="text" style="display: inline;"> URL : </h4>  <p class="text" style="display: inline; margin-left: 0px;"> {$item->url}</p><br><br>
-            <img src="{$lien['basepath']}/web/img/{$item->img}" class="imgItem">
-</div>
+           
 END;
+            if (!str_starts_with($item->img, "http")){
+                $html.= <<<END
+                <img src="{$lien['basepath']}/web/img/{$item->img}" class="imgItem" alt="{$item->descr}">
+                </div>
+END;
+            }else{
+                $html.= <<<END
+                <img src="{$item->img}" class="imgItem" alt="{$item->descr}">
+                </div>
+END;
+            }
+
         }else{
             $html = <<<END
             <div>
@@ -31,17 +42,15 @@ END;
             <h4 class="text">Tarif : {$item->tarif}</h4>
             <h4 class="text" style="display: inline;"> URL : </h4>  <p class="text" style="display: inline; margin-left: 0px;"> {$item->url}</p><br><br>
 END;
-            if(!$item->reserver){
-                $html .= <<<END
+        }
+        if(!$item->reserver){
+            $html .= <<<END
+                <br><br><br><br><br><br><br>
                 <a href="{$tab['modifItem']}?numIt={$_GET['numIt']}"><input type="button" class="buttonAfficherModif" style="display:inline-block;  margin-left: 0%;" name="modifier" value="Modifier infos"></a>
                 <a href="{$tab['supprimerItem']}?numIt={$_GET['numIt']}"><input type="button" class="buttonAfficherModif" style="display:inline-block; margin-left: 0%;" name="supprimer" value="Supprimer l'item"></a>
-</div>
+                </div>
 END;
-            }
-
-
         }
-
         return $html;
     }
 
@@ -123,10 +132,19 @@ END;
                 <h4><a class="titre3" href="{$tab['lien3']}?numIt={$row->id}"> {$row->nom}</a></h4>
                 <p class="text">Reservation : </p>
 END;
+
                 if ($row->img != null){
-                    $html .= <<<END
-                    <img src="{$lien['basepath']}/web/img/{$row->img}" class="imgItem"><br><br><br><br><br>
+                    if (!str_starts_with($row->img, "http")){
+                        $html.= <<<END
+                <img src="{$lien['basepath']}/web/img/{$row->img}" class="imgItem" alt="{$row->descr}"><br><br><br><br><br>
+                </div>
 END;
+                    }else{
+                        $html.= <<<END
+                <img src="{$row->img}" class="imgItem" alt="{$row->descr}"><br><br><br><br><br>
+                </div>
+END;
+                    }
                 }
                 $html.= <<<END
                 </div>
@@ -255,9 +273,8 @@ END;
     }
 
 
-    public function modifierItem($args, $tab):String{
+    public function modifierItem($args, $tab,$lien):String{
         $html = '';
-
         if(empty($_POST['NewNom']) && empty($_POST['NewDescription']) && empty($_POST['NewURL']) && empty($_POST['NewImg']) && empty($_POST['NewTarif'])){
             $html .=<<<END
                     <div>
@@ -271,13 +288,31 @@ END;
                         <label class="textModif" for="numLi"> - URL actuelle : {$args->url}  </label><br><br>
                         <label class="text" for="numLi"> Nouvelle URL</label><br>
                         <input type="text" class="infosModif" name="NewURL"> <br><br>
-                        <label class="textModif" for="numLi"> - Image actuelle : {$args->img}  </label><br><br>
+                        <label class="textModif" for="numLi"> - Image actuelle : </label><br>&nbsp;
+END;
+            if ($args->img != null){
+                if (!str_starts_with($args->img, "http")){
+                    $html.= <<<END
+                        <img src="{$lien['basepath']}/web/img/{$args->img}" style="max-width: 200px; max-height: 200px"><br><br>
+END;
+                }else{
+                    $html.= <<<END
+                        <img src={$args->img} style="max-width: 200px; max-height: 200px"><br><br>
+END;
+                }
+
+            }else{
+                $html.= <<<END
+                        <label class="text" for="numLi"> Aucune image</label><br>
+END;
+            }
+            $html.= <<<END
+                        <input type="submit" name="buttonSuppImg" class="buttonDelete" value="Supprimer l'image"><br>
                         <label class="text" for="numLi"> Nouvelle image</label><br>
                         <input type="text" class="infosModif" name="NewImg"> <br><br>
                         <label class="textModif" for="numLi"> - Tarif actuel : {$args->tarif}  </label><br><br>
                         <label class="text" for="numLi"> Nouveau tarif</label><br>
                         <input type="text" class="infosModif" name="NewTarif"> <br><br>
-                        
                         <input type="submit" name="buttonModifierItem" class="buttonModifier" value="Valider les modifications">
                         </form>
                         </div>
@@ -684,7 +719,7 @@ END;
             case 'ajouter Item':
                 $content = null;
                 if (!empty($_POST['NomItem']) && !empty($_POST['DescriptionItem']) && !empty($_POST['PrixItem'])){
-                    $content = $this->unItemHtml($this->data[1], $tab);
+                    $content = $this->unItemHtml($this->data[1], $tab, $lien);
 
                     $html .= <<<END
                 <div><h1 class="centrage2">Ajouter un item</h1></div>
@@ -704,7 +739,7 @@ END;
                 }
                 break;
             case 'modifier item':
-                $content = $this->modifierItem($this->data, $tab);
+                $content = $this->modifierItem($this->data, $tab, $lien);
 
                 $html .= <<<END
                 <div><h1 class="centrage2">Modifier un item</h1></div>

@@ -458,12 +458,15 @@ class ParticipantController{
                 if (!empty($_POST['NewTarif'])){
                     $item->tarif = $_POST['NewTarif'];
                 }
+                if (isset($_POST["buttonSuppImg"]))
+                {
+                    $item->img = "";
+                }
                 $item->timestamps = false;
                 $item->save();
             }
 
             $this->paths($rq, $item, $rs, 'modifier item');
-
             return $rs;
 
 
