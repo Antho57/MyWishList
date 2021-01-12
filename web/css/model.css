@@ -319,6 +319,12 @@ nav ul li:hover ul li {
     font-size: 20px;
 }
 
+.buttonParticiper{
+    margin-left: 30px;
+    font-family: "Agency FB";
+    font-size: 20px;
+}
+
 .buttonDelete{
     margin-left: 30px;
     font-family: "Agency FB";
@@ -370,6 +376,7 @@ input[type=number] {
     width: 90px;
     height: 90px;
     float: left;
+    margin-left: 30px;
 }
 
 .ici{

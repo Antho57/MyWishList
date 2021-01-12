@@ -102,12 +102,15 @@ class ParticipantController{
 
             $var = $rq->getQueryParams();
             $item = null;
+            $liste = null;
             if(isset($var['numIt'])){
                 $item = item::query()->where('id', '=', $var['numIt'])
                     ->firstOrFail();
+                $liste = liste::query()->where('no', '=', $item->liste_id)->first();
             }
+            $rep = ([$item, $liste]);
 
-            $this->paths($rq, [$item], $rs, 'un item');
+            $this->paths($rq, $rep, $rs, 'un item');
             return $rs;
 
 
@@ -417,13 +420,15 @@ class ParticipantController{
                     $item->url = $_POST['url'];
                 }
 
+                $item->reserver = 0;
+
                 $item->timestamps = false;
                 $item->save();
 
                 $itemCree = item::query()->where( 'descr', 'like', $_POST['DescriptionItem'])->firstOrFail();
             }
 
-            $val = ([$liste, $itemCree]);
+            $val = ([$itemCree, $liste]);
 
             $this->paths($rq, $val, $rs, 'ajouter Item');
 

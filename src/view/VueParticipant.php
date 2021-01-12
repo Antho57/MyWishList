@@ -12,45 +12,118 @@ class VueParticipant{
     }
 
 
-    private function unItemHtml(\mywishlist\models\item $item, $lien, $tab):string {
-        if($item->img != null){
+    private function unItemHtml($args, $lien, $tab):string {
+        if($args[0]->img != null){
             $html = <<<END
             <div>
-            <h3 class="titre3">{$item->id} - {$item->nom}</h3>
-            <p class="text">{$item->descr}</p>
-            <h4 class="text">Tarif : {$item->tarif}</h4>
-            <h4 class="text" style="display: inline;"> URL : </h4>  <p class="text" style="display: inline; margin-left: 0px;"> {$item->url}</p><br><br>
+            <h3 class="titre3">{$args[0]->id} - {$args[0]->nom}</h3>
+            <p class="text">{$args[0]->descr}</p>
+            <h4 class="text" style="display: inline;">Tarif : </h4> <p class="text" style="display: inline; margin-left: 0px;"> {$args[0]->tarif}</p><br><br>
+            <h4 class="text" style="display: inline;"> URL : </h4>  <p class="text" style="display: inline; margin-left: 0px;"> {$args[0]->url}</p><br>
            
 END;
-            if (!str_starts_with($item->img, "http")){
+            if ($args[0]->reserver === 0){
+                $html .= <<<END
+                    <p class="text">Cette item n'est pas réservé</p>
+END;
+            }else {
+                if (isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id){
+                    $html .= <<<END
+                    <p class="text">Cette item est réservé</p>
+END;
+                }else {
+                    $html .= <<<END
+                    <p class="text">Cette item est réservé</p>
+                    <h4 class="text" style="display: inline;"> Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$args[0]->nom_participant} </p><br>
+                    <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$args[0]->message} </p><br><br>
+END;
+                }
+            }
+            if (!str_starts_with($args[0]->img, "http")){
                 $html.= <<<END
-                <img src="{$lien['basepath']}/web/img/{$item->img}" class="imgItem" alt="{$item->descr}">
-                </div>
+                <img src="{$lien['basepath']}/web/img/{$args[0]->img}" class="imgItem" alt="{$args[0]->descr}">
+                </div><br><br><br><br><br><br>
 END;
             }else{
                 $html.= <<<END
-                <img src="{$item->img}" class="imgItem" alt="{$item->descr}">
-                </div>
+                <img src="{$args[0]->img}" class="imgItem" alt="{$args[0]->descr}">
+                </div><br><br><br><br><br><br>
 END;
             }
 
         }else{
             $html = <<<END
             <div>
-            <h3 class="titre3">{$item->id} - {$item->nom}</h3>
-            <p class="text">{$item->descr}</p>
-            <h4 class="text">Tarif : {$item->tarif}</h4>
-            <h4 class="text" style="display: inline;"> URL : </h4>  <p class="text" style="display: inline; margin-left: 0px;"> {$item->url}</p><br><br>
+            <h3 class="titre3">{$args[0]->id} - {$args[0]->nom}</h3>
+            <p class="text">{$args[0]->descr}</p>
+            <h4 class="text" style="display: inline;">Tarif : </h4> <p class="text" style="display: inline; margin-left: 0px;"> {$args[0]->tarif}</p><br><br>
+            <h4 class="text" style="display: inline;"> URL : </h4>  <p class="text" style="display: inline; margin-left: 0px;"> {$args[0]->url}</p><br>
 END;
+            if ($args[0]->reserver === 0){
+                $html .= <<<END
+                    <p class="text">Cette item n'est pas réservé</p>
+END;
+            }else {
+                if (isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id){
+                    $html .= <<<END
+                    <p class="text">Cette item est réservé</p>
+END;
+                }else {
+                    $html .= <<<END
+                    <p class="text">Cette item est réservé</p>
+                    <h4 class="text" style="display: inline;"> Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$args[0]->nom_participant} </p><br>
+                    <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$args[0]->message} </p><br><br>
+END;
+                }
+            }
         }
-        if(!$item->reserver){
+        if(!$args[0]->reserver && isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id){
             $html .= <<<END
                 <br><br><br><br><br><br><br>
+                
                 <a href="{$tab['modifItem']}?numIt={$_GET['numIt']}"><input type="button" class="buttonAfficherModif" style="display:inline-block;  margin-left: 0%;" name="modifier" value="Modifier infos"></a>
                 <a href="{$tab['supprimerItem']}?numIt={$_GET['numIt']}"><input type="button" class="buttonAfficherModif" style="display:inline-block; margin-left: 0%;" name="supprimer" value="Supprimer l'item"></a>
                 </div>
 END;
         }
+
+        if (!empty($_SESSION['compte_id'])) {
+            if (!$args[0]->reserver && $_SESSION['compte_id'] != $args[1]->user_id) {
+                $html .= <<<END
+                    
+                    <div>
+                    <h4 class="titre3" for="numLi"> Participer pour cette item </h4>
+                    <form method="post">
+                        <label class="text" for="numLi" style="display: inline;"> Entrer votre nom </label>
+                        <input type="text" class="infosModif" name="nomParticipant" style="margin-left: 0px"> <br><br>
+                        <label class="text" for="numLi" style="display: inline;"> Entrer votre message </label><br>
+                        <textarea type="text" class="infosModif" name="messageParticipant" cols="75" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entre votre message" ></textarea><br><br>
+                        <input type="submit" name="buttonParticiperItem" class="buttonParticiper" value="Participer">
+                        </form>
+                        </div>
+                    </body>
+                </html>
+END;
+            }
+        }else {
+            $html .= <<<END
+                    
+                    <div>
+                    <h4 class="titre3" for="numLi"> Participer pour cette item </h4>
+                    <form method="post">
+                        <label class="text" for="numLi" style="display: inline;"> Entrer votre nom </label>
+                        <input type="text" class="infosModif" name="nomParticipant" style="margin-left: 0px"> <br><br>
+                        <label class="text" for="numLi" style="display: inline;"> Entrer votre message </label><br>
+                        <textarea type="text" class="infosModif" name="messageParticipant" cols="75" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entre votre message" ></textarea><br><br>
+                        <input type="submit" name="buttonParticiperItem" class="buttonParticiper" value="Participer">
+                        </form>
+                        </div>
+                    </body>
+                </html>
+END;
+        }
+
+
         return $html;
     }
 
@@ -130,19 +203,27 @@ END;
                 $html .= <<<END
                 <div>
                 <h4><a class="titre3" href="{$tab['lien3']}?numIt={$row->id}"> {$row->nom}</a></h4>
-                <p class="text">Reservation : </p>
+                
 END;
+
+                if ($row->reserver === 0){
+                    $html .= <<<END
+                    <p class="text">Cette item n'est pas réservé</p>
+END;
+                }else {
+                    $html .= <<<END
+                    <p class="text">Cette item est réservé</p>
+END;
+                }
 
                 if ($row->img != null){
                     if (!str_starts_with($row->img, "http")){
                         $html.= <<<END
                 <img src="{$lien['basepath']}/web/img/{$row->img}" class="imgItem" alt="{$row->descr}"><br><br><br><br><br>
-                </div>
 END;
                     }else{
                         $html.= <<<END
                 <img src="{$row->img}" class="imgItem" alt="{$row->descr}"><br><br><br><br><br>
-                </div>
 END;
                     }
                 }
@@ -286,25 +367,12 @@ END;
                         <label class="textModif" for="numLi"> - URL actuelle : {$args->url}  </label><br><br>
                         <label class="text" for="numLi"> Nouvelle URL</label><br>
                         <input type="text" class="infosModif" name="NewURL"> <br><br>
-                        <label class="textModif" for="numLi"> - Image actuelle : </label><br>&nbsp;
 END;
             if ($args->img != null){
                 if (!str_starts_with($args->img, "http")){
                     $html.= <<<END
+                        <label class="textModif" for="numLi" > - Image actuelle : </label><br>&nbsp;
                         <img src="{$lien['basepath']}/web/img/{$args->img}" style="max-width: 200px; max-height: 200px"><br><br>
-END;
-                }else{
-                    $html.= <<<END
-                        <img src={$args->img} style="max-width: 200px; max-height: 200px"><br><br>
-END;
-                }
-
-            }else{
-                $html.= <<<END
-                        <label class="text" for="numLi"> Aucune image</label><br>
-END;
-            }
-            $html.= <<<END
                         <input type="submit" name="buttonSuppImg" class="buttonDelete" value="Supprimer l'image"><br>
                         <label class="text" for="numLi"> Nouvelle image</label><br>
                         <input type="text" class="infosModif" name="NewImg"> <br><br>
@@ -317,6 +385,40 @@ END;
                     </body>
                 </html>
 END;
+                }else{
+                    $html.= <<<END
+                        <label class="textModif" for="numLi" > - Image actuelle : </label><br>&nbsp;
+                        <img src={$args->img} style="max-width: 200px; max-height: 200px"><br><br>
+                        <input type="submit" name="buttonSuppImg" class="buttonDelete" value="Supprimer l'image"><br>
+                        <label class="text" for="numLi"> Nouvelle image</label><br>
+                        <input type="text" class="infosModif" name="NewImg"> <br><br>
+                        <label class="textModif" for="numLi"> - Tarif actuel : {$args->tarif}  </label><br><br>
+                        <label class="text" for="numLi"> Nouveau tarif</label><br>
+                        <input type="text" class="infosModif" name="NewTarif"> <br><br>
+                        <input type="submit" name="buttonModifierItem" class="buttonModifier" value="Valider les modifications">
+                        </form>
+                        </div>
+                    </body>
+                </html>
+END;
+                }
+
+            }else{
+                $html.= <<<END
+                        <label class="textModif" for="numLi" style="display: inline;"> - Image actuelle : </label>
+                        <label class="text" for="numLi" style="display: inline;"> Aucune image</label><br>
+                        <label class="text" for="numLi"> Nouvelle image</label><br>
+                        <input type="text" class="infosModif" name="NewImg"> <br><br>
+                        <label class="textModif" for="numLi"> - Tarif actuel : {$args->tarif}  </label><br><br>
+                        <label class="text" for="numLi"> Nouveau tarif</label><br>
+                        <input type="text" class="infosModif" name="NewTarif"> <br><br>
+                        <input type="submit" name="buttonModifierItem" class="buttonModifier" value="Valider les modifications">
+                        </form>
+                        </div>
+                    </body>
+                </html>
+END;
+            }
 
         }else {
             $html .= <<<END
@@ -336,7 +438,7 @@ END;
         $html = '';
 
         $html .=<<<END
-        <div><h1 class="titreAjoutItem">Liste : {$this->data[0]->titre}</h1></div>
+        <div><h1 class="titreAjoutItem">Liste : {$this->data[1]->titre}</h1></div>
         <div>
         <form method="post">
             <label class="text" for="numLi"> Entrez le nom de l'item </label>
@@ -448,8 +550,8 @@ END;
                 break;
             case 'un item':
                 $content = null;
-                if( $this->data[0] !== null) {
-                    $content = $this->unItemHtml($this->data[0], $lien, $tab);
+                if( $this->data[0] !== null && $this->data[1] !== null) {
+                    $content = $this->unItemHtml($this->data, $lien, $tab);
                 }
                 $html .= <<<END
             <div><h1 class="centrage2">Description d'un item</h1></div>
@@ -720,7 +822,7 @@ END;
             case 'ajouter Item':
                 $content = null;
                 if (!empty($_POST['NomItem']) && !empty($_POST['DescriptionItem']) && !empty($_POST['PrixItem'])){
-                    $content = $this->unItemHtml($this->data[1], $tab, $lien);
+                    $content = $this->unItemHtml($this->data, $tab, $lien);
 
                     $html .= <<<END
                 <div><h1 class="centrage2">Ajouter un item</h1></div>
