@@ -63,6 +63,13 @@ class ParticipantController{
 
         }
 
+        if ($render === 'creer liste' && $val!=null){
+            $lien6 = $this->c->router->pathFor("modifListe", ['token_modif'=>$val->token_modif]);
+            $tab["lienModif"] = $lien6;
+            $lien2 = $this->c->router->pathFor("listeDetail", ['token'=>$val->token]);
+            $tab["lien2"] = $lien2;
+        }
+
         if ($render === 'listes publiques'){
             $i =0;
             $tabLien = [];

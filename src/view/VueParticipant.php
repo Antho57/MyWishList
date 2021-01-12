@@ -170,9 +170,9 @@ END;
             <p class="text">Expiration : {$args->expiration}</p>
             <p class="text">Liste publique : {$public}</p>
             <p class="importante"> Il faut bien garder ce lien pour consulter la liste</p>
-            <p class="text">URL DE CONSULTATION :  {$tab['lien2']}{$args->token}</p>
+            <p class="text">URL DE CONSULTATION :  {$tab['lien2']}</p>
             <p class="importante"> Il faut bien garder ce lien pour modifier la liste</p>
-            <p class="text">URL DE MODIFICATION :  {$tab['lien2']}{$args->token_modif}</p>
+            <p class="text">URL DE MODIFICATION :  {$tab['lienModif']}</p>
             <br>
 END;
 
