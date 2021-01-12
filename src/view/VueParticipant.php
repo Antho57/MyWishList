@@ -178,8 +178,6 @@ END;
             }
         }
 
-
-
         $rep =<<<END
             <section>
             $html
@@ -647,9 +645,12 @@ END;
                             <a href="{$tab['supprimerCompte']}"><input type="button" class="text3" name="supprimerCompte" value="Supprimer mon compte"></a>
                     </div>
                     <div class="info">
-                    $info
+                        $info
+                        <a href="{$tab['ajouterListeCompte']}"><input type="button" class="buttonDelete" name="addListeCompte" value="Ajouter une liste à mon compte"></a>
                     </div>
 END;
+                    if (isset($_POST['ajouterListe'])){
+                    }
                 }else{
                     $_SESSION['password'] = password_hash($_POST['password'], PASSWORD_BCRYPT);
                     $html .=<<<END
@@ -769,6 +770,26 @@ END;
             </body>
         </html>
 END;
+                break;
+            case 'ajouterListeCompte':
+                if ($this->data === null) {
+                    $html .= <<<END
+                    <div><h1 class="centrage2">Ajouter une liste à mon compte</h1></div>
+                    <div class="formulaire1">
+                        <form method="post">
+                            <label class="textCentre">Entrez le token de modification de la liste pour l'ajouter à votre compte</label><br>
+                            <input type="text" class="centrage" name="tokenModif"><br>
+                            <input type="submit" class="buttonCreer3" name="ajoutListe" value="Ajouter la liste"><br>
+                        </form>
+                    </div>
+END;
+                }else{
+                    $html .=<<<END
+                        <div>
+                        <p class="connexionok">Liste ajoutée à votre compte !</p>
+                        </div>
+END;
+                }
                 break;
         }
 

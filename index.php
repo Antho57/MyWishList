@@ -240,5 +240,22 @@ $app->get('/createurs', function (Request $rq, Response $rs, array $args): Respo
 }
 )->setName('Createurs');
 
+
+
+
+$app->get('/ajouterListeCompte', function (Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->ajouterListeCompte($rq,$rs,$args);
+}
+)->setName('AjouterListeCompte');
+
+$app->post('/ajouterListeCompte', function (Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->ajouterListeCompte($rq,$rs,$args);
+}
+)->setName('AjouterListeComptePost');
+
 $app->run();
 

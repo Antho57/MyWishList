@@ -37,8 +37,9 @@ class ParticipantController{
         $createurs = $this->c->router->pathFor("Createurs");
         $modifItem = $this->c->router->pathFor("ModifierItem");
         $suppritem = $this->c->router->pathFor("SupprimerItem");
+        $addListeCompte = $this->c->router->pathFor("AjouterListeCompte");
 
-        $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>'$lien2', "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription, "compte"=>$compte, "supprimerCompte"=>$supprcompte, "createurs"=>$createurs, "modifItem"=>$modifItem, "supprimerItem"=>$suppritem];
+        $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>'$lien2', "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription, "compte"=>$compte, "supprimerCompte"=>$supprcompte, "createurs"=>$createurs, "modifItem"=>$modifItem, "supprimerItem"=>$suppritem, "ajouterListeCompte"=>$addListeCompte];
 
         if (!isset($_SESSION['active']) || $_SESSION['active'] === false){
             $lien5 = $this->c->router->pathFor("Connexion");
@@ -391,7 +392,6 @@ class ParticipantController{
 
 
 
-
     public function ajouterItemListe(Request $rq, Response $rs, array$args){
         try {
             session_start();
@@ -493,6 +493,29 @@ class ParticipantController{
 
         }catch (ModelNotFoundException $e) {
             $rs->write("Problème avec la suppression");
+        }
+    }
+
+    public function ajouterListeCompte(Request $rq, Response $rs):Response{
+        try {
+            session_start();
+
+            $liste = null;
+            if (isset($_POST['ajoutListe']) && !empty($_POST['tokenModif'])){
+                $liste = liste::query()->where('token_modif','=',$_POST['tokenModif'])->first();
+                if ($liste != null){
+                    $liste->user_id = $_SESSION['compte_id'];
+                    $liste->timestamps = false;
+                    $liste->save();
+                }
+            }
+
+            $this->paths($rq, $liste, $rs, 'ajouterListeCompte');
+
+            return $rs;
+
+        }catch (ModelNotFoundException $e) {
+            $rs->write("Problème avec l'ajout");
         }
     }
 }
