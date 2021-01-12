@@ -21,7 +21,7 @@ $app->get('/liste/publiques', function (Request $rq, Response $rs, array $args):
 
     $c = new mywishlist\control\ParticipantController($this);
     return $c->allListe($rq,$rs,$args);
-    }
+}
 )->setName('AllListe');
 
 
@@ -82,6 +82,24 @@ $app->get('/item', function (Request $rq, Response $rs, array $args): Response {
     return $c->displayItem($rq,$rs,$args);
 }
 )->setName('Item');
+
+
+
+
+$app->get('/item/modifier', function(Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->modifierItem($rq,$rs,$args);
+}
+)->setName('ModifierItem');
+
+
+$app->post('/item/modifier', function(Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->modifierItem($rq,$rs,$args);
+}
+)->setName('ModifierItemPost');
 
 
 

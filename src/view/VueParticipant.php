@@ -12,7 +12,7 @@ class VueParticipant{
     }
 
 
-    private function unItemHtml(\mywishlist\models\item $item, $lien):string {
+    private function unItemHtml(\mywishlist\models\item $item, $lien, $tab):string {
         if($item->img != null){
             $html = <<<END
             <div>
@@ -30,6 +30,7 @@ END;
             <p class="text">{$item->descr}</p>
             <h4 class="text">Tarif : {$item->tarif}</h4>
             <h4 class="text" style="display: inline;"> URL : </h4>  <p class="text" style="display: inline; margin-left: 0px;"> {$item->url}</p><br><br>
+            <a href="{$tab['modifItem']}?numIt={$_GET['numIt']}"><input type="button" class="buttonAfficherModif" name="modifier" value="Modifier infos"></a>
 </div>
 END;
         }
@@ -111,7 +112,7 @@ END;
         }else {
             foreach ($args[1] as $row) {
                 $html .= <<<END
-                <h4><a class="titre3" href="{$tab['lien3']}?numIt={$row->id}}"> {$row->nom}</a></h4>
+                <h4><a class="titre3" href="{$tab['lien3']}?numIt={$row->id}"> {$row->nom}</a></h4>
                 <img src="{$lien['basepath']}/web/img/{$row->img}" class="imgItem">
                 <p class="text">Reservation : </p>
                 <br>
@@ -190,7 +191,7 @@ END;
         $html = '';
 
         $date = date('Y-m-d');
-        if(!isset($_POST['buttonModifier'])){
+        if(empty($_POST['NewTitre']) && empty($_POST['NewDescription']) && empty($_POST['NewExpiration'])){
             $html .=<<<END
                     <div>
                     <form method="post">
@@ -225,6 +226,49 @@ END;
             </div>
         </body>
     </html>
+END;
+
+        }else {
+            $html .= <<<END
+                        <div>
+                        <p class="connexionok">Modifications effectuées</p>
+                        </div>
+                    </body>
+                </html>
+END;
+        }
+        return $html;
+    }
+
+
+    public function modifierItem($args, $tab):String{
+        $html = '';
+
+        if(empty($_POST['NewNom']) && empty($_POST['NewDescription']) && empty($_POST['NewURL']) && empty($_POST['NewImg']) && empty($_POST['NewTarif'])){
+            $html .=<<<END
+                    <div>
+                    <form method="post">
+                        <label class="textModif" for="numLi"> - Nom actuel : {$args->nom} </label> <br><br>
+                        <label class="text" for="numLi"> Nouveau nom </label>
+                        <input type="text" class="infosL2" name="NewNom" minlength="1" maxlength="250" size="30" placeholder="Entrez le nouveau nom" ><br><br>
+                        <label class="textModif" for="numLi"> - Descritpion actuelle : {$args->descr} </label><br><br>
+                        <label class="text" for="numLi"> Nouvelle description </label><br>
+                        <textarea type="text" class="infosModif" name="NewDescription" cols="75" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entrez la nouvelle description" ></textarea><br><br>
+                        <label class="textModif" for="numLi"> - URL actuelle : {$args->url}  </label><br><br>
+                        <label class="text" for="numLi"> Nouvelle URL</label><br>
+                        <input type="text" class="infosModif" name="NewURL"> <br><br>
+                        <label class="textModif" for="numLi"> - Image actuelle : {$args->img}  </label><br><br>
+                        <label class="text" for="numLi"> Nouvelle image</label><br>
+                        <input type="text" class="infosModif" name="NewImg"> <br><br>
+                        <label class="textModif" for="numLi"> - Tarif actuel : {$args->tarif}  </label><br><br>
+                        <label class="text" for="numLi"> Nouveau tarif</label><br>
+                        <input type="text" class="infosModif" name="NewTarif"> <br><br>
+                        
+                        <input type="submit" name="buttonModifierItem" class="buttonModifier" value="Valider les modifications">
+                        </form>
+                        </div>
+                    </body>
+                </html>
 END;
 
         }else {
@@ -358,7 +402,7 @@ END;
             case 'un item':
                 $content = null;
                 if( $this->data[0] !== null) {
-                    $content = $this->unItemHtml($this->data[0], $lien);
+                    $content = $this->unItemHtml($this->data[0], $lien, $tab);
                 }
                 $html .= <<<END
             <div><h1 class="centrage2">Description d'un item</h1></div>
@@ -644,6 +688,14 @@ END;
                
 END;
                 }
+                break;
+            case 'modifier item':
+                $content = $this->modifierItem($this->data, $tab);
+
+                $html .= <<<END
+                <div><h1 class="centrage2">Modifier un item</h1></div>
+                $content 
+END;
                 break;
         }
 

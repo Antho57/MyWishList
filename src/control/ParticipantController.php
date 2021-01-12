@@ -35,8 +35,9 @@ class ParticipantController{
         $compte = $this->c->router->pathFor("Compte");
         $supprcompte = $this->c->router->pathFor("supprimerCompte");
         $createurs = $this->c->router->pathFor("Createurs");
+        $modifItem = $this->c->router->pathFor("ModifierItem");
 
-        $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>'$lien2', "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription, "compte"=>$compte, "supprimerCompte"=>$supprcompte, "createurs"=>$createurs];
+        $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>'$lien2', "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription, "compte"=>$compte, "supprimerCompte"=>$supprcompte, "createurs"=>$createurs, "modifItem"=>$modifItem];
 
         if (!isset($_SESSION['active']) || $_SESSION['active'] === false){
             $lien5 = $this->c->router->pathFor("Connexion");
@@ -429,6 +430,44 @@ class ParticipantController{
 
         } catch (ModelNotFoundException $e) {
             $rs->write("Problème avec l'ajout de l'item");
+            return $rs;
+        }
+    }
+
+    public function modifierItem(Request $rq, Response $rs, array$args){
+        try {
+            session_start();
+
+            $item = item::query()->where('id', '=', $_GET['numIt'])->first();
+            $liste = liste::query()->where('no', '=', $item->liste_id)->first();
+            $compte = compte::query()->where('compte_id', '=', $liste->user_id)->first();
+            if(isset($_SESSION['active']) && $_SESSION['active'] === true && $compte->login === $_SESSION['login']){
+                if (!empty($_POST['NewNom'])){
+                    $item->nom = $_POST['NewNom'];
+                }
+                if (!empty($_POST['NewDescription'])){
+                    $item->descr = $_POST['NewDescription'];
+                }
+                if (!empty($_POST['NewImg'])){
+                    $item->img = $_POST['NewImg'];
+                }
+                if (!empty($_POST['NewURL'])){
+                    $item->url = $_POST['NewURL'];
+                }
+                if (!empty($_POST['NewTarif'])){
+                    $item->tarif = $_POST['NewTarif'];
+                }
+                $item->timestamps = false;
+                $item->save();
+            }
+
+            $this->paths($rq, $item, $rs, 'modifier item');
+
+            return $rs;
+
+
+        } catch (ModelNotFoundException $e) {
+            $rs->write("La liste {$_GET['token_modif']} n'a pas été trouvée");
             return $rs;
         }
     }
