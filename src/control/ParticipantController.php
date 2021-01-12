@@ -275,6 +275,7 @@ class ParticipantController{
         session_start();
         unset($_SESSION['active']);
         $this->paths($rq, '', $rs, 'deconnexion');
+        session_destroy();
 
         return $rs;
     }
