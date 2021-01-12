@@ -367,17 +367,11 @@ class ParticipantController{
         try {
             session_start();
 
-            $val = '';
-
-            //$ids = liste::query()->select('user_id')->where('public', '=', '1')->groupBy('user_id')->get();
-
             $ids = compte::query()->select( 'login')->join('liste', 'compte_id', '=', 'user_id')->where('public', '=', '1')->groupBy('compte_id', 'login')->get();
 
             $this->paths($rq, $ids, $rs, 'createurs');
 
-
             return $rs;
-
 
         } catch (ModelNotFoundException $e) {
             $rs->write("Problème avec la liste des créateurs");
@@ -429,6 +423,5 @@ class ParticipantController{
             $rs->write("Problème avec l'ajout de l'item");
             return $rs;
         }
-
     }
 }

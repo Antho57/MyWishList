@@ -292,7 +292,7 @@ END;
                             </ul>
                         </li>
                             <ul>
-                                <li class="liste"><a href={$tab['lien3']}>Item</a>
+                                <li class="liste"><a href={$tab['createurs']}>Créateurs</a>
                             </ul>
                         </li>
                     </ul>
