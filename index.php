@@ -114,6 +114,7 @@ $app->post('/connexion', function (Request $rq, Response $rs, array $args): Resp
 
 
 
+
 $app->get('/inscription', function (Request $rq, Response $rs, array $args): Response {
 
     $c = new mywishlist\control\ParticipantController($this);
@@ -156,12 +157,16 @@ $app->post('/liste/creer', function (Request $rq, Response $rs, array $args): Re
 }
 )->setName('CréerListePost');
 
+
+
 $app->get('/', function (Request $rq, Response $rs, array $args): Response {
 
     $c = new mywishlist\control\ParticipantController($this);
     return $c->accueil($rq,$rs,$args);
 }
 )->setName('Accueil');
+
+
 
 
 $app->get('/compte', function (Request $rq, Response $rs, array $args): Response {
