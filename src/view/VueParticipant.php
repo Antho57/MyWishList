@@ -33,8 +33,8 @@ END;
 END;
             if(!$item->reserver){
                 $html .= <<<END
-                <a href="{$tab['modifItem']}?numIt={$_GET['numIt']}"><input type="button" class="buttonAfficherModif" name="modifier" value="Modifier infos"></a>
-                <a href="{$tab['supprimerItem']}?numIt={$_GET['numIt']}"><input type="button" class="buttonAfficherModif" name="supprimer" value="Supprimer l'item"></a>
+                <a href="{$tab['modifItem']}?numIt={$_GET['numIt']}"><input type="button" class="buttonAfficherModif" style="display:inline-block;  margin-left: 0%;" name="modifier" value="Modifier infos"></a>
+                <a href="{$tab['supprimerItem']}?numIt={$_GET['numIt']}"><input type="button" class="buttonAfficherModif" style="display:inline-block; margin-left: 0%;" name="supprimer" value="Supprimer l'item"></a>
 </div>
 END;
             }
@@ -119,10 +119,17 @@ END;
         }else {
             foreach ($args[1] as $row) {
                 $html .= <<<END
+                <div>
                 <h4><a class="titre3" href="{$tab['lien3']}?numIt={$row->id}"> {$row->nom}</a></h4>
-                <img src="{$lien['basepath']}/web/img/{$row->img}" class="imgItem">
                 <p class="text">Reservation : </p>
-                <br>
+END;
+                if ($row->img != null){
+                    $html .= <<<END
+                    <img src="{$lien['basepath']}/web/img/{$row->img}" class="imgItem"><br><br><br><br><br>
+END;
+                }
+                $html.= <<<END
+                </div>
 END;
             }
         }
