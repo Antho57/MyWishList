@@ -36,8 +36,9 @@ class ParticipantController{
         $supprcompte = $this->c->router->pathFor("supprimerCompte");
         $createurs = $this->c->router->pathFor("Createurs");
         $modifItem = $this->c->router->pathFor("ModifierItem");
+        $suppritem = $this->c->router->pathFor("SupprimerItem");
 
-        $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>'$lien2', "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription, "compte"=>$compte, "supprimerCompte"=>$supprcompte, "createurs"=>$createurs, "modifItem"=>$modifItem];
+        $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>'$lien2', "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription, "compte"=>$compte, "supprimerCompte"=>$supprcompte, "createurs"=>$createurs, "modifItem"=>$modifItem, "supprimerItem"=>$suppritem];
 
         if (!isset($_SESSION['active']) || $_SESSION['active'] === false){
             $lien5 = $this->c->router->pathFor("Connexion");
@@ -469,6 +470,26 @@ class ParticipantController{
         } catch (ModelNotFoundException $e) {
             $rs->write("La liste {$_GET['token_modif']} n'a pas été trouvée");
             return $rs;
+        }
+    }
+
+    public function supprimerItem(Request $rq, Response $rs):Response{
+        try {
+            session_start();
+
+            $item = item::query()->where('id', '=', $_GET['numIt'])->first();
+
+            if (isset($_POST['oui'])){
+                item::query()->where('id', '=', $_GET['numIt'])->delete();
+                $item = null;
+            }
+
+            $this->paths($rq, $item, $rs, 'supprimerItem');
+
+            return $rs;
+
+        }catch (ModelNotFoundException $e) {
+            $rs->write("Problème avec la suppression");
         }
     }
 }

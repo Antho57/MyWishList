@@ -103,6 +103,20 @@ $app->post('/item/modifier', function(Request $rq, Response $rs, array $args): R
 
 
 
+$app->get('/item/supprimer', function (Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->supprimerItem($rq,$rs,$args);
+}
+)->setName('SupprimerItem');
+
+$app->post('/item/supprimer', function (Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->supprimerItem($rq,$rs,$args);
+}
+)->setName('SupprimerItemPost');
+
 
 
 $app->get('/credits', function (Request $rq, Response $rs, array $args): Response {

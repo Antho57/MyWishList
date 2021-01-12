@@ -30,9 +30,16 @@ END;
             <p class="text">{$item->descr}</p>
             <h4 class="text">Tarif : {$item->tarif}</h4>
             <h4 class="text" style="display: inline;"> URL : </h4>  <p class="text" style="display: inline; margin-left: 0px;"> {$item->url}</p><br><br>
-            <a href="{$tab['modifItem']}?numIt={$_GET['numIt']}"><input type="button" class="buttonAfficherModif" name="modifier" value="Modifier infos"></a>
+END;
+            if(!$item->reserver){
+                $html .= <<<END
+                <a href="{$tab['modifItem']}?numIt={$_GET['numIt']}"><input type="button" class="buttonAfficherModif" name="modifier" value="Modifier infos"></a>
+                <a href="{$tab['supprimerItem']}?numIt={$_GET['numIt']}"><input type="button" class="buttonAfficherModif" name="supprimer" value="Supprimer l'item"></a>
 </div>
 END;
+            }
+
+
         }
 
         return $html;
@@ -695,6 +702,30 @@ END;
                 $html .= <<<END
                 <div><h1 class="centrage2">Modifier un item</h1></div>
                 $content 
+END;
+                break;
+            case 'supprimerItem':
+                if($this->data != null){
+                    $html .= <<<END
+                    <div><h1 class="centrage2">Supprimer l'item</h1></div>
+                    <div class="formulaire1">
+                        <form method="post">
+                            <p class="textRed">Etes vous sûr de vouloir supprimer cet item ? Cette action est irréversible.</p>
+                            <input type="submit" class="buttonCreer" name="oui" value="Oui">
+                            <a href="{$tab['lien3']}?numIt={$_GET['numIt']}"><input type="button" class="buttonCreer2" name="non" value="Non"></a>
+                        </form>
+                    </div>
+END;
+                }else{
+                    $html .=<<<END
+                        <div>
+                        <p class="connexionok">Item supprimé !</p>
+                        </div>
+END;
+                }
+                $html .=<<<END
+            </body>
+        </html>
 END;
                 break;
         }
