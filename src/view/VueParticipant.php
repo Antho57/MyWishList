@@ -13,7 +13,8 @@ class VueParticipant{
 
 
     private function unItemHtml(\mywishlist\models\item $item, $lien):string {
-        $html = <<<END
+        if($item->img != null){
+            $html = <<<END
             <div>
             <h3 class="titre3">{$item->id} - {$item->nom}</h3>
             <p class="text">{$item->descr}</p>
@@ -22,6 +23,17 @@ class VueParticipant{
             <img src="{$lien['basepath']}/web/img/{$item->img}" class="imgItem">
 </div>
 END;
+        }else{
+            $html = <<<END
+            <div>
+            <h3 class="titre3">{$item->id} - {$item->nom}</h3>
+            <p class="text">{$item->descr}</p>
+            <h4 class="text">Tarif : {$item->tarif}</h4>
+            <h4 class="text" style="display: inline;"> URL : </h4>  <p class="text" style="display: inline; margin-left: 0px;"> {$item->url}</p><br><br>
+</div>
+END;
+        }
+
         return $html;
     }
 
@@ -53,11 +65,11 @@ END;
     private function listeCreateurs($liste):String{
         $val = '';
 
-
-        $val = <<<END
-            <h3 class="titre3"> ID : {$liste->compte_id} &nbsp&nbsp&nbsp&nbsp - &nbsp&nbsp&nbsp&nbsp Login : {$liste->login}</h3>
+    foreach ($liste as $l){
+        $val .= <<<END
+             <h3 class="titre3">Login : {$l->login}</h3>
 END;
-
+    }
         return $val;
     }
 

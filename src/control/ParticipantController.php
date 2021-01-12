@@ -369,12 +369,11 @@ class ParticipantController{
 
             $val = '';
 
-            $ids = liste::query()->select('user_id')->where('public', '=', '1')->groupBy('user_id')->get();
-            foreach ($ids as $id){
-                $val = compte::query()->where('compte_id', 'like', $id->user_id)->first();
-                $this->paths($rq, $val, $rs, 'createurs');
-            }
+            //$ids = liste::query()->select('user_id')->where('public', '=', '1')->groupBy('user_id')->get();
 
+            $ids = compte::query()->select( 'login')->join('liste', 'compte_id', '=', 'user_id')->where('public', '=', '1')->groupBy('compte_id', 'login')->get();
+
+            $this->paths($rq, $ids, $rs, 'createurs');
 
 
             return $rs;
