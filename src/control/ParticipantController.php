@@ -5,6 +5,7 @@ namespace mywishlist\control;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use mywishlist\Connexion\Authentication;
+use mywishlist\models\commentaires;
 use mywishlist\models\compte;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -168,13 +169,23 @@ class ParticipantController{
             $liste = liste::query()->where('token', '=', $args['token'])
                 ->firstOrFail();
             $items = item::query()->where('liste_id', '=', $liste->no)->get();
-            if (isset($_SESSION['active']) && $_SESSION['active']===true){
-                $utilisateur = compte::query()->where('login', 'like', $_SESSION['login'])->firstOrFail();
-                $val = ([$liste, $items, $utilisateur]);
-            }else {
-                $val = ([$liste, $items]);
+            $commentaires = commentaires::query()->get();
+            if(isset($_POST['publier']) && !empty($_POST['message'])){
+                $com = new commentaires();
+                $com->id_compte = $liste->user_id;
+                $com->message = $_POST['message'];
+                $com->id_liste = $liste->no;
+                $com->timestamps = false;
+                $com->save();
             }
-//TODO
+            if (isset($_SESSION['active']) && $_SESSION['active'] === true){
+                $utilisateur = compte::query()->where('login', 'like', $_SESSION['login'])->firstOrFail();
+                $val = ([$liste, $items, $utilisateur, $commentaires]);
+            }else {
+                $val = ([$liste, $items, $commentaires]);
+            }
+
+
 
             $this->paths($rq, $val, $rs, 'liste detail');
 

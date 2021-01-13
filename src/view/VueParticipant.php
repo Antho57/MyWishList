@@ -169,8 +169,40 @@ END;
             <p class="text">Description : {$args[0]->description}</p>
             <p class="text" style="display: inline-block">Expiration : {$args[0]->expiration} </p> $val
             <p class="text">Liste publique : {$public}</p>
-            <h4 class="titre2"> Commentaires :</h4>
+            <h4 class="titre2" style="font-size: 28px; text-decoration: none;"> Messages :</h4>
+            
 END;
+        if (isset($_SESSION['active']) && $_SESSION['active'] === true) {
+            if (isset($args[3])){
+                foreach ($args[3] as $row){
+                    if($row->id_liste === $args[0]->no){
+                        $html .= <<<END
+                    <p class="text" style="border-bottom: solid #202020"> {$row->message} </p>
+END;
+                    }
+                }
+            }
+        }else{
+            if (isset($args[2])){
+                foreach ($args[2] as $row){
+                    if($row->id_liste === $args[0]->no){
+                        $html .= <<<END
+                    <p class="text" style="border-bottom: solid #202020"> {$row->message} </p>
+END;
+                    }
+                }
+            }
+        }
+
+        $html .= <<<END
+        <form method="post">
+            <label class="text" style="text-decoration: underline black" for="numLi"> Nouveau message </label><br><br>
+            <label class="text" for="numLi"> Message : </label><br>
+            <textarea type="text" class="infosModif" name="message" cols="75" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entrez votre message" ></textarea><br><br>
+            <input type="submit" name="publier" class="buttonAjoutItem" value="Publier le message">
+        </form>
+END;
+
 
         if (isset($_SESSION['active']) && $_SESSION['active']===true){
             if ($_SESSION['compte_id'] === $args[0]->user_id ) {
@@ -235,7 +267,6 @@ END;
 END;
             }
         }
-
         $val =<<<END
             <section>
             $html
