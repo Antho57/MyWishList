@@ -76,6 +76,14 @@ body{
     background-color: white;
 }
 
+.titre2{
+    text-decoration: underline black;
+    font-size: 30px;
+    margin-left: 30px;
+    font-family: "Agency FB";
+    color: black;
+}
+
 .titre3{
     text-decoration: underline black;
     font-size: 30px;

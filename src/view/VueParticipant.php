@@ -24,16 +24,16 @@ class VueParticipant{
 END;
             if ($args[0]->reserver === 0){
                 $html .= <<<END
-                    <p class="text">Cette item n'est pas réservé</p>
+                    <p class="text">Cet item n'est pas réservé</p>
 END;
             }else {
                 if (isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id){
                     $html .= <<<END
-                    <p class="text">Cette item est réservé</p>
+                    <p class="text">Cet item est réservé</p>
 END;
                 }else {
                     $html .= <<<END
-                    <p class="text">Cette item est réservé</p>
+                    <p class="text">Cet item est réservé</p>
                     <h4 class="text" style="display: inline;"> Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$args[0]->nom_participant} </p><br>
                     <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$args[0]->message} </p><br><br>
 END;
@@ -61,23 +61,23 @@ END;
 END;
             if ($args[0]->reserver === 0){
                 $html .= <<<END
-                    <p class="text">Cette item n'est pas réservé</p>
+                    <p class="text">Cet item n'est pas réservé</p>
 END;
             }else {
                 if (isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id){
                     $html .= <<<END
-                    <p class="text">Cette item est réservé</p>
+                    <p class="text">Cet item est réservé</p>
 END;
                 }else {
                     $html .= <<<END
-                    <p class="text">Cette item est réservé</p>
+                    <p class="text">Cet item est réservé</p>
                     <h4 class="text" style="display: inline;"> Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$args[0]->nom_participant} </p><br>
                     <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$args[0]->message} </p><br><br>
 END;
                 }
             }
         }
-        if(!$args[0]->reserver && isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id){
+        if(!$args[0]->reserver && isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id && isset($_GET['numIt'])){
             $html .= <<<END
                 <br><br><br><br><br><br><br>
                 
@@ -204,26 +204,30 @@ END;
                 
 END;
 
-                if ($row->reserver === 0){
+                if ($row->reserver === 0 || $row->reserver === null){
                     $html .= <<<END
-                    <p class="text">Cette item n'est pas réservé</p>
+                    <p class="text">Cet item n'est pas réservé</p>
 END;
-                }else {
+                }else if ($row->reserver === 1){
                     $html .= <<<END
-                    <p class="text">Cette item est réservé</p>
+                    <p class="text">Cet item est réservé</p>
 END;
                 }
 
                 if ($row->img != null){
                     if (!str_starts_with($row->img, "http")){
                         $html.= <<<END
-                <img src="{$lien['basepath']}/web/img/{$row->img}" class="imgItem" alt="{$row->descr}"><br><br><br><br><br>
+                        <img src="{$lien['basepath']}/web/img/{$row->img}" alt="{$row->descr}" style="max-width: 200px; max-height: 200px"><br><br><br>
 END;
                     }else{
                         $html.= <<<END
-                <img src="{$row->img}" class="imgItem" alt="{$row->descr}"><br><br><br><br><br>
+                        <img src="{$row->img}" alt="{$row->descr}" style="max-width: 200px; max-height: 200px"><br><br><br>
 END;
                     }
+                }else{
+                    $html.=<<<END
+                    <p class="text">Aucune image disponible</p>
+END;
                 }
                 $html.= <<<END
                 </div>
@@ -436,17 +440,19 @@ END;
         $html = '';
 
         $html .=<<<END
-        <div><h1 class="titreAjoutItem">Liste : {$this->data[1]->titre}</h1></div>
+        <div><h1 class="titre2">Liste : {$this->data[1]->titre}</h1></div>
         <div>
         <form method="post">
             <label class="text" for="numLi"> Entrez le nom de l'item </label>
-            <input type="text" class="infosL2" name="NomItem" minlength="1" maxlength="100" size="25" placeholder="Entrez le nom" ><br>
+            <input type="text" class="infosL2" name="NomItem" minlength="1" maxlength="100" size="25" placeholder="Entrez le nom" required><br>
             <label class="text" for="numLi"> Entrez la description de l'item </label><br><br>
-            <textarea type="text" class="infosModif" name="DescriptionItem" cols="50" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entrez la nouvelle description" ></textarea><br>
+            <textarea type="text" class="infosModif" name="DescriptionItem" cols="50" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entrez la nouvelle description" required></textarea><br>
             <label class="text" for="numLi"> Entrez le prix de l'item </label>
-            <input type="text" class="infosL2" name="PrixItem" minlength="1" maxlength="4" size="10" placeholder="Entrez le prix" ><br>
-            <label class="text" for="numLi"> Entrez un lien vers l'item en question (FACULTATIF) </label><br><br>
-            <input type="text" class="infosModif" name="url" minlength="1" maxlength="2000" size="50" placeholder="Entrez l'url" ><br><br>
+            <input type="text" class="infosL2" name="PrixItem" minlength="1" maxlength="4" size="10" placeholder="Entrez le prix" required><br>
+            <label class="text" for="numLi"> Entrez le nom ou l'URL de l'image (Facultatif)</label><br>
+            <input type="text" class="infosModif" name="LienImg" minlength="1" maxlength="100" size="25" placeholder="Lien de l'image" ><br>
+            <label class="text" for="numLi"> Entrez un lien vers l'item en question (Facultatif) </label><br><br>
+            <input type="text" class="infosModif" name="url" minlength="1" maxlength="2000" size="50" placeholder="Entrez l'URL" ><br><br>
             <input type="submit" class="buttonAjouter" value="Ajouter l'item">
         </form>
         </div>
@@ -582,11 +588,11 @@ END;
                             <div class="formulaire1">
                                 <form method="post">
                                         <label class="infosL" for="numLi"> Entrez le titre de votre liste </label>
-                                        <input type="text" class="infosL2" name="titre" minlength="1" maxlength="100" size="15" placeholder="Entrez le titre" ><br>
+                                        <input type="text" class="infosL2" name="titre" minlength="1" maxlength="100" size="15" placeholder="Entrez le titre" required><br>
                                         <label class="infosL" for="numLi"> Entrez la description de votre liste </label>
-                                        <input type="text" class="infosL2" name="description" minlength="1" maxlength="300" size="15" placeholder="Entrez la description" ><br>
+                                        <input type="text" class="infosL2" name="description" minlength="1" maxlength="300" size="15" placeholder="Entrez la description" required><br>
                                         <label class="infosL" for="numLi"> Entrez la date d'expiration de votre liste </label>
-                                        <input type="date" class="infosL2" name="expiration" min=$date> <br>
+                                        <input type="date" class="infosL2" name="expiration" min=$date required> <br>
                                         <label class="infosL" for="numLi"> Rendre la liste publique </label>
                                         <input type="checkbox" class="infosL2" name="public"><br>
                                         <input type="submit" class="buttonCreer" value="Créer">

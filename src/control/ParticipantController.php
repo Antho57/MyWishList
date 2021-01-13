@@ -419,6 +419,9 @@ class ParticipantController{
                 if (!empty($_POST['url'])) {
                     $item->url = $_POST['url'];
                 }
+                if (!empty($_POST['LienImg'])) {
+                    $item->img = $_POST['LienImg'];
+                }
 
                 $item->reserver = 0;
 
