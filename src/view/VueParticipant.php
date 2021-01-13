@@ -177,7 +177,7 @@ END;
                 foreach ($args[3] as $row){
                     if($row->id_liste === $args[0]->no){
                         $html .= <<<END
-                    <p class="text" style="border-bottom: solid #202020"> {$row->message} </p>
+                    <p class="text" > - {$row->message} </p>
 END;
                     }
                 }
@@ -187,7 +187,7 @@ END;
                 foreach ($args[2] as $row){
                     if($row->id_liste === $args[0]->no){
                         $html .= <<<END
-                    <p class="text" style="border-bottom: solid #202020"> {$row->message} </p>
+                    <p class="text" > - {$row->message} </p>
 END;
                     }
                 }
