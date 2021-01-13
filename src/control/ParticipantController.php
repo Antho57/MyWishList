@@ -174,7 +174,7 @@ class ParticipantController{
             }else {
                 $val = ([$liste, $items]);
             }
-
+//TODO
 
             $this->paths($rq, $val, $rs, 'liste detail');
 

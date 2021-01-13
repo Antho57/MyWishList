@@ -159,16 +159,17 @@ END;
 END;
 
         if (date('Y-m-d', strtotime($args[0]->expiration)) < date('Y-m-d')){
-            $html .= <<<END
-                <h4 class="text" style="color: #37ff00">Cette liste a expiré</h4>
+            $val = <<<END
+                <h4 class="text" style="color: #ff2b39; display: inline-block">Cette liste a expiré</h4>
 END;
 
         }
 
         $html .= <<<END
             <p class="text">Description : {$args[0]->description}</p>
-            <p class="text">Expiration : {$args[0]->expiration}</p>
+            <p class="text" style="display: inline-block">Expiration : {$args[0]->expiration} </p> $val
             <p class="text">Liste publique : {$public}</p>
+            <h4 class="titre2"> Commentaires :</h4>
 END;
 
         if (isset($_SESSION['active']) && $_SESSION['active']===true){

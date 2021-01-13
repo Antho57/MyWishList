@@ -35,6 +35,13 @@ $app->get('/liste/detail/{token}', function (Request $rq, Response $rs, array $a
 }
 )->setName('listeDetail');
 
+$app->post('/liste/detail/{token}', function (Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->listeDetail($rq,$rs,$args);
+}
+)->setName('listeDetailPost');
+
 
 
 
