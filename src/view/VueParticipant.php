@@ -90,15 +90,14 @@ END;
         if (!empty($_SESSION['compte_id'])) {
             if (!$args[0]->reserver && $_SESSION['compte_id'] != $args[1]->user_id) {
                 $html .= <<<END
-                    
                     <div>
-                    <h4 class="titre3" for="numLi"> Participer pour cette item </h4>
+                    <h4 class="titre3" for="numLi"> Participer pour cet item </h4>
                     <form method="post">
-                        <label class="text" for="numLi" style="display: inline;"> Entrer votre nom </label>
+                        <label class="text" for="numLi" style="display: inline;"> Entrez votre nom </label>
                         <input type="text" class="infosModif" name="nomParticipant" style="margin-left: 0px"> <br><br>
-                        <label class="text" for="numLi" style="display: inline;"> Entrer votre message </label><br>
-                        <textarea type="text" class="infosModif" name="messageParticipant" cols="75" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entre votre message" ></textarea><br><br>
-                        <input type="submit" name="buttonParticiperItem" class="buttonParticiper" value="Participer">
+                        <label class="text" for="numLi" style="display: inline;"> Entrez votre message </label><br>
+                        <textarea type="text" class="infosModif" name="messageParticipant" cols="75" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entrez votre message" ></textarea><br><br>
+                        <input type="submit" name="buttonParticiperItem" class="buttonAjoutItem" value="Participer"><br><br>
                         </form>
                         </div>
                     </body>
@@ -107,15 +106,14 @@ END;
             }
         }else {
             $html .= <<<END
-                    
                     <div>
-                    <h4 class="titre3" for="numLi"> Participer pour cette item </h4>
+                    <h4 class="titre3" for="numLi"> Participer pour cet item </h4>
                     <form method="post">
-                        <label class="text" for="numLi" style="display: inline;"> Entrer votre nom </label>
+                        <label class="text" for="numLi" style="display: inline;"> Entrez votre nom </label>
                         <input type="text" class="infosModif" name="nomParticipant" style="margin-left: 0px"> <br><br>
-                        <label class="text" for="numLi" style="display: inline;"> Entrer votre message </label><br>
-                        <textarea type="text" class="infosModif" name="messageParticipant" cols="75" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entre votre message" ></textarea><br><br>
-                        <input type="submit" name="buttonParticiperItem" class="buttonParticiper" value="Participer">
+                        <label class="text" for="numLi" style="display: inline;"> Entrez votre message </label><br>
+                        <textarea type="text" class="infosModif" name="messageParticipant" cols="75" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entrez votre message" ></textarea><br><br>
+                        <input type="submit" name="buttonParticiperItem" class="buttonParticiper" value="Participer"><br><br>
                         </form>
                         </div>
                     </body>
@@ -747,8 +745,9 @@ END;
                             <a href="{$tab['supprimerCompte']}"><input type="button" class="text3" name="supprimerCompte" value="Supprimer mon compte"></a>
                     </div>
                     <div class="info">
+                    <h4 class="titre6">Vos listes :</h4>
                         $info
-                        <a href="{$tab['ajouterListeCompte']}"><input type="button" class="buttonDelete" name="addListeCompte" value="Ajouter une liste à mon compte"></a>
+                        <a href="{$tab['ajouterListeCompte']}"><input type="button" class="buttonDelete" name="addListeCompte" value="Ajouter une liste à mon compte"></a><br><br>
                     </div>
 END;
                     if (isset($_POST['ajouterListe'])){

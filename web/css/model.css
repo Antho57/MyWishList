@@ -24,6 +24,19 @@
 }
 
 
+.titre6{
+    text-align: center;
+    font-family: "Agency FB";
+    font-weight: bolder;
+    font-size: 40px;
+    color: black;
+    margin-left: auto;
+    margin-right: 1600px;
+    display: block;
+
+    border: 3px solid black;
+}
+
 
 .titreAjoutItem{
     font-family: "Agency FB";
