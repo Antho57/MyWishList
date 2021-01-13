@@ -13,6 +13,25 @@ class VueParticipant{
 
 
     private function unItemHtml($args, $lien, $tab):string {
+        $val = '';
+        if ($args[0]->reserver === 0 || $args[0]->reserver === null){
+            $val .= <<<END
+                    <p class="text">Cet item n'est pas réservé</p>
+END;
+        }else {
+            if (isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id){
+                $val .= <<<END
+                    <p class="text">Cet item est réservé</p>
+END;
+            }else {
+                $val .= <<<END
+                    <p class="text">Cet item est réservé</p>
+                    <h4 class="text" style="display: inline;"> Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$args[0]->nom_participant} </p><br>
+                    <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$args[0]->message} </p><br><br>
+END;
+            }
+        }
+
         if($args[0]->img != null){
             $html = <<<END
             <div>
@@ -22,23 +41,8 @@ class VueParticipant{
             <h4 class="text" style="display: inline;"> URL : </h4>  <p class="text" style="display: inline; margin-left: 0px;"> {$args[0]->url}</p><br>
            
 END;
-            if ($args[0]->reserver === 0){
-                $html .= <<<END
-                    <p class="text">Cet item n'est pas réservé</p>
-END;
-            }else {
-                if (isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id){
-                    $html .= <<<END
-                    <p class="text">Cet item est réservé</p>
-END;
-                }else {
-                    $html .= <<<END
-                    <p class="text">Cet item est réservé</p>
-                    <h4 class="text" style="display: inline;"> Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$args[0]->nom_participant} </p><br>
-                    <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$args[0]->message} </p><br><br>
-END;
-                }
-            }
+            $html.=$val;
+
             if (!str_starts_with($args[0]->img, "http")){
                 $html.= <<<END
                 <img src="{$lien['basepath']}/web/img/{$args[0]->img}" class="imgItem" alt="{$args[0]->descr}">
@@ -59,42 +63,29 @@ END;
             <h4 class="text" style="display: inline;">Tarif : </h4> <p class="text" style="display: inline; margin-left: 0px;"> {$args[0]->tarif}</p><br><br>
             <h4 class="text" style="display: inline;"> URL : </h4>  <p class="text" style="display: inline; margin-left: 0px;"> {$args[0]->url}</p><br>
 END;
-            if ($args[0]->reserver === 0){
-                $html .= <<<END
-                    <p class="text">Cet item n'est pas réservé</p>
-END;
-            }else {
-                if (isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id){
-                    $html .= <<<END
-                    <p class="text">Cet item est réservé</p>
-END;
-                }else {
-                    $html .= <<<END
-                    <p class="text">Cet item est réservé</p>
-                    <h4 class="text" style="display: inline;"> Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$args[0]->nom_participant} </p><br>
-                    <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$args[0]->message} </p><br><br>
-END;
-                }
-            }
+            $html.=$val;
+
         }
         if(!$args[0]->reserver && isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id && isset($_GET['numIt'])){
             $html .= <<<END
                 <br><br><br><br><br><br><br>
-                
                 <a href="{$tab['modifItem']}?numIt={$_GET['numIt']}"><input type="button" class="buttonAfficherModif" style="display:inline-block;  margin-left: 0%;" name="modifier" value="Modifier infos"></a>
                 <a href="{$tab['supprimerItem']}?numIt={$_GET['numIt']}"><input type="button" class="buttonAfficherModif" style="display:inline-block; margin-left: 0%;" name="supprimer" value="Supprimer l'item"></a>
                 </div>
 END;
         }
 
-        if (!empty($_SESSION['compte_id'])) {
-            if (!$args[0]->reserver && $_SESSION['compte_id'] != $args[1]->user_id) {
-                $html .= <<<END
+        if(!isset($_SESSION['nomParticipant'])){
+            $_SESSION['nomParticipant'] = '';
+        }
+
+        if(!$args[0]->reserver){
+            $html .= <<<END
                     <div>
                     <h4 class="titre3" for="numLi"> Participer pour cet item </h4>
                     <form method="post">
                         <label class="text" for="numLi" style="display: inline;"> Entrez votre nom </label>
-                        <input type="text" class="infosModif" name="nomParticipant" style="margin-left: 0px"> <br><br>
+                        <input type="text" class="infosModif" name="nomParticipant" style="margin-left: 0px" placeholder="Nom"  value="{$_SESSION['nomParticipant']}"> <br><br>
                         <label class="text" for="numLi" style="display: inline;"> Entrez votre message </label><br>
                         <textarea type="text" class="infosModif" name="messageParticipant" cols="75" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entrez votre message" ></textarea><br><br>
                         <input type="submit" name="buttonParticiperItem" class="buttonAjoutItem" value="Participer"><br><br>
@@ -103,24 +94,15 @@ END;
                     </body>
                 </html>
 END;
-            }
-        }else {
+        }else if ($args[0]->reserver && $args[0]->nom_participant === $_SESSION['nomParticipant']){
             $html .= <<<END
-                    <div>
-                    <h4 class="titre3" for="numLi"> Participer pour cet item </h4>
-                    <form method="post">
-                        <label class="text" for="numLi" style="display: inline;"> Entrez votre nom </label>
-                        <input type="text" class="infosModif" name="nomParticipant" style="margin-left: 0px"> <br><br>
-                        <label class="text" for="numLi" style="display: inline;"> Entrez votre message </label><br>
-                        <textarea type="text" class="infosModif" name="messageParticipant" cols="75" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entrez votre message" ></textarea><br><br>
-                        <input type="submit" name="buttonParticiperItem" class="buttonParticiper" value="Participer"><br><br>
-                        </form>
+                        <div>
+                        <p class="participationok">Participation enregistrée</p>
                         </div>
                     </body>
                 </html>
 END;
         }
-
 
         return $html;
     }

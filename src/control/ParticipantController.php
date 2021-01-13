@@ -110,6 +110,18 @@ class ParticipantController{
             }
             $rep = ([$item, $liste]);
 
+            if(isset($_POST['buttonParticiperItem']) && !empty($_POST['nomParticipant']) && !empty($_POST['messageParticipant'])){
+                $_SESSION['nomParticipant'] = $_POST['nomParticipant'];
+                $item->nom_participant = $_POST['nomParticipant'];
+                $item->message = $_POST['messageParticipant'];
+                $item->reserver = true;
+                if(isset($_SESSION['compte_id'])){
+                    $item->id_participant = $_SESSION['compte_id'];
+                }
+                $item->timestamps = false;
+                $item->save();
+            }
+
             $this->paths($rq, $rep, $rs, 'un item');
             return $rs;
 

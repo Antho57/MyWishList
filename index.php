@@ -83,6 +83,14 @@ $app->get('/item', function (Request $rq, Response $rs, array $args): Response {
 }
 )->setName('Item');
 
+$app->post('/item', function (Request $rq, Response $rs, array $args): Response {
+
+    $c = new mywishlist\control\ParticipantController($this);
+    return $c->displayItem($rq,$rs,$args);
+}
+)->setName('ItemPost');
+
+
 
 
 

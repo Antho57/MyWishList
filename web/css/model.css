@@ -299,6 +299,16 @@ nav ul li:hover ul li {
     border: 1px solid green;
 }
 
+.participationok{
+    text-align: center;
+    color: Green;
+    font-family: "Agency FB";
+    font-size: 30px;
+    margin-left: auto;
+    margin-right: 1500px;
+    border: 1px solid green;
+}
+
 .infosL2{
     text-align: center;
     margin-left: 15px;
