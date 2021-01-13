@@ -19,7 +19,7 @@ class VueParticipant{
                     <p class="text">Cet item n'est pas réservé</p>
 END;
         }else {
-            if (isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id){
+            if (isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id && date('Y-m-d', strtotime($args[1]->expiration)) > date('Y-m-d')){
                 $val .= <<<END
                     <p class="text">Cet item est réservé</p>
 END;
@@ -66,7 +66,7 @@ END;
             $html.=$val;
 
         }
-        if(!$args[0]->reserver && isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id && isset($_GET['numIt'])){
+        if(!$args[0]->reserver && isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id && isset($_GET['numIt']) && date('Y-m-d', strtotime($args[1]->expiration)) > date('Y-m-d')){
             $html .= <<<END
                 <br><br><br><br><br><br><br>
                 <a href="{$tab['modifItem']}?numIt={$_GET['numIt']}"><input type="button" class="buttonAfficherModif" style="display:inline-block;  margin-left: 0%;" name="modifier" value="Modifier infos"></a>
@@ -79,7 +79,7 @@ END;
             $_SESSION['nomParticipant'] = '';
         }
 
-        if(!$args[0]->reserver){
+        if(!$args[0]->reserver && date('Y-m-d', strtotime($args[1]->expiration)) > date('Y-m-d')){
             $html .= <<<END
                     <div>
                     <h4 class="titre3" for="numLi"> Participer pour cet item </h4>
@@ -155,18 +155,36 @@ END;
 
         $html = <<<END
             <h3 class="titreli"> {$args[0]->no} - {$args[0]->titre}</h3>
+            
+END;
+
+        if (date('Y-m-d', strtotime($args[0]->expiration)) < date('Y-m-d')){
+            $html .= <<<END
+                <h4 class="text" style="color: #37ff00">Cette liste a expiré</h4>
+END;
+
+        }
+
+        $html .= <<<END
             <p class="text">Description : {$args[0]->description}</p>
             <p class="text">Expiration : {$args[0]->expiration}</p>
             <p class="text">Liste publique : {$public}</p>
 END;
+
         if (isset($_SESSION['active']) && $_SESSION['active']===true){
-            if ($_SESSION['compte_id'] === $args[0]->user_id){
-                $html .= <<<END
+            if ($_SESSION['compte_id'] === $args[0]->user_id ) {
+                if (date('Y-m-d', strtotime($args[0]->expiration)) > date('Y-m-d')) {
+                    $html .= <<<END
                 <p class="text">URL DE CONSULTATION :  {$tab['lien2']}</p>
                 <p class="textImportant" >URL DE MODIFICATION : </p> <p class="text" style="display: inline; margin-left: 0px;">{$tab['lienModif']}</p><br><br>
                 <a href="{$tab['lienModif']}"><input type="button" class="buttonAfficherModif" name="modifier" value="Modifier infos"></a>
                 
 END;
+                }else {
+                    $html .= <<<END
+                <p class="text">URL DE CONSULTATION :  {$tab['lien2']}</p>
+END;
+                }
             }
         }
 
