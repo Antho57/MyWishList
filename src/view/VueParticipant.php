@@ -304,7 +304,7 @@ END;
         $html = '';
 
         $date = date('Y-m-d');
-        if(empty($_POST['NewTitre']) && empty($_POST['NewDescription']) && empty($_POST['NewExpiration'])){
+        if(empty($_POST['NewTitre']) && empty($_POST['NewDescription']) && empty($_POST['NewExpiration']) && date('Y-m-d', strtotime($args->expiration)) > date('Y-m-d')){
             $html .=<<<END
                     <div>
                     <form method="post">
@@ -342,13 +342,24 @@ END;
 END;
 
         }else {
-            $html .= <<<END
+            if (date('Y-m-d', strtotime($args->expiration)) > date('Y-m-d')){
+                $html .= <<<END
                         <div>
                         <p class="connexionok">Modifications effectuées</p>
                         </div>
                     </body>
                 </html>
 END;
+            }else {
+                $html .= <<<END
+                        <div>
+                        <p class="connexionok">Cette liste ne peut plus être modifié</p>
+                        </div>
+                    </body>
+                </html>
+END;
+            }
+
         }
         return $html;
     }
