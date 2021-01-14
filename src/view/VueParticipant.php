@@ -1113,7 +1113,7 @@ END;
                 <div><h1 class="centrage2">Ajouter un item</h1></div>
                 <div><h1 class="connexionok">Ajout réussi</h1></div>
                 
-                $content
+                <div class="info">$content</div>
                
 END;
                 }else {
