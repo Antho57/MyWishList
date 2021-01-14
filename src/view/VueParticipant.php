@@ -200,7 +200,8 @@ END;
             }
         }
 
-        $html .= <<<END
+        if (date('Y-m-d', strtotime($args[0]->expiration)) > date('Y-m-d')) {
+            $html .= <<<END
         <form method="post">
             <label class="text" style="text-decoration: underline black" for="numLi"> Nouveau message </label><br><br>
             <label class="text" for="numLi"> Nom : </label><br>
@@ -210,6 +211,7 @@ END;
             <input type="submit" name="publier" class="buttonAjoutItem" value="Publier le message">
         </form>
 END;
+        }
 
 
         if (isset($_SESSION['active']) && $_SESSION['active']===true){
