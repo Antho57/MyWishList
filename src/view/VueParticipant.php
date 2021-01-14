@@ -157,19 +157,19 @@ END;
             <h3 class="titreli"> {$args[0]->no} - {$args[0]->titre}</h3>
             
 END;
+        $val = '';
 
         if (date('Y-m-d', strtotime($args[0]->expiration)) < date('Y-m-d')){
             $val = <<<END
                 <h4 class="text" style="color: #ff2b39; display: inline-block">Cette liste a expiré</h4>
 END;
-
         }
 
         $html .= <<<END
             <p class="text">Description : {$args[0]->description}</p>
             <p class="text" style="display: inline-block">Expiration : {$args[0]->expiration} </p> $val
             <p class="text">Liste publique : {$public}</p>
-            <h4 class="titre2" style="font-size: 28px; text-decoration: none;"> Messages :</h4>
+            <h4 class="titre2" style="font-size: 28px; text-decoration: underline green; text-decoration-thickness: 3px"> Messages :</h4>
             
 END;
         if (isset($_SESSION['active']) && $_SESSION['active'] === true) {
@@ -177,7 +177,10 @@ END;
                 foreach ($args[3] as $row){
                     if($row->id_liste === $args[0]->no){
                         $html .= <<<END
-                    <p class="text" style="border-bottom: solid #202020"> {$row->message} </p>
+                        <div>
+                            <p class="text" style="max-width: 200px; overflow-wrap: break-word; font-weight: bold; margin-top: 1px; margin-bottom: 1px"> {$row->nom} : </p>
+                            <p class="text" style="max-width: 500px; overflow-wrap: break-word; margin-top: 1px; margin-bottom: 1px"> {$row->message} </p>
+                        </div><br><br>
 END;
                     }
                 }
@@ -187,7 +190,10 @@ END;
                 foreach ($args[2] as $row){
                     if($row->id_liste === $args[0]->no){
                         $html .= <<<END
-                    <p class="text" style="border-bottom: solid #202020"> {$row->message} </p>
+                        <div style="max-width: 500px; overflow-wrap: break-word;">
+                            <p class="text" style="font-weight: bold; display: inline-block; margin-top: 1px; margin-bottom: 1px"> {$row->nom} : </p>
+                            <p class="text" style="display: inline-block; margin-top: 1px; margin-bottom: 1px"> {$row->message} </p>
+                        </div>
 END;
                     }
                 }
@@ -197,6 +203,8 @@ END;
         $html .= <<<END
         <form method="post">
             <label class="text" style="text-decoration: underline black" for="numLi"> Nouveau message </label><br><br>
+            <label class="text" for="numLi"> Nom : </label><br>
+            <input type="text" class="infosModif" name="nom" minlength="1" maxlength="250" size="30" placeholder="Entrez votre nom" ><br>
             <label class="text" for="numLi"> Message : </label><br>
             <textarea type="text" class="infosModif" name="message" cols="75" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entrez votre message" ></textarea><br><br>
             <input type="submit" name="publier" class="buttonAjoutItem" value="Publier le message">

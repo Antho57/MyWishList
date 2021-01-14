@@ -169,15 +169,17 @@ class ParticipantController{
             $liste = liste::query()->where('token', '=', $args['token'])
                 ->firstOrFail();
             $items = item::query()->where('liste_id', '=', $liste->no)->get();
-            $commentaires = commentaires::query()->get();
-            if(isset($_POST['publier']) && !empty($_POST['message'])){
+
+            if(isset($_POST['publier']) && !empty($_POST['message']) && !empty($_POST['nom'])){
                 $com = new commentaires();
-                $com->id_compte = $liste->user_id;
                 $com->message = $_POST['message'];
+                $com->nom = $_POST['nom'];
                 $com->id_liste = $liste->no;
                 $com->timestamps = false;
                 $com->save();
             }
+            $commentaires = commentaires::query()->get();
+
             if (isset($_SESSION['active']) && $_SESSION['active'] === true){
                 $utilisateur = compte::query()->where('login', 'like', $_SESSION['login'])->firstOrFail();
                 $val = ([$liste, $items, $utilisateur, $commentaires]);
