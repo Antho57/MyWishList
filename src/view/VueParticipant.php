@@ -944,7 +944,7 @@ END;
                 if ($content == null){
                     $html .= <<<END
                     <div class="formulaire1">
-                        <p class="text">Voilà l'accueil !</p>
+                        <p class="text" style="margin-left: 800px; color: #0099ff">Bienvenue sur le site My Wish List</p>
                     </div>
 END;
                 }
