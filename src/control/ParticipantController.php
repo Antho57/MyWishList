@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use mywishlist\Connexion\Authentication;
 use mywishlist\models\commentaires;
 use mywishlist\models\compte;
+use mywishlist\models\participation;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use mywishlist\models\item as item;
@@ -104,23 +105,37 @@ class ParticipantController{
             $var = $rq->getQueryParams();
             $item = null;
             $liste = null;
+            $participation = null;
             if(isset($var['numIt'])){
                 $item = item::query()->where('id', '=', $var['numIt'])
                     ->firstOrFail();
                 $liste = liste::query()->where('no', '=', $item->liste_id)->first();
+                $participation = participation::query()->where('id_item', '=', $var['numIt'])->get();
             }
-            $rep = ([$item, $liste]);
+            $rep = ([$item, $liste, $participation]);
 
             if(isset($_POST['buttonParticiperItem']) && !empty($_POST['nomParticipant']) && !empty($_POST['messageParticipant'])){
                 $_SESSION['nomParticipant'] = $_POST['nomParticipant'];
-                $item->nom_participant = $_POST['nomParticipant'];
-                $item->message = $_POST['messageParticipant'];
-                $item->reserver = true;
-                if(isset($_SESSION['compte_id'])){
-                    $item->id_participant = $_SESSION['compte_id'];
+                $Newparticipation = new participation();
+                $Newparticipation->nom_participant = $_POST['nomParticipant'];
+                $Newparticipation->message = $_POST['messageParticipant'];
+                $Newparticipation->id_participant = $_SESSION['compte_id'];
+                $Newparticipation->id_item = $item->id;
+                $Newparticipation->montant = $_POST['montant'];
+
+                $montant = $_POST['montant'];
+                foreach($participation as $row){
+                    $montant +=$row->montant;
                 }
-                $item->timestamps = false;
-                $item->save();
+                if ($montant === $item->tarif){
+                    $item->cagnotte = 0;
+                    $item->reserver = 1;
+                    $item->timestamps = false;
+                    $item->save();
+                }
+
+                $Newparticipation->timestamps = false;
+                $Newparticipation->save();
             }
 
             $this->paths($rq, $rep, $rs, 'un item');

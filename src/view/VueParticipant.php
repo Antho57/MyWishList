@@ -14,21 +14,149 @@ class VueParticipant{
 
     private function unItemHtml($args, $lien, $tab):string {
         $val = '';
-        if ($args[0]->reserver === 0 || $args[0]->reserver === null){
-            $val .= <<<END
-                    <p class="text">Cet item n'est pas réservé</p>
-END;
-        }else {
-            if (isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id && date('Y-m-d', strtotime($args[1]->expiration)) > date('Y-m-d')){
+
+        $montant = 0;
+        foreach ($args[2] as $row) {
+            $montant += $row->montant;
+        }
+
+        if (date('Y-m-d', strtotime($args[1]->expiration)) > date('Y-m-d')){
+            if ($args[0]->cagnotte === 0 && $args[0]->reserver === 0){
                 $val .= <<<END
-                    <p class="text">Cet item est réservé</p>
+                <h4 class="titre3">Cet item n'a pas de cagnotte</h4>
+END;
+            }elseif ($args[0]->reserver === 1){
+                if (isset($_SESSION['active']) && $_SESSION['active'] === true) {
+                    if ($_SESSION['compte_id'] === $args[1]->user_id) {
+                        $val .= <<<END
+                        <h4 class="titre3">La cagnotte pour cet item est terminé</h4>
+END;
+                    }else{
+                        $val .= <<<END
+                    <h4 class="titre3">La cagnotte pour cet item est terminé</h4>
+END;
+                        if(sizeof($args[2])===0){
+                            $val .= <<<END
+                            <p class="text">Aucun participant</p>
+END;
+
+                        }else{
+                            $val .= <<<END
+                            <p class="text">Montant de la cagnotte : {$montant}€</p>
+                            <p class="text">Les participants : </p>
+END;
+
+                            foreach ($args[2] as $row) {
+                                $val .= <<<END
+                        <h4 class="text" style="display: inline;"> - Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->nom_participant} </p><br>
+                        <h4 class="text" style="display: inline;"> Montant de la participation : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->montant} </p><br>
+                        <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->message} </p><br><br>
+END;
+                            }
+                        }
+                    }
+
+                }else {
+                    $val .= <<<END
+                    <h4 class="titre3">La cagnotte pour cet item est terminé</h4>
+END;
+                    if(sizeof($args[2])===0){
+                        $val .= <<<END
+                            <p class="text">Aucun participant</p>
+END;
+
+                    }else{
+                        $val .= <<<END
+                            <p class="text">Montant de la cagnotte : {$montant}€</p>
+                            <p class="text">Les participants : </p>
+END;
+
+                        foreach ($args[2] as $row) {
+                            $val .= <<<END
+                        <h4 class="text" style="display: inline;"> - Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->nom_participant} </p><br>
+                        <h4 class="text" style="display: inline;"> Montant de la participation : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->montant} </p><br>
+                        <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->message} </p><br><br>
+END;
+                        }
+                    }
+                }
+            }elseif ($args[0]->cagnotte === 1){
+                if (isset($_SESSION['active']) && $_SESSION['active'] === true) {
+                    if ($_SESSION['compte_id'] === $args[1]->user_id) {
+                        $val .= <<<END
+                        <h4 class="titre3">Une cagnotte est ouverte pour cet item</h4>
+END;
+                    }else{
+                        $val .= <<<END
+                    <h4 class="titre3">Une cagnotte est ouverte pour cet item</h4>
+END;
+                        if(sizeof($args[2])===0){
+                            $val .= <<<END
+                            <p class="text">Montant de la cagnotte : {$montant}€</p>
+                            <p class="text">Aucun participant</p>
+END;
+
+                        }else{
+                            $val .= <<<END
+                            <p class="text">Montant de la cagnotte : {$montant}€</p>
+                            <p class="text">Les participants : </p>
+END;
+
+                            foreach ($args[2] as $row) {
+                                $val .= <<<END
+                        <h4 class="text" style="display: inline;"> - Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->nom_participant} </p><br>
+                        <h4 class="text" style="display: inline;"> Montant de la participation : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->montant} </p><br>
+                        <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->message} </p><br><br>
+END;
+                            }
+                        }
+                    }
+
+                }else {
+                    $val .= <<<END
+                    <h4 class="titre3">Une cagnotte est ouverte pour cet item</h4>
+END;
+                    if(sizeof($args[2])===0){
+                        $val .= <<<END
+                            <p class="text">Montant de la cagnotte : {$montant}€</p>
+                            <p class="text">Aucun participant</p>
+END;
+
+                    }else{
+                        $val .= <<<END
+                            <p class="text">Montant de la cagnotte : {$montant}€</p>
+                            <p class="text">Les participants : </p>
+END;
+
+                        foreach ($args[2] as $row) {
+                            $val .= <<<END
+                        <h4 class="text" style="display: inline;"> - Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->nom_participant} </p><br>
+                        <h4 class="text" style="display: inline;"> Montant de la participation : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->montant} </p><br>
+                        <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->message} </p><br><br>
+END;
+                        }
+                    }
+                }
+            }
+        }else {
+            if (sizeof($args[2])===0){
+                $val .= <<<END
+                    <h4 class="titre3">La cagnotte pour cette item est fermé</h4>
+                    <p class="text">Cette item n'a pas eu de cagnotte</p>
 END;
             }else {
                 $val .= <<<END
-                    <p class="text">Cet item est réservé</p>
-                    <h4 class="text" style="display: inline;"> Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$args[0]->nom_participant} </p><br>
-                    <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$args[0]->message} </p><br><br>
+                    <h4 class="titre3">La cagnotte pour cette item est fermé</h4>
+                    <p class="text">Montant de la cagnotte : {$montant}€</p>
+                    <p class="text">Les participants : </p>
 END;
+                foreach ($args[2] as $row) {
+                    $val .= <<<END
+                        <h4 class="text" style="display: inline;"> - Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->nom_participant} </p><br>
+                        <h4 class="text" style="display: inline;"> Montant de la participation : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->montant} </p><br>
+                        <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->message} </p><br><br>
+END;
+                }
             }
         }
 
@@ -37,22 +165,24 @@ END;
             <div>
             <h3 class="titre3">{$args[0]->id} - {$args[0]->nom}</h3>
             <p class="text">{$args[0]->descr}</p>
-            <h4 class="text" style="display: inline;">Tarif : </h4> <p class="text" style="display: inline; margin-left: 0px;"> {$args[0]->tarif}</p><br><br>
+            <h4 class="text" style="display: inline;">Tarif : </h4> <p class="text" style="display: inline; margin-left: 0px;"> {$args[0]->tarif}€</p><br><br>
             <h4 class="text" style="display: inline;"> URL : </h4>  <p class="text" style="display: inline; margin-left: 0px;"> {$args[0]->url}</p><br>
            
 END;
-            $html.=$val;
+
 
             if (!str_starts_with($args[0]->img, "http")){
                 $html.= <<<END
                 <img src="{$lien['basepath']}/web/img/{$args[0]->img}" class="imgItem" alt="{$args[0]->descr}">
                 </div><br><br><br><br><br><br>
 END;
+                $html.=$val;
             }else{
                 $html.= <<<END
                 <img src="{$args[0]->img}" class="imgItem" alt="{$args[0]->descr}">
                 </div><br><br><br><br><br><br>
 END;
+                $html.=$val;
             }
 
         }else{
@@ -60,13 +190,13 @@ END;
             <div>
             <h3 class="titre3">{$args[0]->id} - {$args[0]->nom}</h3>
             <p class="text">{$args[0]->descr}</p>
-            <h4 class="text" style="display: inline;">Tarif : </h4> <p class="text" style="display: inline; margin-left: 0px;"> {$args[0]->tarif}</p><br><br>
+            <h4 class="text" style="display: inline;">Tarif : </h4> <p class="text" style="display: inline; margin-left: 0px;"> {$args[0]->tarif}€</p><br><br>
             <h4 class="text" style="display: inline;"> URL : </h4>  <p class="text" style="display: inline; margin-left: 0px;"> {$args[0]->url}</p><br>
 END;
             $html.=$val;
 
         }
-        if(!$args[0]->reserver && isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id && isset($_GET['numIt']) && date('Y-m-d', strtotime($args[1]->expiration)) > date('Y-m-d')){
+        if($args[0]->cagnotte === 0 && !$args[0]->reserver && isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id && isset($_GET['numIt']) && date('Y-m-d', strtotime($args[1]->expiration)) > date('Y-m-d')){
             $html .= <<<END
                 <br><br><br><br><br><br><br>
                 <a href="{$tab['modifItem']}?numIt={$_GET['numIt']}"><input type="button" class="buttonAfficherModif" style="display:inline-block;  margin-left: 0%;" name="modifier" value="Modifier infos"></a>
@@ -79,29 +209,47 @@ END;
             $_SESSION['nomParticipant'] = '';
         }
 
-        if(!$args[0]->reserver && date('Y-m-d', strtotime($args[1]->expiration)) > date('Y-m-d')){
-            $html .= <<<END
+        $dejaParticiper = false;
+
+        if (isset($_SESSION['active']) && $_SESSION['active'] === true) {
+            foreach ($args[2] as $row) {
+                if ($row->id_participant === $_SESSION['compte_id']) {
+                    $dejaParticiper = true;
+                }
+            }
+
+            if ($args[0]->cagnotte === 1 && $args[0]->reserver === 0 && date('Y-m-d', strtotime($args[1]->expiration)) > date('Y-m-d') && !$dejaParticiper && isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id){
+                $montant = 0;
+                foreach ($args[2] as $row) {
+                    $montant += $row->montant;
+                }
+                $max = $args[0]->tarif - $montant;
+
+                $html .= <<<END
                     <div>
                     <h4 class="titre3" for="numLi"> Participer pour cet item </h4>
                     <form method="post">
-                        <label class="text" for="numLi" style="display: inline;"> Entrez votre nom </label>
-                        <input type="text" class="infosModif" name="nomParticipant" style="margin-left: 0px" placeholder="Nom"  value="{$_SESSION['nomParticipant']}"> <br><br>
-                        <label class="text" for="numLi" style="display: inline;"> Entrez votre message </label><br>
+                        <label class="text" for="nomParticipant" style="display: inline;"> Entrez votre nom </label>
+                        <input type="text" class="infosModif" name="nomParticipant" style="margin-left: 0px" placeholder="Nom"  value="{$_SESSION['login']}"> <br><br>
+                        <label class="text" for="messageParticipant" style="display: inline;"> Entrez votre message </label><br>
                         <textarea type="text" class="infosModif" name="messageParticipant" cols="75" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entrez votre message" ></textarea><br><br>
+                        <label class="text" for="montant" style="display: inline;"> Entrez un montant </label>
+                        <input type="number" class="infosModif" name="montant" min="1" max=$max value="1"> <br><br>
                         <input type="submit" name="buttonParticiperItem" class="buttonAjoutItem" value="Participer"><br><br>
                         </form>
                         </div>
                     </body>
                 </html>
 END;
-        }else if ($args[0]->reserver && $args[0]->nom_participant === $_SESSION['nomParticipant']){
-            $html .= <<<END
+            }else if ($args[0]->reserver && $args[0]->nom_participant === $_SESSION['nomParticipant']) {
+                $html .= <<<END
                         <div>
                         <p class="participationok">Participation enregistrée</p>
                         </div>
                     </body>
                 </html>
 END;
+            }
         }
 
         return $html;
@@ -213,7 +361,7 @@ END;
 
         $html .= <<<END
             <p class="text">Description : {$args[0]->description}</p>
-            <p class="text" style="display: inline-block">Expiration : {$args[0]->expiration} </p> $val
+            <p class="text" style="display: inline-block">Expiration : {$args[0]->expiration} </p>
             <p class="text">Liste publique : {$public}</p>
             <h4 class="titre2" style="font-size: 28px; text-decoration: underline green; text-decoration-thickness: 3px"> Messages :</h4>
             

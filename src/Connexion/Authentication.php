@@ -22,6 +22,8 @@ class Authentication
             $c->save();
             $_SESSION['active'] = true;
             $_SESSION['login'] = strip_tags($userName);
+            $compte = compte::query()->where('login', 'like', $_SESSION['login'])->first();
+            $_SESSION['compte_id'] = $compte->compte_id;
         }
     }
 
