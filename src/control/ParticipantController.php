@@ -441,6 +441,7 @@ class ParticipantController{
 
             $liste = null;
             $itemCree = null;
+            $participation = null;
 
             $liste = liste::query()->where('token_modif', '=', $args['token_modif'])
                 ->firstOrFail();
@@ -462,17 +463,24 @@ class ParticipantController{
                 if (!empty($_POST['LienImg'])) {
                     $item->img = $_POST['LienImg'];
                 }
+                if (isset($_POST['cagnotte'])){
+                    $item->cagnotte = 1;
+                }else {
+                    $item->cagnotte = 0;
+                }
 
                 $item->reserver = 0;
-                $item->cagnotte = 0;
 
                 $item->timestamps = false;
                 $item->save();
 
                 $itemCree = item::query()->where( 'descr', 'like', $_POST['DescriptionItem'])->firstOrFail();
+                $participation = participation::query()->where ('id_item', '=', $itemCree->id)->get();
+                $liste = liste::query()->where('no', '=', $itemCree->liste_id)
+                    ->firstOrFail();
             }
 
-            $val = ([$itemCree, $liste]);
+            $val = ([$itemCree, $liste, $participation]);
 
             $this->paths($rq, $val, $rs, 'ajouter Item');
 
@@ -507,9 +515,11 @@ class ParticipantController{
                 if (!empty($_POST['NewTarif'])){
                     $item->tarif = $_POST['NewTarif'];
                 }
-                if (isset($_POST["buttonSuppImg"]))
-                {
+                if (isset($_POST["buttonSuppImg"])) {
                     $item->img = "";
+                }
+                if (isset($_POST['cagnotte'])){
+                    $item->cagnotte = 1;
                 }
                 $item->timestamps = false;
                 $item->save();

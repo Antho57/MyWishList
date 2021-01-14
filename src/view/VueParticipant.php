@@ -218,7 +218,7 @@ END;
                 }
             }
 
-            if ($args[0]->cagnotte === 1 && $args[0]->reserver === 0 && date('Y-m-d', strtotime($args[1]->expiration)) > date('Y-m-d') && !$dejaParticiper && isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] === $args[1]->user_id){
+            if ($args[0]->cagnotte === 1 && $args[0]->reserver === 0 && date('Y-m-d', strtotime($args[1]->expiration)) > date('Y-m-d') && !$dejaParticiper && isset($_SESSION['active']) && $_SESSION['active'] === true && $_SESSION['compte_id'] != $args[1]->user_id){
                 $montant = 0;
                 foreach ($args[2] as $row) {
                     $montant += $row->montant;
@@ -603,7 +603,7 @@ END;
 
     public function modifierItem($args, $tab,$lien):String{
         $html = '';
-        if(empty($_POST['NewNom']) && empty($_POST['NewDescription']) && empty($_POST['NewURL']) && empty($_POST['NewImg']) && empty($_POST['NewTarif'])){
+        if(empty($_POST['NewNom']) && empty($_POST['NewDescription']) && empty($_POST['NewURL']) && empty($_POST['NewImg']) && empty($_POST['NewTarif']) && empty($_POST['cagnotte'])){
             $html .=<<<END
                     <div>
                     <form method="post">
@@ -628,6 +628,17 @@ END;
                         <label class="textModif" for="numLi"> - Tarif actuel : {$args->tarif}  </label><br><br>
                         <label class="text" for="numLi"> Nouveau tarif</label><br>
                         <input type="text" class="infosModif" name="NewTarif"> <br><br>
+END;
+
+                    if ($args->cagnotte === 0 && $args->reserver === 0) {
+                        $html .= <<<END
+                        <label class="textModif" for="numLi"> - Cet item n'a pas de cagnotte  </label><br><br>
+                        <label class="text" for="numLi"> Ouvrir une cagnotte pour cette item </label>
+                        <input type="checkbox" class="infosL2" name="cagnotte"><br><br>
+END;
+                    }
+
+                    $html.= <<<END
                         <input type="submit" name="buttonModifierItem" class="buttonModifier" value="Valider les modifications">
                         </form>
                         </div>
@@ -644,6 +655,16 @@ END;
                         <label class="textModif" for="numLi"> - Tarif actuel : {$args->tarif}  </label><br><br>
                         <label class="text" for="numLi"> Nouveau tarif</label><br>
                         <input type="text" class="infosModif" name="NewTarif"> <br><br>
+END;
+                    if ($args->cagnotte === 0 && $args->reserver === 0) {
+                        $html .= <<<END
+                        <label class="textModif" for="numLi"> - Cet item n'a pas de cagnotte  </label><br><br>
+                        <label class="text" for="numLi"> Ouvrir une cagnotte pour cette item </label>
+                        <input type="checkbox" class="infosL2" name="cagnotte"><br><br>
+END;
+                    }
+
+                    $html .= <<<END
                         <input type="submit" name="buttonModifierItem" class="buttonModifier" value="Valider les modifications">
                         </form>
                         </div>
@@ -661,6 +682,16 @@ END;
                         <label class="textModif" for="numLi"> - Tarif actuel : {$args->tarif}  </label><br><br>
                         <label class="text" for="numLi"> Nouveau tarif</label><br>
                         <input type="text" class="infosModif" name="NewTarif"> <br><br>
+END;
+                if ($args->cagnotte === 0 && $args->reserver === 0) {
+                    $html .= <<<END
+                        <label class="textModif" for="numLi"> - Cet item n'a pas de cagnotte  </label><br><br>
+                        <label class="text" for="numLi"> Ouvrir une cagnotte pour cette item </label>
+                        <input type="checkbox" class="infosL2" name="cagnotte"><br><br>
+END;
+                }
+
+                $html.= <<<END
                         <input type="submit" name="buttonModifierItem" class="buttonModifier" value="Valider les modifications">
                         </form>
                         </div>
@@ -700,6 +731,8 @@ END;
             <input type="text" class="infosModif" name="LienImg" minlength="1" maxlength="100" size="25" placeholder="Lien de l'image" ><br>
             <label class="text" for="numLi"> Entrez un lien vers l'item en question (Facultatif) </label><br><br>
             <input type="text" class="infosModif" name="url" minlength="1" maxlength="2000" size="50" placeholder="Entrez l'URL" ><br><br>
+            <label class="text" for="numLi"> Ouvrir une cagnotte pour cette item </label>
+            <input type="checkbox" class="infosL2" name="cagnotte"><br><br>
             <input type="submit" class="buttonAjouter" value="Ajouter l'item">
         </form>
         </div>
