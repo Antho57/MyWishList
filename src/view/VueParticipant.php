@@ -303,40 +303,44 @@ END;
 
         $html = <<<END
             <h3 class="titreli"> {$args[0]->no} - {$args[0]->titre}</h3>
+END;
+
+        if(isset($_SESSION['active']) && $_SESSION['active'] === true && $args[0]->user_id === $args[2]->compte_id) {
+            $html .= <<<END
             <form method="post" enctype="multipart/form-data">
                 <input type="file" id="fileToUpload" name="fileToUpload" class="inputfile" accept=".jpg,.jpeg,.png,.gif"  multiple><br><br>
                 <input type="submit" name="poster" value="Poster l'image" class="text" style="font-size: 20px">
             </form>
 END;
-
-        if (isset($_FILES['fileToUpload'])) {
-            $target_dir = "web/img/";
-            $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-            $uploadOk = 1;
-            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-            // Check if image file is a actual image or fake image
-            if (isset($_POST["poster"])) {
-                $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-                if ($check !== false) {
-                    $uploadOk = 1;
-                } else {
-                    $uploadOk = 0;
+            if (isset($_FILES['fileToUpload'])) {
+                $target_dir = "web/img/";
+                $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+                $uploadOk = 1;
+                $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+                // Check if image file is a actual image or fake image
+                if (isset($_POST["poster"])) {
+                    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+                    if ($check !== false) {
+                        $uploadOk = 1;
+                    } else {
+                        $uploadOk = 0;
+                    }
                 }
-            }
 
-            if (file_exists($target_file)) {
-                $html .= <<<END
+                if (file_exists($target_file)) {
+                    $html .= <<<END
                 <h4 class="text" style="color: #ff2b39; display: inline-block">Erreur : Cette image existe déjà</h4>
 END;
-                $uploadOk = 0;
-            }
+                    $uploadOk = 0;
+                }
 
-            if ($uploadOk == 1)  {
-                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                    $name = htmlspecialchars(basename($_FILES["fileToUpload"]["name"]));
-                    $html .= <<<END
+                if ($uploadOk == 1) {
+                    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                        $name = htmlspecialchars(basename($_FILES["fileToUpload"]["name"]));
+                        $html .= <<<END
                 <h4 class="text" style="color: green; display: inline-block">L'image {$name} a été téléchargé</h4>
 END;
+                    }
                 }
             }
         }
