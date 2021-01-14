@@ -202,8 +202,6 @@ class ParticipantController{
                 $val = ([$liste, $items, $commentaires]);
             }
 
-
-
             $this->paths($rq, $val, $rs, 'liste detail');
 
             return $rs;

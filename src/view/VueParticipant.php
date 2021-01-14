@@ -304,48 +304,39 @@ END;
         $html = <<<END
             <h3 class="titreli"> {$args[0]->no} - {$args[0]->titre}</h3>
             <form method="post" enctype="multipart/form-data">
-                <input type="file" name="fileToUpload">
-                <input type="submit" value="Poster l'image">
+                <input type="file" id="fileToUpload" name="fileToUpload" class="inputfile" accept=".jpg,.jpeg,.png,.gif"  multiple><br><br>
+                <input type="submit" name="poster" value="Poster l'image" class="text" style="font-size: 20px">
             </form>
 END;
 
-        if (isset($_FILES['fileToUpload'])){
-            print_r($_FILES);
-            $target_dir = "{$lien['basepath']}/src/web/img/";
+        if (isset($_FILES['fileToUpload'])) {
+            $target_dir = "web/img/";
             $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
             $uploadOk = 1;
             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
             // Check if image file is a actual image or fake image
-            if (isset($_POST["submit"])) {
+            if (isset($_POST["poster"])) {
                 $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
                 if ($check !== false) {
-                    echo "File is an image - " . $check["mime"] . ".";
                     $uploadOk = 1;
                 } else {
-                    echo "File is not an image.";
                     $uploadOk = 0;
                 }
             }
 
             if (file_exists($target_file)) {
-                echo "Sorry, file already exists.";
+                $html .= <<<END
+                <h4 class="text" style="color: #ff2b39; display: inline-block">Erreur : Cette image existe déjà</h4>
+END;
                 $uploadOk = 0;
             }
 
-            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-                && $imageFileType != "gif" ) {
-                echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-                $uploadOk = 0;
-            }
-
-            if ($uploadOk == 0) {
-                echo "Sorry, your file was not uploaded.";
-                // if everything is ok, try to upload file
-            } else {
+            if ($uploadOk == 1)  {
                 if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                    echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
-                } else {
-                    echo "Sorry, there was an error uploading your file.";
+                    $name = htmlspecialchars(basename($_FILES["fileToUpload"]["name"]));
+                    $html .= <<<END
+                <h4 class="text" style="color: green; display: inline-block">L'image {$name} a été téléchargé</h4>
+END;
                 }
             }
         }
