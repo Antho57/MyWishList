@@ -336,27 +336,43 @@ END;
 END;
         if (isset($_SESSION['active']) && $_SESSION['active'] === true) {
             if (isset($args[3])){
-                foreach ($args[3] as $row){
-                    if($row->id_liste === $args[0]->no){
-                        $html .= <<<END
+                if (sizeof($args[3]) === 0){
+                    $html .= <<<END
+                        <div>
+                            <p class="text"> Aucun message </p>
+                        </div><br><br>
+END;
+                }else {
+                    foreach ($args[3] as $row) {
+                        if ($row->id_liste === $args[0]->no) {
+                            $html .= <<<END
                         <div>
                             <p class="text" style="max-width: 200px; overflow-wrap: break-word; font-weight: bold; margin-top: 1px; margin-bottom: 1px"> {$row->nom} : </p>
                             <p class="text" style="max-width: 500px; overflow-wrap: break-word; margin-top: 1px; margin-bottom: 1px"> {$row->message} </p>
                         </div><br><br>
 END;
+                        }
                     }
                 }
             }
         }else{
             if (isset($args[2])){
-                foreach ($args[2] as $row){
-                    if($row->id_liste === $args[0]->no){
-                        $html .= <<<END
+                if (sizeof($args[2]) === 0){
+                    $html .= <<<END
+                        <div>
+                            <p class="text"> Aucun message </p>
+                        </div><br><br>
+END;
+                }else {
+                    foreach ($args[2] as $row) {
+                        if ($row->id_liste === $args[0]->no) {
+                            $html .= <<<END
                         <div style="max-width: 500px; overflow-wrap: break-word;">
                             <p class="text" style="font-weight: bold; display: inline-block; margin-top: 1px; margin-bottom: 1px"> {$row->nom} : </p>
                             <p class="text" style="display: inline-block; margin-top: 1px; margin-bottom: 1px"> {$row->message} </p>
                         </div>
 END;
+                        }
                     }
                 }
             }
