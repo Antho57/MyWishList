@@ -319,9 +319,9 @@ END;
         }
 
 
-        $val = '';
+        $val = null;
 
-        if (date('Y-m-d', strtotime($args[0]->expiration)) < date('Y-m-d')){
+        if (date('Y-m-d', strtotime($args[0]->expiration)) <= date('Y-m-d')){
             $val = <<<END
                 <h4 class="text" style="color: #ff2b39; display: inline-block">Cette liste a expiré</h4>
 END;
@@ -330,6 +330,7 @@ END;
         $html .= <<<END
             <p class="text">Description : {$args[0]->description}</p>
             <p class="text" style="display: inline-block">Expiration : {$args[0]->expiration} </p>
+            <p class="text" style="display: inline">$val</p>
             <p class="text">Liste publique : {$public}</p>
             <h4 class="titre2" style="font-size: 28px; text-decoration: underline green; text-decoration-thickness: 3px"> Messages :</h4>
             
