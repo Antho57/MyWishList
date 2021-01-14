@@ -464,6 +464,7 @@ class ParticipantController{
                 }
 
                 $item->reserver = 0;
+                $item->cagnotte = 0;
 
                 $item->timestamps = false;
                 $item->save();
