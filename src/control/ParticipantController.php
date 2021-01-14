@@ -106,13 +106,14 @@ class ParticipantController{
             $item = null;
             $liste = null;
             $participation = null;
+
             if(isset($var['numIt'])){
                 $item = item::query()->where('id', '=', $var['numIt'])
                     ->firstOrFail();
                 $liste = liste::query()->where('no', '=', $item->liste_id)->first();
-                $participation = participation::query()->where('id_item', '=', $var['numIt'])->get();
             }
-            $rep = ([$item, $liste, $participation]);
+
+            $participation = participation::query()->where('id_item', '=', $var['numIt'])->get();
 
             if(isset($_POST['buttonParticiperItem']) && !empty($_POST['nomParticipant']) && !empty($_POST['messageParticipant'])){
                 $_SESSION['nomParticipant'] = $_POST['nomParticipant'];
@@ -136,7 +137,12 @@ class ParticipantController{
 
                 $Newparticipation->timestamps = false;
                 $Newparticipation->save();
+
             }
+
+            $participation = participation::query()->where('id_item', '=', $var['numIt'])->get();
+
+            $rep = ([$item, $liste, $participation]);
 
             $this->paths($rq, $rep, $rs, 'un item');
             return $rs;

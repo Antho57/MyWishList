@@ -14,10 +14,16 @@ class VueParticipant{
 
     private function unItemHtml($args, $lien, $tab):string {
         $val = '';
+        $infosparticipant = '';
 
         $montant = 0;
         foreach ($args[2] as $row) {
             $montant += $row->montant;
+            $infosparticipant .= <<<END
+            <h4 class="text" style="display: inline;"> - Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->nom_participant} </p><br>
+            <h4 class="text" style="display: inline; margin-left: 43px"> Montant de la participation : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->montant} </p><br>
+            <h4 class="text" style="display: inline; margin-left: 43px"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->message} </p><br><br>
+END;
         }
 
         if (date('Y-m-d', strtotime($args[1]->expiration)) > date('Y-m-d')){
@@ -25,15 +31,15 @@ class VueParticipant{
                 $val .= <<<END
                 <h4 class="titre3">Cet item n'a pas de cagnotte</h4>
 END;
-            }elseif ($args[0]->reserver === 1){
+            }else if ($args[0]->reserver === 1){
                 if (isset($_SESSION['active']) && $_SESSION['active'] === true) {
                     if ($_SESSION['compte_id'] === $args[1]->user_id) {
                         $val .= <<<END
-                        <h4 class="titre3">La cagnotte pour cet item est terminé</h4>
+                        <h4 class="titre3">La cagnotte pour cet item est terminée</h4>
 END;
                     }else{
                         $val .= <<<END
-                    <h4 class="titre3">La cagnotte pour cet item est terminé</h4>
+                    <h4 class="titre3">La cagnotte pour cet item est terminée</h4>
 END;
                         if(sizeof($args[2])===0){
                             $val .= <<<END
@@ -45,20 +51,13 @@ END;
                             <p class="text">Montant de la cagnotte : {$montant}€</p>
                             <p class="text">Les participants : </p>
 END;
-
-                            foreach ($args[2] as $row) {
-                                $val .= <<<END
-                        <h4 class="text" style="display: inline;"> - Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->nom_participant} </p><br>
-                        <h4 class="text" style="display: inline;"> Montant de la participation : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->montant} </p><br>
-                        <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->message} </p><br><br>
-END;
-                            }
+                                $val .= $infosparticipant;
                         }
                     }
 
                 }else {
                     $val .= <<<END
-                    <h4 class="titre3">La cagnotte pour cet item est terminé</h4>
+                    <h4 class="titre3">La cagnotte pour cet item est terminée</h4>
 END;
                     if(sizeof($args[2])===0){
                         $val .= <<<END
@@ -71,16 +70,10 @@ END;
                             <p class="text">Les participants : </p>
 END;
 
-                        foreach ($args[2] as $row) {
-                            $val .= <<<END
-                        <h4 class="text" style="display: inline;"> - Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->nom_participant} </p><br>
-                        <h4 class="text" style="display: inline;"> Montant de la participation : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->montant} </p><br>
-                        <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->message} </p><br><br>
-END;
-                        }
+                            $val .= $infosparticipant;
                     }
                 }
-            }elseif ($args[0]->cagnotte === 1){
+            }else if ($args[0]->cagnotte === 1){
                 if (isset($_SESSION['active']) && $_SESSION['active'] === true) {
                     if ($_SESSION['compte_id'] === $args[1]->user_id) {
                         $val .= <<<END
@@ -101,14 +94,7 @@ END;
                             <p class="text">Montant de la cagnotte : {$montant}€</p>
                             <p class="text">Les participants : </p>
 END;
-
-                            foreach ($args[2] as $row) {
-                                $val .= <<<END
-                        <h4 class="text" style="display: inline;"> - Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->nom_participant} </p><br>
-                        <h4 class="text" style="display: inline;"> Montant de la participation : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->montant} </p><br>
-                        <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->message} </p><br><br>
-END;
-                            }
+                                $val .= $infosparticipant;
                         }
                     }
 
@@ -127,36 +113,23 @@ END;
                             <p class="text">Montant de la cagnotte : {$montant}€</p>
                             <p class="text">Les participants : </p>
 END;
-
-                        foreach ($args[2] as $row) {
-                            $val .= <<<END
-                        <h4 class="text" style="display: inline;"> - Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->nom_participant} </p><br>
-                        <h4 class="text" style="display: inline;"> Montant de la participation : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->montant} </p><br>
-                        <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->message} </p><br><br>
-END;
-                        }
+                            $val .= $infosparticipant;
                     }
                 }
             }
         }else {
             if (sizeof($args[2])===0){
                 $val .= <<<END
-                    <h4 class="titre3">La cagnotte pour cette item est fermé</h4>
-                    <p class="text">Cette item n'a pas eu de cagnotte</p>
+                    <h4 class="titre3">La cagnotte pour cet item est fermée</h4>
+                    <p class="text">Cet item n'a pas eu de cagnotte</p>
 END;
             }else {
                 $val .= <<<END
-                    <h4 class="titre3">La cagnotte pour cette item est fermé</h4>
+                    <h4 class="titre3">La cagnotte pour cet item est fermée</h4>
                     <p class="text">Montant de la cagnotte : {$montant}€</p>
                     <p class="text">Les participants : </p>
 END;
-                foreach ($args[2] as $row) {
-                    $val .= <<<END
-                        <h4 class="text" style="display: inline;"> - Nom du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->nom_participant} </p><br>
-                        <h4 class="text" style="display: inline;"> Montant de la participation : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->montant} </p><br>
-                        <h4 class="text" style="display: inline;"> Message du participant : </h4> <p class ="text" style="display: inline; margin-left: 0px;"> {$row->message} </p><br><br>
-END;
-                }
+                    $val .= $infosparticipant;
             }
         }
 
@@ -308,7 +281,7 @@ END;
         if(isset($_SESSION['active']) && $_SESSION['active'] === true && $args[0]->user_id === $args[2]->compte_id) {
             $html .= <<<END
             <form method="post" enctype="multipart/form-data">
-                <input type="file" id="fileToUpload" name="fileToUpload" class="inputfile" accept=".jpg,.jpeg,.png,.gif"  multiple><br><br>
+                <input type="file" id="fileToUpload" name="fileToUpload" class="inputfile" accept=".jpg,.jpeg,.png,.gif"><br><br>
                 <input type="submit" name="poster" value="Poster l'image" class="text" style="font-size: 20px">
             </form>
 END;
@@ -549,6 +522,10 @@ END;
                         <label class="text" for="numLi"> Nouvelle date d'expiration</label><br>
                         <input type="date" class="infosModif" name="NewExpiration" min=$date> <br><br>
 END;
+            foreach ($args[1] as $row) {
+
+            }
+
             if ($this->data->public === 1){
                 $html .=<<<END
                         <label class="textModif" for="numLi"> - La liste est publique  </label><br><br>
@@ -610,7 +587,7 @@ END;
                         <textarea type="text" class="infosModif" name="NewDescription" cols="75" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entrez la nouvelle description" ></textarea><br><br>
                         <label class="textModif" for="numLi"> - URL actuelle : {$args->url}  </label><br><br>
                         <label class="text" for="numLi"> Nouvelle URL</label><br>
-                        <input type="text" class="infosModif" name="NewURL"> <br><br>
+                        <input type="text" class="infosModif" name="NewURL" placeholder="Entrez la nouvelle URL de l'item" size="25px"> <br><br>
 END;
             if ($args->img != null){
                 if (!str_starts_with($args->img, "http")){
@@ -619,53 +596,37 @@ END;
                         <img src="{$lien['basepath']}/web/img/{$args->img}" style="max-width: 200px; max-height: 200px"><br><br>
                         <input type="submit" name="buttonSuppImg" class="buttonDelete" value="Supprimer l'image"><br>
                         <label class="text" for="numLi"> Nouvelle image</label><br>
-                        <input type="text" class="infosModif" name="NewImg"> <br><br>
+                        <input type="text" class="infosModif" name="NewImg" placeholder="Entrez l'URL ou le nom de l'image" size="25px"> <br><br>
                         <label class="textModif" for="numLi"> - Tarif actuel : {$args->tarif}  </label><br><br>
                         <label class="text" for="numLi"> Nouveau tarif</label><br>
-                        <input type="text" class="infosModif" name="NewTarif"> <br><br>
+                        <input type="text" class="infosModif" name="NewTarif" placeholder="Entrez le nouveau tarif"> <br><br>
 END;
 
                     if ($args->cagnotte === 0 && $args->reserver === 0) {
                         $html .= <<<END
                         <label class="textModif" for="numLi"> - Cet item n'a pas de cagnotte  </label><br><br>
-                        <label class="text" for="numLi"> Ouvrir une cagnotte pour cette item </label>
+                        <label class="text" for="numLi"> Ouvrir une cagnotte pour cet item </label>
                         <input type="checkbox" class="infosL2" name="cagnotte"><br><br>
 END;
                     }
-
-                    $html.= <<<END
-                        <input type="submit" name="buttonModifierItem" class="buttonModifier" value="Valider les modifications">
-                        </form>
-                        </div>
-                    </body>
-                </html>
-END;
                 }else{
                     $html.= <<<END
                         <label class="textModif" for="numLi" > - Image actuelle : </label><br>&nbsp;
                         <img src={$args->img} style="max-width: 200px; max-height: 200px"><br><br>
                         <input type="submit" name="buttonSuppImg" class="buttonDelete" value="Supprimer l'image"><br>
                         <label class="text" for="numLi"> Nouvelle image</label><br>
-                        <input type="text" class="infosModif" name="NewImg"> <br><br>
+                        <input type="text" class="infosModif" name="NewImg" placeholder="Entrez l'URL ou le nom de l'image" size="25px"> <br><br>
                         <label class="textModif" for="numLi"> - Tarif actuel : {$args->tarif}  </label><br><br>
                         <label class="text" for="numLi"> Nouveau tarif</label><br>
-                        <input type="text" class="infosModif" name="NewTarif"> <br><br>
+                        <input type="text" class="infosModif" name="NewTarif" placeholder="Entrez le nouveau tarif"> <br><br>
 END;
                     if ($args->cagnotte === 0 && $args->reserver === 0) {
                         $html .= <<<END
                         <label class="textModif" for="numLi"> - Cet item n'a pas de cagnotte  </label><br><br>
-                        <label class="text" for="numLi"> Ouvrir une cagnotte pour cette item </label>
+                        <label class="text" for="numLi"> Ouvrir une cagnotte pour cet item </label>
                         <input type="checkbox" class="infosL2" name="cagnotte"><br><br>
 END;
                     }
-
-                    $html .= <<<END
-                        <input type="submit" name="buttonModifierItem" class="buttonModifier" value="Valider les modifications">
-                        </form>
-                        </div>
-                    </body>
-                </html>
-END;
                 }
 
             }else{
@@ -673,27 +634,29 @@ END;
                         <label class="textModif" for="numLi" style="display: inline;"> - Image actuelle : </label>
                         <label class="text" for="numLi" style="display: inline;"> Aucune image</label><br>
                         <label class="text" for="numLi"> Nouvelle image</label><br>
-                        <input type="text" class="infosModif" name="NewImg"> <br><br>
+                        <input type="text" class="infosModif" name="NewImg" placeholder="Entrez l'URL ou le nom de l'image" size="25px"> <br><br>
                         <label class="textModif" for="numLi"> - Tarif actuel : {$args->tarif}  </label><br><br>
                         <label class="text" for="numLi"> Nouveau tarif</label><br>
-                        <input type="text" class="infosModif" name="NewTarif"> <br><br>
+                        <input type="text" class="infosModif" name="NewTarif" placeholder="Entrez le nouveau tarif"> <br><br>
 END;
                 if ($args->cagnotte === 0 && $args->reserver === 0) {
                     $html .= <<<END
                         <label class="textModif" for="numLi"> - Cet item n'a pas de cagnotte  </label><br><br>
-                        <label class="text" for="numLi"> Ouvrir une cagnotte pour cette item </label>
+                        <label class="text" for="numLi"> Ouvrir une cagnotte pour cet item </label>
                         <input type="checkbox" class="infosL2" name="cagnotte"><br><br>
 END;
                 }
 
-                $html.= <<<END
-                        <input type="submit" name="buttonModifierItem" class="buttonModifier" value="Valider les modifications">
+
+
+            }
+            $html.= <<<END
+                        <input type="submit" name="buttonModifierItem" class="buttonAjoutItem" value="Valider les modifications"><br><br>
                         </form>
                         </div>
                     </body>
                 </html>
 END;
-            }
 
         }else {
             $html .= <<<END
@@ -726,7 +689,7 @@ END;
             <input type="text" class="infosModif" name="LienImg" minlength="1" maxlength="100" size="25" placeholder="Lien de l'image" ><br>
             <label class="text" for="numLi"> Entrez un lien vers l'item en question (Facultatif) </label><br><br>
             <input type="text" class="infosModif" name="url" minlength="1" maxlength="2000" size="50" placeholder="Entrez l'URL" ><br><br>
-            <label class="text" for="numLi"> Ouvrir une cagnotte pour cette item </label>
+            <label class="text" for="numLi"> Ouvrir une cagnotte pour cet item </label>
             <input type="checkbox" class="infosL2" name="cagnotte"><br><br>
             <input type="submit" class="buttonAjouter" value="Ajouter l'item">
         </form>
