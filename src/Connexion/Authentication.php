@@ -24,6 +24,7 @@ class Authentication
             $_SESSION['login'] = strip_tags($userName);
             $compte = compte::query()->where('login', 'like', $_SESSION['login'])->first();
             $_SESSION['compte_id'] = $compte->compte_id;
+            $_SESSION['LAST_ACTIVITY'] = time();
         }
     }
 
@@ -35,6 +36,7 @@ class Authentication
                 $_SESSION['active'] = true;
                 $_SESSION['login'] = strip_tags($username);
                 $_SESSION['compte_id'] = $compte->compte_id;
+                $_SESSION['LAST_ACTIVITY'] = time();
             }
         }
     }
@@ -52,6 +54,7 @@ class Authentication
         $compte->timestamps = false;
         $compte->save();
         $_SESSION['login'] = strip_tags($userName);
+        $_SESSION['LAST_ACTIVITY'] = time();
     }
 
     public static function checkAccessRights ( $required ) {

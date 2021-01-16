@@ -724,6 +724,14 @@ END;
 
     public function render($vars, $lien, $tab){
 
+        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600)) {
+            session_unset();
+            session_destroy();
+        }else{
+            $_SESSION['LAST_ACTIVITY'] = time();
+        }
+
+
         $html = <<<END
         <!DOCTYPE html>
         <html>
