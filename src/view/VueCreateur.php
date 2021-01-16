@@ -437,7 +437,7 @@ END;
             <label class="text" for="numLi"> Entrez la description de l'item </label><br><br>
             <textarea type="text" class="infosModif" name="DescriptionItem" cols="50" rows="5" minlength="1" maxlength="1000" size="50" placeholder="Entrez la nouvelle description" required></textarea><br>
             <label class="text" for="numLi"> Entrez le prix de l'item </label>
-            <input type="text" class="infosL2" name="PrixItem" minlength="1" maxlength="4" size="10" placeholder="Entrez le prix" required><br>
+            <input type="number" class="infosL2" name="PrixItem" minlength="1" maxlength="4" size="10" placeholder="Entrez le prix" required><br>
             <label class="text" for="numLi"> Entrez le nom ou l'URL de l'image (Facultatif)</label><br>
             <input type="text" class="infosModif" name="LienImg" minlength="1" maxlength="100" size="25" placeholder="Lien de l'image" ><br>
             <label class="text" for="numLi"> Entrez un lien vers l'item en question (Facultatif) </label><br><br>
