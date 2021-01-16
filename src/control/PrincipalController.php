@@ -5,17 +5,15 @@ namespace mywishlist\control;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use mywishlist\Connexion\Authentication;
-use mywishlist\models\commentaires;
 use mywishlist\models\compte;
-use mywishlist\models\participation;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use mywishlist\models\item as item;
 use mywishlist\models\liste as liste;
-use mywishlist\view\VueParticipant as vueParticipant;
-use function Sodium\add;
+use mywishlist\view\VuePrincipale as VuePrincipale;
 
-class ParticipantController{
+
+class PrincipalController{
+
     private $c = null;
 
     public function __construct(\Slim\Container $c){
@@ -50,12 +48,6 @@ class ParticipantController{
         }
         $tab["lien5"] = $lien5;
 
-        if ($render === 'liste detail'){
-            $lien6 = $this->c->router->pathFor("modifListe", ['token_modif'=>$val[0]->token_modif]);
-            $tab["lienModif"] = $lien6;
-            $lien2 = $this->c->router->pathFor("listeDetail", ['token'=>$val[0]->token]);
-            $tab["lien2"] = $lien2;
-        }
         if ($render === 'compte'){
             $i =0;
             $tabLien = [];
@@ -66,13 +58,6 @@ class ParticipantController{
             }
             $tab['lienCompte'] = $tabLien;
 
-        }
-
-        if ($render === 'creer liste' && $val!=null){
-            $lien6 = $this->c->router->pathFor("modifListe", ['token_modif'=>$val->token_modif]);
-            $tab["lienModif"] = $lien6;
-            $lien2 = $this->c->router->pathFor("listeDetail", ['token'=>$val->token]);
-            $tab["lien2"] = $lien2;
         }
 
         if ($render === 'listes publiques'){
@@ -87,113 +72,17 @@ class ParticipantController{
 
         }
 
-        if ($render === 'modifier liste'){
-            $lien = $this->c->router->pathFor("ajoutItemListe", ['token_modif'=>$val->token_modif]);
-            $tab['lienAjoutItem'] = $lien;
-        }
-
-        $v = new VueParticipant($val);
+        $v = new VuePrincipale($val);
 
         $rs->write($v->render($render, $htmlvars, $tab));
     }
 
-    public function displayItem(Request $rq, Response $rs):Response{
-
-        try{
-            session_start();
-
-            $var = $rq->getQueryParams();
-            $item = null;
-            $liste = null;
-            $participation = null;
-
-            if(isset($var['numIt'])){
-                $item = item::query()->where('id', '=', $var['numIt'])
-                    ->firstOrFail();
-                $liste = liste::query()->where('no', '=', $item->liste_id)->first();
-            }
-
-            $participation = participation::query()->where('id_item', '=', $var['numIt'])->get();
-
-            if(isset($_POST['buttonParticiperItem']) && !empty($_POST['nomParticipant']) && !empty($_POST['messageParticipant'])){
-                $_SESSION['nomParticipant'] = $_POST['nomParticipant'];
-                $Newparticipation = new participation();
-                $Newparticipation->nom_participant = $_POST['nomParticipant'];
-                $Newparticipation->message = $_POST['messageParticipant'];
-                $Newparticipation->id_participant = $_SESSION['compte_id'];
-                $Newparticipation->id_item = $item->id;
-                $Newparticipation->montant = $_POST['montant'];
-
-                $montant = $_POST['montant'];
-                foreach($participation as $row){
-                    $montant +=$row->montant;
-                }
-                if ($montant === $item->tarif){
-                    $item->cagnotte = 0;
-                    $item->reserver = 1;
-                    $item->timestamps = false;
-                    $item->save();
-                }
-
-                $Newparticipation->timestamps = false;
-                $Newparticipation->save();
-
-            }
-
-            $participation = participation::query()->where('id_item', '=', $var['numIt'])->get();
-
-            $rep = ([$item, $liste, $participation]);
-
-            $this->paths($rq, $rep, $rs, 'un item');
-            return $rs;
 
 
-        }catch(ModelNotFoundException $e){
-            $rs->write( "item non trouvé");
-            return $rs;
-        }
-    }
 
 
-    public function listeDetail(Request $rq, Response $rs, array$args):Response
-    {
-        try {
-            session_start();
-
-            $val = null;
-            $items = null;
-
-            $liste = liste::query()->where('token', '=', $args['token'])
-                ->firstOrFail();
-            $items = item::query()->where('liste_id', '=', $liste->no)->get();
-
-            if(isset($_POST['publier']) && !empty($_POST['message']) && !empty($_POST['nom'])){
-                $com = new commentaires();
-                $com->message = $_POST['message'];
-                $com->nom = $_POST['nom'];
-                $com->id_liste = $liste->no;
-                $com->timestamps = false;
-                $com->save();
-            }
-            $commentaires = commentaires::query()->get();
-
-            if (isset($_SESSION['active']) && $_SESSION['active'] === true){
-                $utilisateur = compte::query()->where('login', 'like', $_SESSION['login'])->firstOrFail();
-                $val = ([$liste, $items, $utilisateur, $commentaires]);
-            }else {
-                $val = ([$liste, $items, $commentaires]);
-            }
-
-            $this->paths($rq, $val, $rs, 'liste detail');
-
-            return $rs;
 
 
-        } catch (ModelNotFoundException $e) {
-            $rs->write("La liste {$_GET['token']} n'a pas été trouvée");
-            return $rs;
-        }
-    }
 
     public function displayCredits(Request $rq, Response $rs):Response{
 
@@ -332,7 +221,21 @@ class ParticipantController{
         }
     }
 
+    public function allListe(Request $rq, Response $rs):Response{
+
+        try{
+            session_start();
+
+            $item = liste::query()->where('public', '=', '1')->orderBy('expiration')->get();
+
+            $this->paths($rq, $item, $rs, 'listes publiques');
+            return $rs;
 
 
+        }catch(ModelNotFoundException $e){
+            $rs->write( "Erreur lors de l'affichage des listes");
+            return $rs;
+        }
+    }
 
 }

@@ -19,7 +19,7 @@ $app = new \Slim\App($c);
 
 $app->get('/liste/publiques', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\PrincipalController($this);
     return $c->allListe($rq,$rs,$args);
 }
 )->setName('AllListe');
@@ -48,7 +48,7 @@ $app->post('/liste/detail/{token}', function (Request $rq, Response $rs, array $
 
 $app->get('/liste/modifier/{token_modif}', function(Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\CreateurController($this);
     return $c->modifierListe($rq,$rs,$args);
 }
 )->setName('modifListe');
@@ -56,7 +56,7 @@ $app->get('/liste/modifier/{token_modif}', function(Request $rq, Response $rs, a
 
 $app->post('/liste/modifier/{token_modif}', function(Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\CreateurController($this);
     return $c->modifierListe($rq,$rs,$args);
 }
 )->setName('modifListePost');
@@ -66,7 +66,7 @@ $app->post('/liste/modifier/{token_modif}', function(Request $rq, Response $rs, 
 
 $app->get('/liste/modifier/{token_modif}/ajoutItem', function(Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\CreateurController($this);
     return $c->ajouterItemListe($rq,$rs,$args);
 }
 )->setName('ajoutItemListe');
@@ -74,7 +74,7 @@ $app->get('/liste/modifier/{token_modif}/ajoutItem', function(Request $rq, Respo
 
 $app->post('/liste/modifier/{token_modif}/ajoutItem', function(Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\CreateurController($this);
     return $c->ajouterItemListe($rq,$rs,$args);
 }
 )->setName('ajoutItemListePost');
@@ -103,7 +103,7 @@ $app->post('/item', function (Request $rq, Response $rs, array $args): Response 
 
 $app->get('/item/modifier', function(Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\CreateurController($this);
     return $c->modifierItem($rq,$rs,$args);
 }
 )->setName('ModifierItem');
@@ -111,7 +111,7 @@ $app->get('/item/modifier', function(Request $rq, Response $rs, array $args): Re
 
 $app->post('/item/modifier', function(Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\CreateurController($this);
     return $c->modifierItem($rq,$rs,$args);
 }
 )->setName('ModifierItemPost');
@@ -120,14 +120,14 @@ $app->post('/item/modifier', function(Request $rq, Response $rs, array $args): R
 
 $app->get('/item/supprimer', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\CreateurController($this);
     return $c->supprimerItem($rq,$rs,$args);
 }
 )->setName('SupprimerItem');
 
 $app->post('/item/supprimer', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\CreateurController($this);
     return $c->supprimerItem($rq,$rs,$args);
 }
 )->setName('SupprimerItemPost');
@@ -136,7 +136,7 @@ $app->post('/item/supprimer', function (Request $rq, Response $rs, array $args):
 
 $app->get('/credits', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\PrincipalController($this);
     return $c->displayCredits($rq,$rs,$args);
 }
 )->setName('Credits');
@@ -147,14 +147,14 @@ $app->get('/credits', function (Request $rq, Response $rs, array $args): Respons
 
 $app->get('/connexion', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\PrincipalController($this);
     return $c->connexion($rq,$rs,$args);
 }
 )->setName('Connexion');
 
 $app->post('/connexion', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\PrincipalController($this);
     return $c->connexion($rq,$rs,$args);
 }
 )->setName('ConnexionPost');
@@ -164,14 +164,14 @@ $app->post('/connexion', function (Request $rq, Response $rs, array $args): Resp
 
 $app->get('/inscription', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\PrincipalController($this);
     return $c->inscription($rq,$rs,$args);
 }
 )->setName('Inscription');
 
 $app->post('/inscription', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\PrincipalController($this);
     return $c->inscription($rq,$rs,$args);
 }
 )->setName('InscriptionPost');
@@ -181,7 +181,7 @@ $app->post('/inscription', function (Request $rq, Response $rs, array $args): Re
 
 $app->get('/deconnexion', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\PrincipalController($this);
     return $c->deconnexion($rq,$rs,$args);
 }
 )->setName('Deconnexion');
@@ -191,7 +191,7 @@ $app->get('/deconnexion', function (Request $rq, Response $rs, array $args): Res
 
 $app->get('/liste/creer', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\CreateurController($this);
     return $c->creerListe($rq,$rs,$args);
 }
 )->setName('CréerListe');
@@ -199,7 +199,7 @@ $app->get('/liste/creer', function (Request $rq, Response $rs, array $args): Res
 
 $app->post('/liste/creer', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\CreateurController($this);
     return $c->creerListe($rq,$rs,$args);
 }
 )->setName('CréerListePost');
@@ -208,7 +208,7 @@ $app->post('/liste/creer', function (Request $rq, Response $rs, array $args): Re
 
 $app->get('/', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\PrincipalController($this);
     return $c->accueil($rq,$rs,$args);
 }
 )->setName('Accueil');
@@ -218,14 +218,14 @@ $app->get('/', function (Request $rq, Response $rs, array $args): Response {
 
 $app->get('/compte', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\PrincipalController($this);
     return $c->compte($rq,$rs,$args);
 }
 )->setName('Compte');
 
 $app->post('/compte', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\PrincipalController($this);
     return $c->compte($rq,$rs,$args);
 }
 )->setName('ComptePost');
@@ -234,14 +234,14 @@ $app->post('/compte', function (Request $rq, Response $rs, array $args): Respons
 
 $app->get('/supprimercompte', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\PrincipalController($this);
     return $c->supprimerCompte($rq,$rs,$args);
 }
 )->setName('supprimerCompte');
 
 $app->post('/supprimercompte', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\PrincipalController($this);
     return $c->supprimerCompte($rq,$rs,$args);
 }
 )->setName('supprimerComptePost');
@@ -250,7 +250,7 @@ $app->post('/supprimercompte', function (Request $rq, Response $rs, array $args)
 
 $app->get('/createurs', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\PrincipalController($this);
     return $c->listeCreateurs($rq,$rs,$args);
 }
 )->setName('Createurs');
@@ -260,14 +260,14 @@ $app->get('/createurs', function (Request $rq, Response $rs, array $args): Respo
 
 $app->get('/ajouterListeCompte', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\CreateurController($this);
     return $c->ajouterListeCompte($rq,$rs,$args);
 }
 )->setName('AjouterListeCompte');
 
 $app->post('/ajouterListeCompte', function (Request $rq, Response $rs, array $args): Response {
 
-    $c = new mywishlist\control\ParticipantController($this);
+    $c = new mywishlist\control\CreateurController($this);
     return $c->ajouterListeCompte($rq,$rs,$args);
 }
 )->setName('AjouterListeComptePost');
