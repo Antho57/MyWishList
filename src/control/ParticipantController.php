@@ -40,8 +40,9 @@ class ParticipantController{
         $modifItem = $this->c->router->pathFor("ModifierItem");
         $suppritem = $this->c->router->pathFor("SupprimerItem");
         $addListeCompte = $this->c->router->pathFor("AjouterListeCompte");
+        $deco = $this->c->router->pathFor("inactivité");
 
-        $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>'$lien2', "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription, "compte"=>$compte, "supprimerCompte"=>$supprcompte, "createurs"=>$createurs, "modifItem"=>$modifItem, "supprimerItem"=>$suppritem, "ajouterListeCompte"=>$addListeCompte];
+        $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>'$lien2', "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription, "compte"=>$compte, "supprimerCompte"=>$supprcompte, "createurs"=>$createurs, "modifItem"=>$modifItem, "supprimerItem"=>$suppritem, "ajouterListeCompte"=>$addListeCompte, "deco"=>$deco];
 
         if (!isset($_SESSION['active']) || $_SESSION['active'] === false){
             $lien5 = $this->c->router->pathFor("Connexion");

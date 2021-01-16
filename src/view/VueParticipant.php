@@ -434,13 +434,6 @@ END;
 
     public function render($vars, $lien, $tab){
 
-        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600)) {
-            session_unset();
-            session_destroy();
-        }else{
-            $_SESSION['LAST_ACTIVITY'] = time();
-        }
-
 
         $html = <<<END
         <!DOCTYPE html>
@@ -448,7 +441,17 @@ END;
             <head> 
                 <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
                 <title>MyWishList</title>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+END;
+        if (isset($_SESSION['active']) && $_SESSION['active']===true){
+            $html .= <<<END
+                <meta http-equiv="refresh" name="viewport" content="600;url={$tab['deco']}" charset="UTF-8">
+END;
+        }else{
+            $html .= <<<END
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+END;
+        }
+        $html .= <<<END
             </head>
             <body>
             <div id="header">

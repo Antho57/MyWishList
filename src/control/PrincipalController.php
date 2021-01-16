@@ -38,8 +38,9 @@ class PrincipalController{
         $modifItem = $this->c->router->pathFor("ModifierItem");
         $suppritem = $this->c->router->pathFor("SupprimerItem");
         $addListeCompte = $this->c->router->pathFor("AjouterListeCompte");
+        $deco = $this->c->router->pathFor("inactivité");
 
-        $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>'$lien2', "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription, "compte"=>$compte, "supprimerCompte"=>$supprcompte, "createurs"=>$createurs, "modifItem"=>$modifItem, "supprimerItem"=>$suppritem, "ajouterListeCompte"=>$addListeCompte];
+        $tab = ["accueil"=>$accueil, "lien1"=>$lien1, "lien2"=>'$lien2', "lien3"=>$lien3, "lien4"=>$lien4, "lien667"=>$lien667, "inscription"=>$inscription, "compte"=>$compte, "supprimerCompte"=>$supprcompte, "createurs"=>$createurs, "modifItem"=>$modifItem, "supprimerItem"=>$suppritem, "ajouterListeCompte"=>$addListeCompte, "deco"=>$deco];
 
         if (!isset($_SESSION['active']) || $_SESSION['active'] === false){
             $lien5 = $this->c->router->pathFor("Connexion");
@@ -81,7 +82,22 @@ class PrincipalController{
 
 
 
+    public function decoInactivite(Request $rq, Response $rs):Response{
+        try{
 
+            session_start();
+            unset($_SESSION);
+            session_destroy();
+
+            $this->paths($rq, "", $rs, 'deco');
+            return $rs;
+
+
+        }catch(ModelNotFoundException $e){
+            $rs->write( "Problème de déconnexion");
+            return $rs;
+        }
+    }
 
 
     public function displayCredits(Request $rq, Response $rs):Response{
@@ -205,7 +221,7 @@ class PrincipalController{
 
 
 
-    public function listeCreateurs(Request $rq, Response $rs, array$args){
+    public function listeCreateurs(Request $rq, Response $rs){
         try {
             session_start();
 

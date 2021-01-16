@@ -14,13 +14,18 @@ $app = new \Slim\App($c);
 \mywishlist\bd\connexion::start(__DIR__. '/src/conf/db.conf.ini');
 
 
-
-
-
-$app->get('/liste/publiques', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/deconnecte', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\PrincipalController($this);
-    return $c->allListe($rq,$rs,$args);
+    return $c->decoInactivite($rq,$rs);
+}
+)->setName('inactivité');
+
+
+$app->get('/liste/publiques', function (Request $rq, Response $rs): Response {
+
+    $c = new mywishlist\control\PrincipalController($this);
+    return $c->allListe($rq,$rs);
 }
 )->setName('AllListe');
 
@@ -83,17 +88,17 @@ $app->post('/liste/modifier/{token_modif}/ajoutItem', function(Request $rq, Resp
 
 
 
-$app->get('/item', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/item', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\ParticipantController($this);
-    return $c->displayItem($rq,$rs,$args);
+    return $c->displayItem($rq,$rs);
 }
 )->setName('Item');
 
-$app->post('/item', function (Request $rq, Response $rs, array $args): Response {
+$app->post('/item', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\ParticipantController($this);
-    return $c->displayItem($rq,$rs,$args);
+    return $c->displayItem($rq,$rs);
 }
 )->setName('ItemPost');
 
@@ -118,26 +123,26 @@ $app->post('/item/modifier', function(Request $rq, Response $rs, array $args): R
 
 
 
-$app->get('/item/supprimer', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/item/supprimer', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\CreateurController($this);
-    return $c->supprimerItem($rq,$rs,$args);
+    return $c->supprimerItem($rq,$rs);
 }
 )->setName('SupprimerItem');
 
-$app->post('/item/supprimer', function (Request $rq, Response $rs, array $args): Response {
+$app->post('/item/supprimer', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\CreateurController($this);
-    return $c->supprimerItem($rq,$rs,$args);
+    return $c->supprimerItem($rq,$rs);
 }
 )->setName('SupprimerItemPost');
 
 
 
-$app->get('/credits', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/credits', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\PrincipalController($this);
-    return $c->displayCredits($rq,$rs,$args);
+    return $c->displayCredits($rq,$rs);
 }
 )->setName('Credits');
 
@@ -145,130 +150,130 @@ $app->get('/credits', function (Request $rq, Response $rs, array $args): Respons
 
 
 
-$app->get('/connexion', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/connexion', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\PrincipalController($this);
-    return $c->connexion($rq,$rs,$args);
+    return $c->connexion($rq,$rs);
 }
 )->setName('Connexion');
 
-$app->post('/connexion', function (Request $rq, Response $rs, array $args): Response {
+$app->post('/connexion', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\PrincipalController($this);
-    return $c->connexion($rq,$rs,$args);
+    return $c->connexion($rq,$rs);
 }
 )->setName('ConnexionPost');
 
 
 
 
-$app->get('/inscription', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/inscription', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\PrincipalController($this);
-    return $c->inscription($rq,$rs,$args);
+    return $c->inscription($rq,$rs);
 }
 )->setName('Inscription');
 
-$app->post('/inscription', function (Request $rq, Response $rs, array $args): Response {
+$app->post('/inscription', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\PrincipalController($this);
-    return $c->inscription($rq,$rs,$args);
+    return $c->inscription($rq,$rs);
 }
 )->setName('InscriptionPost');
 
 
 
 
-$app->get('/deconnexion', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/deconnexion', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\PrincipalController($this);
-    return $c->deconnexion($rq,$rs,$args);
+    return $c->deconnexion($rq,$rs);
 }
 )->setName('Deconnexion');
 
 
 
 
-$app->get('/liste/creer', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/liste/creer', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\CreateurController($this);
-    return $c->creerListe($rq,$rs,$args);
+    return $c->creerListe($rq,$rs);
 }
 )->setName('CréerListe');
 
 
-$app->post('/liste/creer', function (Request $rq, Response $rs, array $args): Response {
+$app->post('/liste/creer', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\CreateurController($this);
-    return $c->creerListe($rq,$rs,$args);
+    return $c->creerListe($rq,$rs);
 }
 )->setName('CréerListePost');
 
 
 
-$app->get('/', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\PrincipalController($this);
-    return $c->accueil($rq,$rs,$args);
+    return $c->accueil($rq,$rs);
 }
 )->setName('Accueil');
 
 
 
 
-$app->get('/compte', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/compte', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\PrincipalController($this);
-    return $c->compte($rq,$rs,$args);
+    return $c->compte($rq,$rs);
 }
 )->setName('Compte');
 
-$app->post('/compte', function (Request $rq, Response $rs, array $args): Response {
+$app->post('/compte', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\PrincipalController($this);
-    return $c->compte($rq,$rs,$args);
+    return $c->compte($rq,$rs);
 }
 )->setName('ComptePost');
 
 
 
-$app->get('/supprimercompte', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/supprimercompte', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\PrincipalController($this);
-    return $c->supprimerCompte($rq,$rs,$args);
+    return $c->supprimerCompte($rq,$rs);
 }
 )->setName('supprimerCompte');
 
-$app->post('/supprimercompte', function (Request $rq, Response $rs, array $args): Response {
+$app->post('/supprimercompte', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\PrincipalController($this);
-    return $c->supprimerCompte($rq,$rs,$args);
+    return $c->supprimerCompte($rq,$rs);
 }
 )->setName('supprimerComptePost');
 
 
 
-$app->get('/createurs', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/createurs', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\PrincipalController($this);
-    return $c->listeCreateurs($rq,$rs,$args);
+    return $c->listeCreateurs($rq,$rs);
 }
 )->setName('Createurs');
 
 
 
 
-$app->get('/ajouterListeCompte', function (Request $rq, Response $rs, array $args): Response {
+$app->get('/ajouterListeCompte', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\CreateurController($this);
-    return $c->ajouterListeCompte($rq,$rs,$args);
+    return $c->ajouterListeCompte($rq,$rs);
 }
 )->setName('AjouterListeCompte');
 
-$app->post('/ajouterListeCompte', function (Request $rq, Response $rs, array $args): Response {
+$app->post('/ajouterListeCompte', function (Request $rq, Response $rs): Response {
 
     $c = new mywishlist\control\CreateurController($this);
-    return $c->ajouterListeCompte($rq,$rs,$args);
+    return $c->ajouterListeCompte($rq,$rs);
 }
 )->setName('AjouterListeComptePost');
 
