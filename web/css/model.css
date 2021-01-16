@@ -429,3 +429,7 @@ input[type="file"]{
     background-color: #777777;
     color: #13c6c6;
 }
+
+li{
+    color: darkcyan;
+}

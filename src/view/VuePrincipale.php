@@ -94,7 +94,7 @@ END;
             <head> 
                 <link rel="stylesheet" href="{$lien['basepath']}/web/css/model.css">
                 <title>MyWishList</title>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
             </head>
             <body>
             <div id="header">
@@ -235,7 +235,38 @@ END;
                 if ($content == null){
                     $html .= <<<END
                     <div class="formulaire1">
-                        <p class="text" style="margin-left: 800px; color: #0099ff">Bienvenue sur le site My Wish List</p>
+                        <p class="text" style="margin-left: auto; margin-right: auto; text-align: center; color: darkcyan; font-weight: bold; text-decoration: underline;">Bienvenue sur le site My Wish List</p>
+                        <p class="text" style="text-align: left; color: darkcyan; text-decoration: underline">Liste des fonctionnalités réalisées :</p>
+                        <ol class="text" style="color: darkcyan;">
+                            <li>&#9989 Afficher une liste de souhaits</li>
+                            <li>&#9989 Afficher un item d'une liste</li>
+                            <li>&#9989 Réserver un item</li>
+                            <li>&#9989 Ajouter un message avec sa réservation</li>
+                            <li>&#9989 Ajouter un message sur une liste</li>
+                            <li>&#9989 Créer une liste</li>
+                            <li>&#9989 Modifier les informations générales d'une de ses listes</li>
+                            <li>&#9989 Ajouter des items</li>
+                            <li>&#9989 Modifier un item</li>
+                            <li>&#9989 Supprimer un item</li>
+                            <li>&#9989 Rajouter une image à un item</li>
+                            <li>&#9989 Modifier une image d'un item</li>
+                            <li>&#9989 Supprimer une image d'un item</li>
+                            <li>&#9989 Partager une liste</li>
+                            <li>&#9989 Consulter les réservations d'une de ses listes avant échéance</li>
+                            <li>&#9989 Consulter les réservations et messages d'une de ses listes après échéance</li>
+                            <li>&#9989 Créer un compte</li>
+                            <li>&#9989 S'authentifier</li>
+                            <li>&#9989 Modifier son compte</li>
+                            <li>&#9989 Rendre une liste publique</li>
+                            <li>&#9989 Afficher les listes de souhaits publiques</li>
+                            <li>&#9989 Créer une cagnotte sur un item</li>
+                            <li>&#9989 Participer à une cagnotte</li>
+                            <li>&#9989 Uploader une image</li>
+                            <li>&#9989 Créer un compte participant</li>
+                            <li>&#9989 Afficher la liste des créateurs</li>
+                            <li>&#9989 Supprimer son compte</li>
+                            <li>&#9989 Joindre des listes à son compte</li>
+                        </ol>
                     </div>
 END;
                 }
