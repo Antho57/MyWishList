@@ -12,7 +12,7 @@ Liste des fonctionnalités réalisées
  
 1 Afficher une liste de souhaits :
 
-https://webetu.iutnc.univ-lorraine.fr/www/briot53u/mywishlist/liste/detail/nosecure1
+https://webetu.iutnc.univ-lorraine.fr/www/briot53u/mywishlist/liste/detail/nosecure1 \n
 (le token de cette liste est “nosecure1”, il suffit de le changer pour accéder à une autre liste)
 
 2 Afficher un item d'une liste :
