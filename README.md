@@ -152,11 +152,19 @@ https://webetu.iutnc.univ-lorraine.fr/www/briot53u/mywishlist/compte
 28 Joindre des listes à son compte :
 
 https://webetu.iutnc.univ-lorraine.fr/www/briot53u/mywishlist/ajouterListeCompte
+
+
+
+ 
  
 Tableau de bord de l’équipe
  
 Voir le fichier “ Tableau_de_bord.png “ en dessous du fichier README
 C’est une image de notre excel avec la liste des tâches réalisées.
+
+
+
+
 
 Comptes mis en place pour le test
  
