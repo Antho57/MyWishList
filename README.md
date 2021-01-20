@@ -1,9 +1,9 @@
 
-                                                         IUT CHARLEMAGNE - DUT INFORMATIQUE
+                                      IUT CHARLEMAGNE - DUT INFORMATIQUE
 
-                                           BRIOT Anthony - SAKER Lucas - SPILMONT François - PISAN Thomas
+                            BRIOT Anthony - SAKER Lucas - SPILMONT François - PISAN Thomas
  
-                                                                 Projet MyWishList
+                                             Projet MyWishList
  
 Url principale du site : https://webetu.iutnc.univ-lorraine.fr/www/briot53u/mywishlist/ 
 
