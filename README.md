@@ -162,7 +162,7 @@ Comptes mis en place pour le test
  
 Compte test créateur :
 Pseudo : ADMIN
-Mot de passe : MDPAdmin 
+Mot de passe : MDPAdmin
 Ce compte contient déjà une liste avec des items et une liste sans items
 
 Compte participant :
